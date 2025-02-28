@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdhcqi3n33rlo"]
+
+[ext_resource type="Script" path="res://world/hud/creature_card/color_ui.gd" id="1_ogh0u"]
+[ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="2_hlnqg"]
+[ext_resource type="LabelSettings" uid="uid://llfhtfilv8mq" path="res://world/hud/attribute_label_setting.tres" id="3_mjyhh"]
+
+[node name="ColorUI" type="VBoxContainer"]
+script = ExtResource("1_ogh0u")
+
+[node name="Color" type="Label" parent="."]
+layout_mode = 2
+text = "Cor"
+label_settings = ExtResource("2_hlnqg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+text = "R"
+label_settings = ExtResource("3_mjyhh")
+horizontal_alignment = 1
+
+[node name="ColorR" type="HSlider" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+editable = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+text = "G"
+label_settings = ExtResource("3_mjyhh")
+horizontal_alignment = 1
+
+[node name="ColorG" type="HSlider" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+editable = false
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer3"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+text = "B"
+label_settings = ExtResource("3_mjyhh")
+horizontal_alignment = 1
+
+[node name="ColorB" type="HSlider" parent="HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+editable = false

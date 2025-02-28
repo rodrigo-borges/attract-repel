@@ -1,0 +1,105 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsatuyar14v2k"]
+
+[ext_resource type="Script" path="res://world/world.gd" id="1_psf47"]
+[ext_resource type="Script" path="res://world/world_camera.gd" id="2_1sg5d"]
+[ext_resource type="PackedScene" uid="uid://xl8400wsyrr4" path="res://world/hud/mini_map/mini_map.tscn" id="3_3l1a1"]
+[ext_resource type="Script" path="res://entities/creature_highlight.gd" id="3_b14dp"]
+[ext_resource type="PackedScene" uid="uid://beirk0bt486wl" path="res://world/hud/line_chart/line_chart.tscn" id="4_qumfv"]
+[ext_resource type="PackedScene" uid="uid://y4xw1cr1uk76" path="res://world/hud/creature_card/creature_card.tscn" id="6_sit8l"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_psf47")
+n_creatures = 30
+
+[node name="WorldCamera" type="Camera2D" parent="."]
+script = ExtResource("2_1sg5d")
+
+[node name="HoverHighlight" type="Node2D" parent="."]
+script = ExtResource("3_b14dp")
+color = Color(1, 1, 1, 0.392157)
+
+[node name="SelectHighlight" type="Node2D" parent="."]
+script = ExtResource("3_b14dp")
+color = Color(1, 1, 1, 0.588235)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Charts" type="PanelContainer" parent="HUD/MarginContainer"]
+self_modulate = Color(1, 1, 1, 0.501961)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/MarginContainer/Charts"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/Charts/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gráficos"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+
+[node name="GridContainer" type="GridContainer" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="PopChart" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("4_qumfv")]
+layout_mode = 2
+chart_name = "População"
+
+[node name="LifespanChart" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("4_qumfv")]
+layout_mode = 2
+chart_name = "Expectativa de vida"
+
+[node name="FoodChart" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("4_qumfv")]
+layout_mode = 2
+chart_name = "Comida disponível"
+
+[node name="EnergyChart" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("4_qumfv")]
+layout_mode = 2
+chart_name = "Energia total"
+
+[node name="ChildrenChart" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("4_qumfv")]
+layout_mode = 2
+chart_name = "Média de filhos"
+
+[node name="MomentumChart" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource("4_qumfv")]
+layout_mode = 2
+chart_name = "Momento total"
+
+[node name="MiniMap" parent="HUD/MarginContainer" node_paths=PackedStringArray("world", "camera") instance=ExtResource("3_3l1a1")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+world = NodePath("../../..")
+camera = NodePath("../../../WorldCamera")
+
+[node name="CreatureCard" parent="HUD/MarginContainer" instance=ExtResource("6_sit8l")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0

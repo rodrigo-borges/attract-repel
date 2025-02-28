@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://y4xw1cr1uk76"]
+
+[ext_resource type="Script" path="res://world/hud/creature_card/creature_card.gd" id="1_2se0r"]
+[ext_resource type="PackedScene" uid="uid://bdhcqi3n33rlo" path="res://world/hud/creature_card/color_ui.tscn" id="1_yku8q"]
+[ext_resource type="PackedScene" uid="uid://tfnus5sdeeeb" path="res://world/hud/creature_card/vector3_ui.tscn" id="2_n27h6"]
+
+[node name="CreatureCard" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_2se0r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Genetics" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Genética"
+
+[node name="Color" parent="VBoxContainer" instance=ExtResource("1_yku8q")]
+layout_mode = 2
+
+[node name="Attraction" parent="VBoxContainer" instance=ExtResource("2_n27h6")]
+layout_mode = 2
+title = "Atração"
+x_title = "R"
+y_title = "G"
+z_title = "B"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Life" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Vida"
