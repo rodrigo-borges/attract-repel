@@ -4,8 +4,10 @@ class_name World
 static var area:Rect2 = Rect2(Vector2.ZERO, Vector2(2000., 2000.))
 
 @export var n_creatures:int = 10
+@export var initial_food_spawn_time:int = 30
 var creatures:Array[Creature]
 var foods:Array[Food]
+var food_spawners:Array[FoodSpawner]
 
 @onready var camera:WorldCamera = $WorldCamera
 @onready var mini_map:MiniMap = find_child("MiniMap")
@@ -54,6 +56,8 @@ func _ready() -> void:
 	select_highlight.set_visible(false)
 	creature_card.set_visible(false)
 
+	call_deferred("spawn_initial_food")
+
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("left_click"):
 		if hovered_creature != null:
@@ -68,6 +72,13 @@ func create_spawner(_area:Rect2, rate:float, color:Color, energy:float) -> void:
 	var spawner:FoodSpawner = FoodSpawner.create(_area, rate, color, energy)
 	add_child(spawner)
 	spawner.created_food.connect(spawn_food)
+	food_spawners.append(spawner)
+
+func spawn_initial_food() -> void:
+	for s in food_spawners:
+		var amount:int = int(initial_food_spawn_time * s.spawn_rate)
+		for _a in amount:
+			s.spawn()
 
 func spawn_food(food:Food, pos:Vector2) -> void:
 	add_child(food)

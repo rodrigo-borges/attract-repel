@@ -33,6 +33,8 @@ class_name Vector3UI
 
 func _ready() -> void:
 	update()
+	if title_label != null:
+		title_label.set_text(title)
 
 func update_sliders() -> void:
 	if x != null and y != null and z != null:
