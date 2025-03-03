@@ -10,6 +10,8 @@ class_name ValueUI
 	set(value): min_value = value; update()
 @export var max_value:float = 1.:
 	set(value): max_value = value; update()
+@export var show_slider:bool = true:
+	set(value): show_slider = value; update()
 @export var editable:bool = false:
 	set(value): editable = value; update()
 @export var central_tick:bool = false:
@@ -41,8 +43,11 @@ func update() -> void:
 	if slider != null:
 		slider.set_min(min_value)
 		slider.set_max(max_value)
+		slider.set_visible(show_slider)
 		slider.set_editable(editable)
 		slider.set_ticks(3*int(central_tick))
 		slider.set_custom_minimum_size(Vector2(slider_min_width, 0.))
 	if value_label != null:
 		value_label.set_custom_minimum_size(Vector2(value_min_width, 0.))
+		value_label.set_h_size_flags(
+			SizeFlags.SIZE_SHRINK_END + SizeFlags.SIZE_EXPAND*int(!show_slider))

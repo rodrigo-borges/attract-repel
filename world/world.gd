@@ -31,6 +31,7 @@ var c_momentum:float
 @onready var select_highlight:CreatureHighlight = find_child("SelectHighlight")
 @onready var creature_card:CreatureCard = find_child("CreatureCard")
 var hovered_creature:Creature
+var selected_creature:Creature
 
 
 func _ready() -> void:
@@ -62,6 +63,8 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("left_click"):
 		if hovered_creature != null:
 			select_creature(hovered_creature)
+		else:
+			unselect_creature()
 	if Input.is_action_just_pressed("escape"):
 		unselect_creature()
 
@@ -143,18 +146,21 @@ func _on_creature_mouse_exited(creature:Creature) -> void:
 		hovered_creature = null
 
 func select_creature(creature:Creature) -> void:
-	if select_highlight.creature != null and select_highlight.creature.died.is_connected(unselect_creature):
-		select_highlight.creature.died.disconnect(unselect_creature)
+	if selected_creature != null and selected_creature.died.is_connected(unselect_creature):
+		selected_creature.died.disconnect(unselect_creature)
 	select_highlight.creature = creature
 	select_highlight.set_visible(true)
 	select_highlight.queue_redraw()
 	creature_card.creature = creature
 	creature_card.set_visible(true)
 	creature.died.connect(unselect_creature)
+	selected_creature = creature
 
 func unselect_creature() -> void:
-	select_highlight.creature.died.disconnect(unselect_creature)
-	select_highlight.creature = null
-	select_highlight.set_visible(false)
-	creature_card.creature = null
-	creature_card.set_visible(false)
+	if selected_creature != null:
+		selected_creature.died.disconnect(unselect_creature)
+		select_highlight.creature = null
+		select_highlight.set_visible(false)
+		creature_card.creature = null
+		creature_card.set_visible(false)
+		selected_creature = null

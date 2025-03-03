@@ -5,10 +5,7 @@ class_name Vector3UI
 @export var vec:Vector3:
 	set(value): vec = value; update_sliders()
 @export var title:String = "Vec":
-	set(value):
-		title = value
-		if title_label != null:
-			title_label.set_text(value)
+	set(value): title = value; update()
 @export var x_title:String = "x":
 	set(value): x_title = value; update()
 @export var y_title:String = "y":
@@ -33,8 +30,6 @@ class_name Vector3UI
 
 func _ready() -> void:
 	update()
-	if title_label != null:
-		title_label.set_text(title)
 
 func update_sliders() -> void:
 	if x != null and y != null and z != null:
@@ -47,6 +42,8 @@ func update() -> void:
 		update_ui(x, x_title)
 		update_ui(y, y_title)
 		update_ui(z, z_title)
+	if title_label != null:
+		title_label.set_text(title)
 
 func update_ui(ui:ValueUI, ui_title:String) -> void:
 	ui.title = ui_title

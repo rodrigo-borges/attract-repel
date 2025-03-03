@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://y4xw1cr1uk76"]
+[gd_scene load_steps=6 format=3 uid="uid://y4xw1cr1uk76"]
 
 [ext_resource type="Script" path="res://world/hud/creature_card/creature_card.gd" id="1_2se0r"]
 [ext_resource type="PackedScene" uid="uid://bdhcqi3n33rlo" path="res://world/hud/creature_card/color_ui.tscn" id="1_yku8q"]
 [ext_resource type="PackedScene" uid="uid://tfnus5sdeeeb" path="res://world/hud/creature_card/vector3_ui.tscn" id="2_n27h6"]
+[ext_resource type="PackedScene" uid="uid://d2gua8cqell5g" path="res://world/hud/creature_card/value_ui.tscn" id="4_khe27"]
+[ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="5_nkwl6"]
 
 [node name="CreatureCard" type="PanelContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -10,26 +12,109 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_2se0r")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Genetics" type="Label" parent="VBoxContainer"]
+[node name="Genetics" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Genética"
 
-[node name="Color" parent="VBoxContainer" instance=ExtResource("1_yku8q")]
+[node name="Color" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_yku8q")]
 layout_mode = 2
 
-[node name="Attraction" parent="VBoxContainer" instance=ExtResource("2_n27h6")]
+[node name="Attraction" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_n27h6")]
 layout_mode = 2
 title = "Atração"
 x_title = "R"
 y_title = "G"
 z_title = "B"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="Intensity" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Intens."
+value = 1.0
+min_value = 1.0
+max_value = 10.0
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="SenseRadius" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Alcance"
+value = 100.0
+min_value = 50.0
+max_value = 1000.0
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Brake" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Freio"
+value = 0.5
+min_value = 0.0
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Reproduction" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reprodução"
+label_settings = ExtResource("5_nkwl6")
+
+[node name="ReprThresh" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Limiar ener."
+min_value = 0.0
+max_value = 100.0
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="ReprCooldown" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Descanso"
+value = 10.0
+min_value = 0.0
+max_value = 100.0
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Life" type="Label" parent="VBoxContainer"]
+[node name="Life" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Vida"
+text = "Vivência"
+
+[node name="Energy" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Energia"
+show_slider = false
+title_min_width = 15.0
+value_min_width = 30.0
+
+[node name="ReprCooldownTime" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Descanso de reprodução"
+show_slider = false
+title_min_width = 15.0
+value_min_width = 30.0
+
+[node name="Children" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Filhos"
+show_slider = false
+title_min_width = 15.0
+value_min_width = 30.0
+
+[node name="Lifespan" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Tempo de vida"
+show_slider = false
+title_min_width = 15.0
+value_min_width = 30.0
