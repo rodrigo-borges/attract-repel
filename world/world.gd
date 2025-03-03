@@ -35,9 +35,10 @@ var selected_creature:Creature
 
 
 func _ready() -> void:
-	create_spawner(Rect2(Vector2(200.,200.), Vector2(700.,300.)), .5, Color(.9,.5,.2), 10.)
-	create_spawner(Rect2(Vector2(1000.,1200.), Vector2(700.,300.)), .5, Color(.2,.9,.5), 10.)
-	create_spawner(Rect2(Vector2(50.,50.), Vector2(1900.,1900.)), 1., Color(.7,.7,.7), 10.)
+	create_spawner(Rect2(Vector2(0., 0.), Vector2(1100.,1600.)), 2., Color(.75,.5,.05), 10., 60.)
+	create_spawner(Rect2(Vector2(900., 0.), Vector2(1100.,1600.)), 4., Color(.05,.5,.75), 10., 60.)
+	create_spawner(Rect2(Vector2(0.,1100.), Vector2(2000.,900.)), 2., Color(.05,.9,.05), -20., 60.)
+	create_spawner(Rect2(Vector2(0.,0.), Vector2(2000.,1100.)), .5, Color(.05,.9,.05), -40., 60.)
 	
 	for i in n_creatures:
 		spawn_creature(
@@ -71,8 +72,8 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	draw_rect(area, Color.BLACK, false)
 
-func create_spawner(_area:Rect2, rate:float, color:Color, energy:float) -> void:
-	var spawner:FoodSpawner = FoodSpawner.create(_area, rate, color, energy)
+func create_spawner(_area:Rect2, rate:float, color:Color, energy:float, decay_time:float) -> void:
+	var spawner:FoodSpawner = FoodSpawner.create(_area, rate, color, energy, decay_time)
 	add_child(spawner)
 	spawner.created_food.connect(spawn_food)
 	food_spawners.append(spawner)
@@ -86,7 +87,7 @@ func spawn_initial_food() -> void:
 func spawn_food(food:Food, pos:Vector2) -> void:
 	add_child(food)
 	food.set_global_position(pos)
-	food.consumed.connect(foods.erase.bind(food))
+	food.tree_exited.connect(foods.erase.bind(food))
 	foods.append(food)
 
 func spawn_creature(creature:Creature, pos:Vector2) -> void:
@@ -134,13 +135,24 @@ func update_counters() -> void:
 	momentum_chart.add_value(c_momentum)
 
 func _on_creature_mouse_entered(creature:Creature) -> void:
+	hover_creature(creature)
+
+func _on_creature_mouse_exited(creature:Creature) -> void:
+	if hovered_creature == creature:
+		unhover_creature()
+
+func hover_creature(creature:Creature) -> void:
+	if hovered_creature != null and hovered_creature.died.is_connected(unhover_creature):
+		hovered_creature.died.disconnect(unhover_creature)
 	hover_highlight.creature = creature
 	hover_highlight.set_visible(true)
 	hover_highlight.queue_redraw()
+	creature.died.connect(unhover_creature)
 	hovered_creature = creature
 
-func _on_creature_mouse_exited(creature:Creature) -> void:
-	if hover_highlight.creature == creature:
+func unhover_creature() -> void:
+	if hovered_creature != null:
+		hovered_creature.died.disconnect(unhover_creature)
 		hover_highlight.creature = null
 		hover_highlight.set_visible(false)
 		hovered_creature = null

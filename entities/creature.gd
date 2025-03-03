@@ -10,7 +10,7 @@ const MAX_ENERGY:float = 100.
 const BASE_MAINTENANCE_COST:float = 1.
 const BASE_MOVEMENT_COST:float = .1
 const BASE_REPRODUCTION_COST:float = 20.
-const MUTATION_CHANCE:float = .05
+const MUTATION_CHANCE:float = .1
 const COLOR_MUTATION_STD:float = .1
 const ATTR_MUTATION_STD:float = .3
 const INTENSITY_MUTATION_STD:float = 1.
@@ -125,6 +125,7 @@ func _physics_process(delta: float) -> void:
 		if collision.get_collider() is Food:
 			var food = collision.get_collider() as Food
 			energy += food.energy_provided
+			energy = minf(MAX_ENERGY, energy)
 			food.consume()
 
 func _draw() -> void:
@@ -189,7 +190,7 @@ func reproduce() -> Creature:
 	return creature
 
 func die() -> void:
-	var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST)
+	var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST, 60.)
 	created_food.emit(corpse)
 	died.emit()
 	queue_free()

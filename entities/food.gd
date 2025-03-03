@@ -2,10 +2,13 @@ extends ColoredEntity
 class_name Food
 
 signal consumed()
+signal decayed()
 
 const BASE_SIZE:float = 8.
 
 var energy_provided:float
+var decay_time:float
+var decay_timer:Timer
 
 
 func _ready() -> void:
@@ -17,6 +20,12 @@ func _ready() -> void:
 	coll_shape.set_shape(coll_rect)
 	add_child(coll_shape)
 
+	if decay_time > 0.:
+		decay_timer = Timer.new()
+		add_child(decay_timer)
+		decay_timer.timeout.connect(func(): decayed.emit(); queue_free())
+		decay_timer.start(decay_time)
+
 func consume() -> void:
 	consumed.emit()
 	queue_free()
@@ -27,8 +36,9 @@ func _draw() -> void:
 	draw_rect(rect, Color.BLACK, false)
 
 static func create(
-		_color:Color, _energy_provided:float):
+		_color:Color, _energy_provided:float, _decay_time:float):
 	var food:Food = Food.new()
 	food.color = _color
 	food.energy_provided = _energy_provided
+	food.decay_time = _decay_time
 	return food
