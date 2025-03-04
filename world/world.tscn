@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=8 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" path="res://world/world_camera.gd" id="2_1sg5d"]
 [ext_resource type="PackedScene" uid="uid://xl8400wsyrr4" path="res://world/hud/mini_map/mini_map.tscn" id="3_3l1a1"]
 [ext_resource type="Script" path="res://entities/creature_highlight.gd" id="3_b14dp"]
+[ext_resource type="PackedScene" uid="uid://bh6bll2w5jv5g" path="res://world/hud/clock/clock.tscn" id="4_46fr4"]
 [ext_resource type="PackedScene" uid="uid://beirk0bt486wl" path="res://world/hud/line_chart/line_chart.tscn" id="4_qumfv"]
 [ext_resource type="PackedScene" uid="uid://y4xw1cr1uk76" path="res://world/hud/creature_card/creature_card.tscn" id="6_sit8l"]
 
@@ -14,6 +15,7 @@ initial_food_spawn_time = 60
 track_period = null
 
 [node name="WorldCamera" type="Camera2D" parent="."]
+process_mode = 3
 script = ExtResource("2_1sg5d")
 
 [node name="HoverHighlight" type="Node2D" parent="."]
@@ -25,6 +27,7 @@ script = ExtResource("3_b14dp")
 color = Color(1, 1, 1, 0.588235)
 
 [node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD"]
 anchors_preset = 15
@@ -32,11 +35,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+
+[node name="Clock" parent="HUD/MarginContainer" instance=ExtResource("4_46fr4")]
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="Charts" type="PanelContainer" parent="HUD/MarginContainer"]
 self_modulate = Color(1, 1, 1, 0.501961)

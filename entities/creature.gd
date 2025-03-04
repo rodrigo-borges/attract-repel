@@ -14,10 +14,10 @@ const MUTATION_CHANCE:float = .1
 const COLOR_MUTATION_STD:float = .1
 const ATTR_MUTATION_STD:float = .3
 const INTENSITY_MUTATION_STD:float = 1.
-const SENSE_RADIUS_MUTATION_STD:float = 1.
+const SENSE_RADIUS_MUTATION_STD:float = 10.
 const REPR_ENERGY_THR_MUTATION_STD:float = 5.
-const REPR_COOLDOWN_MUTATION_STD:float = 2.
-const BRAKE_MUTATION_STD:float = .1
+const REPR_COOLDOWN_MUTATION_STD:float = 5.
+const BRAKE_MUTATION_STD:float = .2
 const FORCE_LINE_SCALE:float = 30.
 const FORCE_LINE_CAP:float = 50.
 
@@ -92,6 +92,9 @@ func _process(_delta:float) -> void:
 	update_force_line(brake_line, brake_force)
 
 func _physics_process(delta: float) -> void:
+	if Engine.time_scale <= 0.:
+		return
+
 	lifespan += delta
 
 	if not on_reproduction_cooldown and energy >= reproduction_energy_threshold:

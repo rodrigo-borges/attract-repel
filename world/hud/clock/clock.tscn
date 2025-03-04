@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh6bll2w5jv5g"]
+
+[ext_resource type="Script" path="res://world/hud/clock/clock.gd" id="1_lufbv"]
+[ext_resource type="Texture2D" uid="uid://2xkcre5f4y2w" path="res://world/hud/clock/pause.png" id="2_lnyst"]
+[ext_resource type="Texture2D" uid="uid://wim1smy16hhi" path="res://world/hud/clock/play.png" id="3_d7ayy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0oity"]
+font_size = 20
+
+[node name="Clock" type="PanelContainer"]
+process_mode = 3
+offset_right = 64.0
+offset_bottom = 23.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_lufbv")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ClockLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "00:00:00"
+label_settings = SubResource("LabelSettings_0oity")
+
+[node name="PauseButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+focus_mode = 0
+toggle_mode = true
+texture_normal = ExtResource("2_lnyst")
+texture_pressed = ExtResource("3_d7ayy")
+ignore_texture_size = true
+stretch_mode = 5
