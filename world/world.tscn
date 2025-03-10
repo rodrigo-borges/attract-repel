@@ -65,6 +65,8 @@ text = "Gráficos"
 [node name="ScrollContainer" type="ScrollContainer" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
 horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/MarginContainer/Charts/MarginContainer/VBoxContainer/ScrollContainer"]
