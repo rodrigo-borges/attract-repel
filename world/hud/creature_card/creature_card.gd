@@ -16,10 +16,11 @@ class_name CreatureCard
 @onready var repr_cooldown_time:ValueUI = find_child("ReprCooldownTime")
 @onready var children:ValueUI = find_child("Children")
 @onready var lifespan:ValueUI = find_child("Lifespan")
+@onready var marker_selector:MarkerButton = find_child("MarkerButton")
 
 
 func _ready() -> void:
-	pass
+	marker_selector.marker_selected.connect(_on_marker_selected)
 
 func _process(_delta:float) -> void:
 	update_life()
@@ -34,6 +35,7 @@ func update() -> void:
 		repr_threshold.value = creature.reproduction_energy_threshold
 		repr_cooldown.value = creature.reproduction_cooldown
 		update_life()
+		marker_selector.update_marker_from_creature(creature)
 
 func update_life() -> void:
 	if creature != null:
@@ -41,3 +43,7 @@ func update_life() -> void:
 		repr_cooldown_time.value = creature.reproduction_cooldowm_timer.time_left
 		children.value = creature.children
 		lifespan.value = creature.lifespan
+
+func _on_marker_selected(marker:Marker) -> void:
+	if creature != null:
+		creature.marker = marker

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Marker" load_steps=3 format=3 uid="uid://wub3am8kt3yd"]
+
+[ext_resource type="Script" path="res://marker/marker.gd" id="1_ta0q0"]
+[ext_resource type="Texture2D" uid="uid://db52gkpoao1ox" path="res://marker/spades_32.png" id="2_5syl6"]
+
+[resource]
+script = ExtResource("1_ta0q0")
+texture = ExtResource("2_5syl6")

@@ -12,7 +12,6 @@
 script = ExtResource("1_psf47")
 n_creatures = 100
 initial_food_spawn_time = 60
-track_period = null
 
 [node name="WorldCamera" type="Camera2D" parent="."]
 process_mode = 3

@@ -45,6 +45,12 @@ var sense_area:Area2D
 var reproduction_cooldowm_timer:Timer
 var attraction_line:Line2D
 var brake_line:Line2D
+var marker:Marker:
+	set(value):
+		marker = value
+		if marker != null and marker_sprite != null:
+			update_marker()
+var marker_sprite:Sprite2D
 
 
 func _ready() -> void:
@@ -86,6 +92,11 @@ func _ready() -> void:
 	brake_line.set_width(2.)
 	brake_line.add_point(Vector2.ZERO)
 	brake_line.add_point(Vector2.ZERO)
+
+	marker_sprite = Sprite2D.new()
+	add_child(marker_sprite)
+	marker_sprite.set_scale(Vector2(.5, .5))
+	update_marker()
 
 func _process(_delta:float) -> void:
 	update_force_line(attraction_line, attraction_force)
@@ -186,6 +197,7 @@ func reproduce() -> Creature:
 		reproduction_energy_threshold, reproduction_cooldown,
 		brake,
 		energy/2.)
+	creature.marker = marker
 	creature.mutate()
 	reproduced.emit(creature)
 	energy /= 2.
@@ -197,6 +209,11 @@ func die() -> void:
 	created_food.emit(corpse)
 	died.emit()
 	queue_free()
+
+func update_marker() -> void:
+	var new_texture:Texture2D = null if marker == null else marker.texture
+	marker_sprite.set_texture(new_texture)
+	marker_sprite.set_visible(marker!=null)
 
 static func create(
 		_color:Color, _size_radius:float,

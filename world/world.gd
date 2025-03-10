@@ -61,12 +61,15 @@ func _ready() -> void:
 	call_deferred("spawn_initial_food")
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("left_click"):
+	pass
+
+func _unhandled_input(event:InputEvent) -> void:
+	if event.is_action_pressed("left_click"):
 		if hovered_creature != null:
 			select_creature(hovered_creature)
 		else:
 			unselect_creature()
-	if Input.is_action_just_pressed("escape"):
+	if event.is_action_pressed("escape"):
 		unselect_creature()
 
 func _draw() -> void:
