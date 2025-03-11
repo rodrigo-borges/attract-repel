@@ -48,7 +48,7 @@ var brake_line:Line2D
 var marker:Marker:
 	set(value):
 		marker = value
-		if marker != null and marker_sprite != null:
+		if marker_sprite != null:
 			update_marker()
 var marker_sprite:Sprite2D
 

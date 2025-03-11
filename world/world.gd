@@ -35,8 +35,8 @@ var selected_creature:Creature
 
 
 func _ready() -> void:
-	create_spawner(Rect2(Vector2(0., 0.), Vector2(1100.,1600.)), 2., Color(.75,.5,.05), 10., 60.)
-	create_spawner(Rect2(Vector2(900., 0.), Vector2(1100.,1600.)), 4., Color(.05,.5,.75), 10., 60.)
+	create_spawner(Rect2(Vector2(0., 0.), Vector2(1100.,1600.)), 2., Color(.75,.5,.05), 15., 60.)
+	create_spawner(Rect2(Vector2(900., 0.), Vector2(1100.,1600.)), 4., Color(.05,.5,.75), 15., 60.)
 	create_spawner(Rect2(Vector2(0.,1100.), Vector2(2000.,900.)), 2., Color(.05,.9,.05), -20., 60.)
 	create_spawner(Rect2(Vector2(0.,0.), Vector2(2000.,1100.)), .5, Color(.05,.9,.05), -40., 60.)
 	

@@ -5,7 +5,7 @@ Aquário de criaturas que são atraídas ou repelidas por cores
 
 - [ ] Seguir criatura selecionada com a câmera.
 - [ ] Destacar janela com câmera seguindo criatura.
-- [x] Adicionar marcador em uma criatura que será passado para seus descendentes.
+- [x] Adicionar marcador em uma criatura que será passado para seus descendentes. (2025-03-10)
 - [ ] Visualizar métricas agrupadas por marcador.
 - [ ] Colidir e quicar criaturas com obstáculos genéricos.
 - [ ] Barrar visão das criaturas em obstáculos.
