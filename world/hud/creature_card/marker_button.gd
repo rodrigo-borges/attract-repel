@@ -12,7 +12,7 @@ func _ready() -> void:
 		add_icon_item(m.texture, m.resource_name)
 	item_selected.connect(_on_item_selected)
 
-func update_marker_from_creature(creature:Creature) -> void:
+func update_marker_from_creature(creature:CreatureVessel) -> void:
 	var idx:int = 0
 	if creature.marker != null:
 		idx = markers.find(creature.marker) + 1

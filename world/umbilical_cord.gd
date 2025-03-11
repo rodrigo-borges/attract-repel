@@ -1,8 +1,8 @@
 extends Line2D
 class_name UmbilicalCord
 
-var parent:Creature
-var child:Creature
+var parent:CreatureVessel
+var child:CreatureVessel
 var time_to_vanish:float
 var timer:Timer
 
@@ -26,7 +26,7 @@ func _process(_delta:float) -> void:
 	if child != null:
 		set_point_position(1, child.global_position)
 
-static func create(_parent:Creature, _child:Creature, _time_to_vanish:float=5.) -> UmbilicalCord:
+static func create(_parent:CreatureVessel, _child:CreatureVessel, _time_to_vanish:float=5.) -> UmbilicalCord:
 	var cord = UmbilicalCord.new()
 	cord.parent = _parent
 	cord.child = _child

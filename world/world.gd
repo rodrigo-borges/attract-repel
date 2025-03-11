@@ -5,7 +5,7 @@ static var area:Rect2 = Rect2(Vector2.ZERO, Vector2(2000., 2000.))
 
 @export var n_creatures:int = 10
 @export var initial_food_spawn_time:int = 30
-var creatures:Array[Creature]
+var creatures:Array[CreatureVessel]
 var foods:Array[Food]
 var food_spawners:Array[FoodSpawner]
 
@@ -30,8 +30,8 @@ var c_momentum:float
 @onready var hover_highlight:CreatureHighlight = find_child("HoverHighlight")
 @onready var select_highlight:CreatureHighlight = find_child("SelectHighlight")
 @onready var creature_card:CreatureCard = find_child("CreatureCard")
-var hovered_creature:Creature
-var selected_creature:Creature
+var hovered_creature:CreatureVessel
+var selected_creature:CreatureVessel
 
 
 func _ready() -> void:
@@ -42,7 +42,7 @@ func _ready() -> void:
 	
 	for i in n_creatures:
 		spawn_creature(
-			Creature.create(
+			CreatureVessel.create(
 				Color(randf(), randf(), randf()), 10.,
 				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.), randfn(100., 5.),
 				randfn(70., 5.), randfn(10., 1.),
@@ -93,7 +93,7 @@ func spawn_food(food:Food, pos:Vector2) -> void:
 	food.tree_exited.connect(foods.erase.bind(food))
 	foods.append(food)
 
-func spawn_creature(creature:Creature, pos:Vector2) -> void:
+func spawn_creature(creature:CreatureVessel, pos:Vector2) -> void:
 	add_child(creature)
 	creature.set_global_position(pos)
 	creature.reproduced.connect(_on_reproduction.bind(creature))
@@ -103,10 +103,10 @@ func spawn_creature(creature:Creature, pos:Vector2) -> void:
 	creature.mouse_exited.connect(_on_creature_mouse_exited.bind(creature))
 	creatures.append(creature)
 
-func _on_food_creation(food:Food, creature:Creature) -> void:
+func _on_food_creation(food:Food, creature:CreatureVessel) -> void:
 	spawn_food(food, creature.global_position)
 
-func _on_reproduction(child:Creature, parent:Creature) -> void:
+func _on_reproduction(child:CreatureVessel, parent:CreatureVessel) -> void:
 	spawn_creature(child, parent.global_position + Vector2(randf()*50., randf()*50.))
 	var cord = UmbilicalCord.create(parent, child)
 	add_child(cord)
@@ -137,14 +137,14 @@ func update_counters() -> void:
 	children_chart.add_value(c_avg_children)
 	momentum_chart.add_value(c_momentum)
 
-func _on_creature_mouse_entered(creature:Creature) -> void:
+func _on_creature_mouse_entered(creature:CreatureVessel) -> void:
 	hover_creature(creature)
 
-func _on_creature_mouse_exited(creature:Creature) -> void:
+func _on_creature_mouse_exited(creature:CreatureVessel) -> void:
 	if hovered_creature == creature:
 		unhover_creature()
 
-func hover_creature(creature:Creature) -> void:
+func hover_creature(creature:CreatureVessel) -> void:
 	if hovered_creature != null and hovered_creature.died.is_connected(unhover_creature):
 		hovered_creature.died.disconnect(unhover_creature)
 	hover_highlight.creature = creature
@@ -160,7 +160,7 @@ func unhover_creature() -> void:
 		hover_highlight.set_visible(false)
 		hovered_creature = null
 
-func select_creature(creature:Creature) -> void:
+func select_creature(creature:CreatureVessel) -> void:
 	if selected_creature != null and selected_creature.died.is_connected(unselect_creature):
 		selected_creature.died.disconnect(unselect_creature)
 	select_highlight.creature = creature

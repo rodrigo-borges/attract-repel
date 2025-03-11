@@ -1,7 +1,7 @@
 extends Control
 class_name CreatureCard
 
-@export var creature:Creature:
+@export var creature:CreatureVessel:
 	set(value):
 		creature = value
 		update()

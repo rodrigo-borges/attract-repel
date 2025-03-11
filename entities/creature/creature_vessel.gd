@@ -1,7 +1,7 @@
 extends ColoredEntity
-class_name Creature
+class_name CreatureVessel
 
-signal reproduced(child:Creature)
+signal reproduced(child:CreatureVessel)
 signal created_food(food:Food)
 signal died
 
@@ -187,11 +187,11 @@ func mutate() -> void:
 
 	attraction = attraction.normalized()
 
-func reproduce() -> Creature:
+func reproduce() -> CreatureVessel:
 	energy -= BASE_REPRODUCTION_COST
 	on_reproduction_cooldown = true
 	reproduction_cooldowm_timer.start(reproduction_cooldown)
-	var creature = Creature.create(
+	var creature = CreatureVessel.create(
 		color, size_radius,
 		attraction, intensity, sense_radius,
 		reproduction_energy_threshold, reproduction_cooldown,
@@ -220,8 +220,8 @@ static func create(
 		_attraction:Vector3, _intensity:float, _sense_radius:float,
 		_reproduction_energy_threshold:float, _reproduction_cooldown:float,
 		_brake:float,
-		_energy:float=MAX_ENERGY/2.) -> Creature:
-	var creature:Creature = Creature.new()
+		_energy:float=MAX_ENERGY/2.) -> CreatureVessel:
+	var creature:CreatureVessel = CreatureVessel.new()
 	creature.color = _color
 	creature.size_radius = _size_radius
 	creature.attraction = _attraction

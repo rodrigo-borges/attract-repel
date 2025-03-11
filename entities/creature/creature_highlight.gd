@@ -3,7 +3,7 @@ class_name CreatureHighlight
 
 @export var color:Color = Color.WHITE
 @export var highlight_width:float = 2.
-var creature:Creature
+var creature:CreatureVessel
 
 func _ready() -> void:
 	set_z_index(-1)
