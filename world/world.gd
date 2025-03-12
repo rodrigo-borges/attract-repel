@@ -130,7 +130,7 @@ func update_counters() -> void:
 	for c in creatures:
 		c_lifespan += c.lifespan
 		c_energy_pool += c.energy
-		c_avg_children += c.children
+		c_avg_children += c.data.children.size()
 		c_momentum += c.total_force.length()
 	c_lifespan /= creatures.size()
 	c_avg_children /= creatures.size()

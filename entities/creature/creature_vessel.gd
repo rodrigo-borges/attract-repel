@@ -31,8 +31,6 @@ var brake:float:
 var lifespan:float:
 	get(): return data.lifespan
 	set(value): data.lifespan = value
-var children:int:
-	get(): return data.children.size()
 
 var energy:float
 var on_reproduction_cooldown:bool
@@ -176,6 +174,7 @@ func reproduce() -> CreatureVessel:
 func die() -> void:
 	var corpse:Food = Food.create(self.color, CreatureData.BASE_REPRODUCTION_COST, 60.)
 	created_food.emit(corpse)
+	data.vessel = null
 	died.emit()
 	queue_free()
 
@@ -197,6 +196,14 @@ func toggle_draw_lines(toggled_on:bool) -> void:
 func toggle_details(toggled_on:bool) -> void:
 	toggle_draw_los(toggled_on)
 	toggle_draw_lines(toggled_on)
+
+func get_descendents_vessels() -> Array[CreatureVessel]:
+	var descendents:Array[CreatureData] = data.get_descendents()
+	var vessels:Array[CreatureVessel] = []
+	for d in descendents:
+		if d.vessel != null:
+			vessels.append(d.vessel)
+	return vessels
 
 static func create(
 		_data:CreatureData,

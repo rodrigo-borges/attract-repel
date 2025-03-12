@@ -119,6 +119,13 @@ show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
+[node name="Descendents" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Descendentes"
+show_slider = false
+title_min_width = 15.0
+value_min_width = 30.0
+
 [node name="Lifespan" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Tempo de vida"
@@ -151,10 +158,23 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+text = "Marcar descendentes"
+label_settings = ExtResource("6_s1ufy")
+
+[node name="MarkDescBt" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
 text = "Seguir"
 label_settings = ExtResource("6_s1ufy")
 
-[node name="FollowButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="FollowButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0

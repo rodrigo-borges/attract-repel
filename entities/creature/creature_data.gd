@@ -68,6 +68,12 @@ func reproduce() -> CreatureData:
 	children.append(creature)
 	return creature
 
+func get_descendents() -> Array[CreatureData]:
+	var descendents:Array[CreatureData] = children.duplicate()
+	for c in children:
+		descendents.append_array(c.get_descendents())
+	return descendents
+
 static func create(
 		_color:Color, _size_radius:float,
 		_attraction:Vector3, _intensity:float, _sense_radius:float,

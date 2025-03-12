@@ -15,13 +15,16 @@ class_name CreatureCard
 @onready var energy:ValueUI = find_child("Energy")
 @onready var repr_cooldown_time:ValueUI = find_child("ReprCooldownTime")
 @onready var children:ValueUI = find_child("Children")
+@onready var descendents:ValueUI = find_child("Descendents")
 @onready var lifespan:ValueUI = find_child("Lifespan")
 @onready var marker_selector:MarkerButton = find_child("MarkerButton")
-@onready var follow_button:Button = find_child("FollowButton")
+@onready var mark_desc_bt:BaseButton = find_child("MarkDescBt")
+@onready var follow_button:BaseButton = find_child("FollowButton")
 
 
 func _ready() -> void:
 	marker_selector.marker_selected.connect(_on_marker_selected)
+	mark_desc_bt.toggled.connect(_on_mark_desc_toggled)
 
 func _process(_delta:float) -> void:
 	update_life()
@@ -42,9 +45,21 @@ func update_life() -> void:
 	if creature != null:
 		energy.value = creature.energy
 		repr_cooldown_time.value = creature.reproduction_cooldowm_timer.time_left
-		children.value = creature.children
+		children.value = creature.data.children.size()
+		descendents.value = creature.data.get_descendents().size()
 		lifespan.value = creature.lifespan
 
 func _on_marker_selected(marker:Marker) -> void:
+	mark(marker)
+
+func _on_mark_desc_toggled(toggled_on:bool) -> void:
+	if toggled_on:
+		mark(marker_selector.get_selected_marker())
+
+func mark(marker:Marker) -> void:
 	if creature != null:
 		creature.marker = marker
+		if mark_desc_bt.button_pressed:
+			var desc:Array[CreatureVessel] = creature.get_descendents_vessels()
+			for d in desc:
+				d.marker = marker

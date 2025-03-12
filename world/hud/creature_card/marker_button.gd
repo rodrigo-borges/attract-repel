@@ -18,6 +18,9 @@ func update_marker_from_creature(creature:CreatureVessel) -> void:
 		idx = markers.find(creature.marker) + 1
 	select(idx)
 
+func get_selected_marker() -> Marker:
+	return get_marker_from_idx(selected)
+
 func get_marker_from_idx(idx:int) -> Marker:
 	var marker:Marker = null
 	if idx > 0:

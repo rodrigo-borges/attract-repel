@@ -25,9 +25,9 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Migrar para Godot 4.4.
 - [ ] Selecionar rapidamente o pai da criatura selecionada.
 - [ ] Visualizar detalhes da comida.
-- [ ] Marcar opcionalmente todos os descendentes da criatura junto dela.
+- [x] Marcar opcionalmente todos os descendentes da criatura junto dela. (2025-03-12)
 - [x] Visualizar força e LoS apenas da criatura selecionada. (2025-03-12)
-- [ ] Ser alertado quando uma criatura exibe determinado gen.
+- [ ] Ser alertado quando uma criatura exibe determinado gene.
 
 ### Simulação
 
