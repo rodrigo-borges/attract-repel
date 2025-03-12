@@ -1,4 +1,4 @@
-extends ColoredEntity
+extends CharacterBody2D
 class_name Food
 
 signal consumed()
@@ -6,6 +6,7 @@ signal decayed()
 
 const BASE_SIZE:float = 8.
 
+var color:Color
 var energy_provided:float
 var decay_time:float
 var decay_timer:Timer

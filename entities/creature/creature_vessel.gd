@@ -1,42 +1,40 @@
-extends ColoredEntity
+extends CharacterBody2D
 class_name CreatureVessel
 
 signal reproduced(child:CreatureVessel)
 signal created_food(food:Food)
 signal died
 
-const BASE_FORCE:float = 100.
-const MAX_ENERGY:float = 100.
-const BASE_MAINTENANCE_COST:float = 1.
-const BASE_MOVEMENT_COST:float = .1
-const BASE_REPRODUCTION_COST:float = 20.
-const MUTATION_CHANCE:float = .1
-const COLOR_MUTATION_STD:float = .1
-const ATTR_MUTATION_STD:float = .3
-const INTENSITY_MUTATION_STD:float = 1.
-const SENSE_RADIUS_MUTATION_STD:float = 10.
-const REPR_ENERGY_THR_MUTATION_STD:float = 5.
-const REPR_COOLDOWN_MUTATION_STD:float = 5.
-const BRAKE_MUTATION_STD:float = .2
-const FORCE_LINE_SCALE:float = 30.
-const FORCE_LINE_CAP:float = 50.
+static var BASE_FORCE:float = 100.
+static var BASE_MAINTENANCE_COST:float = 1.
+static var BASE_MOVEMENT_COST:float = .1
+static var FORCE_LINE_SCALE:float = 30.
+static var FORCE_LINE_CAP:float = 50.
 
+var data:CreatureData
+var color:Color:
+	get(): return data.color
 var size_radius:float:
-	set(value): size_radius = maxf(value, 1.)
-var attraction:Vector3
+	get(): return data.size_radius
+var attraction:Vector3:
+	get(): return data.attraction
 var intensity:float:
-	set(value): intensity = maxf(value, 1.)
+	get(): return data.intensity
 var sense_radius:float:
-	set(value): sense_radius = maxf(value, 50.)
+	get(): return data.sense_radius
 var reproduction_energy_threshold:float:
-	set(value): reproduction_energy_threshold = clampf(value, 0., MAX_ENERGY)
+	get(): return data.reproduction_energy_threshold
 var reproduction_cooldown:float:
-	set(value): reproduction_cooldown = maxf(value, 0.)
+	get(): return data.reproduction_cooldown
 var brake:float:
-	set(value): brake = clampf(value, 0., 1.)
+	get(): return data.brake
+var lifespan:float:
+	get(): return data.lifespan
+	set(value): data.lifespan = value
+var children:int:
+	get(): return data.children.size()
+
 var energy:float
-var lifespan:float
-var children:int
 var on_reproduction_cooldown:bool
 var attraction_force:Vector2
 var brake_force:Vector2
@@ -114,9 +112,8 @@ func _physics_process(delta: float) -> void:
 	attraction_force = Vector2.ZERO
 	var nodes_in_sight:Array[Node2D] = sense_area.get_overlapping_bodies()
 	for node in nodes_in_sight:
-		if node is ColoredEntity and node != self:
-			var entity = node as ColoredEntity
-			attraction_force += calculate_attraction_force(entity)
+		if "color" in node and node != self:
+			attraction_force += calculate_attraction_force(node)
 	brake_force = -velocity * delta * brake
 	total_force = attraction_force + brake_force
 	velocity += total_force
@@ -139,7 +136,7 @@ func _physics_process(delta: float) -> void:
 		if collision.get_collider() is Food:
 			var food = collision.get_collider() as Food
 			energy += food.energy_provided
-			energy = minf(MAX_ENERGY, energy)
+			energy = minf(CreatureData.MAX_ENERGY, energy)
 			food.consume()
 
 func _draw() -> void:
@@ -155,57 +152,25 @@ func update_force_line(line:Line2D, force:Vector2) -> void:
 		line.set_modulate(Color.WHITE)
 	line.set_point_position(1, force.normalized()*line_length)
 
-func calculate_attraction_force(entity:ColoredEntity) -> Vector2:
-	var _force:Vector2 = (entity.global_position - global_position).normalized() * BASE_FORCE * intensity
-	_force *= attraction.x*entity.color.r + attraction.y*entity.color.g + attraction.z*entity.color.b
-	_force /= global_position.distance_squared_to(entity.global_position) + 1.
+func calculate_attraction_force(node:Node2D) -> Vector2:
+	var _force:Vector2 = (node.global_position - global_position).normalized() * BASE_FORCE * intensity
+	_force *= attraction.x*node.color.r + attraction.y*node.color.g + attraction.z*node.color.b
+	_force /= global_position.distance_squared_to(node.global_position) + 1.
 	return _force
 
-func mutate() -> void:
-	if randf() < MUTATION_CHANCE:
-		color.r = clampf(color.r + randfn(0., COLOR_MUTATION_STD), 0., 1.)
-	if randf() < MUTATION_CHANCE:
-		color.g = clampf(color.r + randfn(0., COLOR_MUTATION_STD), 0., 1.)
-	if randf() < MUTATION_CHANCE:
-		color.b = clampf(color.r + randfn(0., COLOR_MUTATION_STD), 0., 1.)
-	if randf() < MUTATION_CHANCE:
-		attraction.x += randfn(0., ATTR_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		attraction.y += randfn(0., ATTR_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		attraction.z += randfn(0., ATTR_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		intensity += randfn(0., INTENSITY_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		sense_radius += randfn(0., SENSE_RADIUS_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		reproduction_energy_threshold += randfn(0., REPR_ENERGY_THR_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		reproduction_cooldown += randfn(0., REPR_COOLDOWN_MUTATION_STD)
-	if randf() < MUTATION_CHANCE:
-		brake += randfn(0., BRAKE_MUTATION_STD)
-
-	attraction = attraction.normalized()
-
 func reproduce() -> CreatureVessel:
-	energy -= BASE_REPRODUCTION_COST
+	energy -= CreatureData.BASE_REPRODUCTION_COST
 	on_reproduction_cooldown = true
 	reproduction_cooldowm_timer.start(reproduction_cooldown)
-	var creature = CreatureVessel.create(
-		color, size_radius,
-		attraction, intensity, sense_radius,
-		reproduction_energy_threshold, reproduction_cooldown,
-		brake,
-		energy/2.)
-	creature.marker = marker
-	creature.mutate()
-	reproduced.emit(creature)
+	var child_data:CreatureData = data.reproduce()
+	var child_vessel = CreatureVessel.create(child_data, energy/2.)
+	child_vessel.marker = marker
+	reproduced.emit(child_vessel)
 	energy /= 2.
-	children += 1
-	return creature
+	return child_vessel
 
 func die() -> void:
-	var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST, 60.)
+	var corpse:Food = Food.create(self.color, CreatureData.BASE_REPRODUCTION_COST, 60.)
 	created_food.emit(corpse)
 	died.emit()
 	queue_free()
@@ -216,21 +181,9 @@ func update_marker() -> void:
 	marker_sprite.set_visible(marker!=null)
 
 static func create(
-		_color:Color, _size_radius:float,
-		_attraction:Vector3, _intensity:float, _sense_radius:float,
-		_reproduction_energy_threshold:float, _reproduction_cooldown:float,
-		_brake:float,
-		_energy:float=MAX_ENERGY/2.) -> CreatureVessel:
+		_data:CreatureData,
+		_energy:float=CreatureData.MAX_ENERGY/2.) -> CreatureVessel:
 	var creature:CreatureVessel = CreatureVessel.new()
-	creature.color = _color
-	creature.size_radius = _size_radius
-	creature.attraction = _attraction
-	creature.intensity = _intensity
-	creature.sense_radius = _sense_radius
-	creature.reproduction_energy_threshold = _reproduction_energy_threshold
-	creature.reproduction_cooldown = _reproduction_cooldown
-	creature.brake = _brake
+	creature.data = _data
 	creature.energy = _energy
-	creature.lifespan = 0.
-	creature.children = 0
 	return creature

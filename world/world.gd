@@ -41,12 +41,13 @@ func _ready() -> void:
 	create_spawner(Rect2(Vector2(0.,0.), Vector2(2000.,1100.)), .5, Color(.05,.9,.05), -40., 60.)
 	
 	for i in n_creatures:
-		spawn_creature(
-			CreatureVessel.create(
+		var data = CreatureData.create(
 				Color(randf(), randf(), randf()), 10.,
 				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.), randfn(100., 5.),
 				randfn(70., 5.), randfn(10., 1.),
-				randfn(.5, .1)),
+				randfn(.5, .1))
+		spawn_creature(
+			CreatureVessel.create(data),
 			Vector2(randf()*area.size.x, randf()*area.size.y))
 
 	track_timer = Timer.new()
