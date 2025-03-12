@@ -186,4 +186,5 @@ static func create(
 	var creature:CreatureVessel = CreatureVessel.new()
 	creature.data = _data
 	creature.energy = _energy
+	_data.vessel = creature
 	return creature

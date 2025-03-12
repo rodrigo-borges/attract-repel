@@ -32,6 +32,8 @@ var c_momentum:float
 @onready var creature_card:CreatureCard = find_child("CreatureCard")
 var hovered_creature:CreatureVessel
 var selected_creature:CreatureVessel
+var follow_button:Button
+var followed_creature:CreatureVessel
 
 
 func _ready() -> void:
@@ -61,6 +63,9 @@ func _ready() -> void:
 
 	call_deferred("spawn_initial_food")
 
+	follow_button = creature_card.follow_button
+	follow_button.toggled.connect(toggle_follow)
+
 func _process(_delta: float) -> void:
 	pass
 
@@ -72,6 +77,9 @@ func _unhandled_input(event:InputEvent) -> void:
 			unselect_creature()
 	if event.is_action_pressed("escape"):
 		unselect_creature()
+	if event.is_action_pressed("follow"):
+		if selected_creature != null:
+			toggle_follow(followed_creature == null)
 
 func _draw() -> void:
 	draw_rect(area, Color.BLACK, false)
@@ -148,11 +156,12 @@ func _on_creature_mouse_exited(creature:CreatureVessel) -> void:
 func hover_creature(creature:CreatureVessel) -> void:
 	if hovered_creature != null and hovered_creature.died.is_connected(unhover_creature):
 		hovered_creature.died.disconnect(unhover_creature)
-	hover_highlight.creature = creature
-	hover_highlight.set_visible(true)
-	hover_highlight.queue_redraw()
-	creature.died.connect(unhover_creature)
-	hovered_creature = creature
+	if hovered_creature != creature:
+		hover_highlight.creature = creature
+		hover_highlight.set_visible(true)
+		hover_highlight.queue_redraw()
+		creature.died.connect(unhover_creature)
+		hovered_creature = creature
 
 func unhover_creature() -> void:
 	if hovered_creature != null:
@@ -164,13 +173,15 @@ func unhover_creature() -> void:
 func select_creature(creature:CreatureVessel) -> void:
 	if selected_creature != null and selected_creature.died.is_connected(unselect_creature):
 		selected_creature.died.disconnect(unselect_creature)
-	select_highlight.creature = creature
-	select_highlight.set_visible(true)
-	select_highlight.queue_redraw()
-	creature_card.creature = creature
-	creature_card.set_visible(true)
-	creature.died.connect(unselect_creature)
-	selected_creature = creature
+	if selected_creature != creature:
+		select_highlight.creature = creature
+		select_highlight.set_visible(true)
+		select_highlight.queue_redraw()
+		creature_card.creature = creature
+		creature_card.set_visible(true)
+		creature.died.connect(unselect_creature)
+		unfollow_creature()
+		selected_creature = creature
 
 func unselect_creature() -> void:
 	if selected_creature != null:
@@ -179,4 +190,27 @@ func unselect_creature() -> void:
 		select_highlight.set_visible(false)
 		creature_card.creature = null
 		creature_card.set_visible(false)
+		unfollow_creature()
 		selected_creature = null
+
+func toggle_follow(toggled_on:bool) -> void:
+	if toggled_on:
+		follow_creature(selected_creature)
+	else:
+		unfollow_creature()
+
+func follow_creature(creature:CreatureVessel) -> void:
+	if followed_creature != null and followed_creature.died.is_connected(unfollow_creature):
+		followed_creature.died.disconnect(unfollow_creature)
+	if followed_creature != creature:
+		camera.followed_node = creature
+		follow_button.set_pressed_no_signal(true)
+		creature.died.connect(unfollow_creature)
+		followed_creature = creature
+	
+func unfollow_creature() -> void:
+	if followed_creature != null:
+		followed_creature.died.disconnect(unfollow_creature)
+		camera.followed_node = null
+		follow_button.set_pressed_no_signal(false)
+		followed_creature = null

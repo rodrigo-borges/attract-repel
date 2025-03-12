@@ -145,3 +145,16 @@ size_flags_vertical = 4
 focus_mode = 0
 script = ExtResource("7_uykr0")
 markers = Array[ExtResource("8_i74sm")]([ExtResource("9_fk8es"), ExtResource("10_cwok2"), ExtResource("11_vsd1d"), ExtResource("12_spcei")])
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Seguir"
+label_settings = ExtResource("6_s1ufy")
+
+[node name="FollowButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0

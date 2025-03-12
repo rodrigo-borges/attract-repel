@@ -8,6 +8,7 @@ const LEAK_TOLERANCE:float = 500.
 
 var moving:bool = false
 var previous_mouse_position:Vector2
+var followed_node:Node2D = null
 
 
 func _ready() -> void:
@@ -22,6 +23,9 @@ func _process(delta:float) -> void:
 	
 	var input_direction:Vector2 = Input.get_vector("left", "right", "up", "down")
 	global_position +=input_direction * delta * MOVE_SPEED
+
+	if followed_node != null:
+		global_position = followed_node.global_position
 
 	var size:Vector2 = get_viewport().get_visible_rect().size
 	if size.x/zoom.x > World.area.size.x + LEAK_TOLERANCE*2.:

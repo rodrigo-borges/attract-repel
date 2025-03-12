@@ -17,6 +17,7 @@ class_name CreatureCard
 @onready var children:ValueUI = find_child("Children")
 @onready var lifespan:ValueUI = find_child("Lifespan")
 @onready var marker_selector:MarkerButton = find_child("MarkerButton")
+@onready var follow_button:Button = find_child("FollowButton")
 
 
 func _ready() -> void:

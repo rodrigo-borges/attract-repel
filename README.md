@@ -7,7 +7,7 @@ Lista de implementações desejadas, sem ordem específica.
 
 ### Experiência
 
-- [ ] Seguir criatura selecionada com a câmera.
+- [x] Seguir criatura selecionada com a câmera. (2025-03-12)
 - [ ] Destacar janela com câmera seguindo criatura.
 - [x] Adicionar marcador em uma criatura que será passado para seus descendentes. (2025-03-10)
 - [ ] Visualizar métricas agrupadas por marcador.
@@ -25,6 +25,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Migrar para Godot 4.4.
 - [ ] Navegar pela genealogia da criatura selecionada.
 - [ ] Visualizar detalhes da comida.
+- [ ] Possibilidade de marcar todos os descendentes da criatura junto dela.
 
 ### Simulação
 
