@@ -49,6 +49,8 @@ var marker:Marker:
 		if marker_sprite != null:
 			update_marker()
 var marker_sprite:Sprite2D
+var draw_force_lines:bool = false
+var draw_sense_radius:bool = false
 
 
 func _ready() -> void:
@@ -97,8 +99,9 @@ func _ready() -> void:
 	update_marker()
 
 func _process(_delta:float) -> void:
-	update_force_line(attraction_line, attraction_force)
-	update_force_line(brake_line, brake_force)
+	if draw_force_lines:
+		update_force_line(attraction_line, attraction_force)
+		update_force_line(brake_line, brake_force)
 
 func _physics_process(delta: float) -> void:
 	if Engine.time_scale <= 0.:
@@ -140,9 +143,10 @@ func _physics_process(delta: float) -> void:
 			food.consume()
 
 func _draw() -> void:
+	if draw_sense_radius:
+		draw_circle(Vector2.ZERO, self.sense_radius, Color(0., 0., 0., 0.1))
 	draw_circle(Vector2.ZERO, self.size_radius, self.color)
 	draw_circle(Vector2.ZERO, self.size_radius, Color.BLACK, false)
-	draw_circle(Vector2.ZERO, self.sense_radius, Color(0., 0., 0., 0.3), false)
 
 func update_force_line(line:Line2D, force:Vector2) -> void:
 	var line_length:float = min(force.length()*FORCE_LINE_SCALE, FORCE_LINE_CAP)
@@ -179,6 +183,20 @@ func update_marker() -> void:
 	var new_texture:Texture2D = null if marker == null else marker.texture
 	marker_sprite.set_texture(new_texture)
 	marker_sprite.set_visible(marker!=null)
+
+func toggle_draw_los(toggled_on:bool) -> void:
+	if toggled_on != draw_sense_radius:
+		draw_sense_radius = toggled_on
+		queue_redraw()
+
+func toggle_draw_lines(toggled_on:bool) -> void:
+	draw_force_lines = toggled_on
+	brake_line.set_visible(toggled_on)
+	attraction_line.set_visible(toggled_on)
+
+func toggle_details(toggled_on:bool) -> void:
+	toggle_draw_los(toggled_on)
+	toggle_draw_lines(toggled_on)
 
 static func create(
 		_data:CreatureData,

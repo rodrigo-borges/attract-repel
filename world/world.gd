@@ -74,9 +74,9 @@ func _unhandled_input(event:InputEvent) -> void:
 		if hovered_creature != null:
 			select_creature(hovered_creature)
 		else:
-			unselect_creature()
+			deselect_creature()
 	if event.is_action_pressed("escape"):
-		unselect_creature()
+		deselect_creature()
 	if event.is_action_pressed("follow"):
 		if selected_creature != null:
 			toggle_follow(followed_creature == null)
@@ -154,8 +154,8 @@ func _on_creature_mouse_exited(creature:CreatureVessel) -> void:
 		unhover_creature()
 
 func hover_creature(creature:CreatureVessel) -> void:
-	if hovered_creature != null and hovered_creature.died.is_connected(unhover_creature):
-		hovered_creature.died.disconnect(unhover_creature)
+	if hovered_creature != null:
+		unhover_creature()
 	if hovered_creature != creature:
 		hover_highlight.creature = creature
 		hover_highlight.set_visible(true)
@@ -171,21 +171,23 @@ func unhover_creature() -> void:
 		hovered_creature = null
 
 func select_creature(creature:CreatureVessel) -> void:
-	if selected_creature != null and selected_creature.died.is_connected(unselect_creature):
-		selected_creature.died.disconnect(unselect_creature)
+	if selected_creature != null:
+		deselect_creature()
 	if selected_creature != creature:
+		creature.died.connect(deselect_creature)
+		creature.toggle_details(true)
 		select_highlight.creature = creature
 		select_highlight.set_visible(true)
 		select_highlight.queue_redraw()
 		creature_card.creature = creature
 		creature_card.set_visible(true)
-		creature.died.connect(unselect_creature)
 		unfollow_creature()
 		selected_creature = creature
 
-func unselect_creature() -> void:
+func deselect_creature() -> void:
 	if selected_creature != null:
-		selected_creature.died.disconnect(unselect_creature)
+		selected_creature.died.disconnect(deselect_creature)
+		selected_creature.toggle_details(false)
 		select_highlight.creature = null
 		select_highlight.set_visible(false)
 		creature_card.creature = null
@@ -200,8 +202,8 @@ func toggle_follow(toggled_on:bool) -> void:
 		unfollow_creature()
 
 func follow_creature(creature:CreatureVessel) -> void:
-	if followed_creature != null and followed_creature.died.is_connected(unfollow_creature):
-		followed_creature.died.disconnect(unfollow_creature)
+	if followed_creature != null:
+		unfollow_creature()
 	if followed_creature != creature:
 		camera.followed_node = creature
 		follow_button.set_pressed_no_signal(true)
