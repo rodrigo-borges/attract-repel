@@ -1,10 +1,7 @@
 extends Control
 class_name CreatureCard
 
-@export var creature:CreatureVessel:
-	set(value):
-		creature = value
-		update()
+@export var creature:CreatureVessel
 @onready var color_ui:ColorUI = find_child("Color")
 @onready var attraction:Vector3UI = find_child("Attraction")
 @onready var intensity:ValueUI = find_child("Intensity")
@@ -17,6 +14,7 @@ class_name CreatureCard
 @onready var children:ValueUI = find_child("Children")
 @onready var descendents:ValueUI = find_child("Descendents")
 @onready var lifespan:ValueUI = find_child("Lifespan")
+@onready var parent_bt:Button = find_child("ParentBt")
 @onready var marker_selector:MarkerButton = find_child("MarkerButton")
 @onready var mark_desc_bt:BaseButton = find_child("MarkDescBt")
 @onready var follow_button:BaseButton = find_child("FollowButton")
@@ -28,6 +26,16 @@ func _ready() -> void:
 
 func _process(_delta:float) -> void:
 	update_life()
+
+func set_creature(new:CreatureVessel) -> void:
+	if creature != null and creature.get_parent_vessel() != null:
+		if creature.get_parent_vessel().died.is_connected(update_parent_bt):
+			creature.get_parent_vessel().died.disconnect(update_parent_bt)
+	creature = new
+	if new != null and new.get_parent_vessel() != null:
+		new.get_parent_vessel().died.connect(update_parent_bt)
+	update_parent_bt()
+	update()
 
 func update() -> void:
 	if creature != null:
@@ -63,3 +71,9 @@ func mark(marker:Marker) -> void:
 			var desc:Array[CreatureVessel] = creature.get_descendents_vessels()
 			for d in desc:
 				d.marker = marker
+
+func update_parent_bt() -> void:
+	if creature != null:
+		parent_bt.set_disabled(creature.get_parent_vessel() == null)
+		var text:String = "Inexistente" if creature.data.parent == null else ("%x" % creature.data.parent.get_instance_id()).substr(5)
+		parent_bt.set_text(text)

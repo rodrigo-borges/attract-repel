@@ -23,7 +23,8 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Finalizar simulação através de um botão.
 - [ ] Exibir estatísticas ao finalizar simulação.
 - [ ] Migrar para Godot 4.4.
-- [ ] Selecionar rapidamente o pai da criatura selecionada.
+- [x] Selecionar rapidamente o pai da criatura selecionada. (2025-03-12)
+- [ ] Navegar pela genealogia de uma criatura.
 - [ ] Visualizar detalhes da comida.
 - [x] Marcar opcionalmente todos os descendentes da criatura junto dela. (2025-03-12)
 - [x] Visualizar força e LoS apenas da criatura selecionada. (2025-03-12)

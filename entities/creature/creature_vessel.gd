@@ -197,6 +197,12 @@ func toggle_details(toggled_on:bool) -> void:
 	toggle_draw_los(toggled_on)
 	toggle_draw_lines(toggled_on)
 
+func get_parent_vessel() -> CreatureVessel:
+	var parent:CreatureVessel = null
+	if data.parent != null and data.parent.vessel != null:
+		parent = data.parent.vessel
+	return parent
+
 func get_descendents_vessels() -> Array[CreatureVessel]:
 	var descendents:Array[CreatureData] = data.get_descendents()
 	var vessels:Array[CreatureVessel] = []

@@ -32,7 +32,8 @@ var c_momentum:float
 @onready var creature_card:CreatureCard = find_child("CreatureCard")
 var hovered_creature:CreatureVessel
 var selected_creature:CreatureVessel
-var follow_button:Button
+var select_parent_bt:Button
+var follow_bt:Button
 var followed_creature:CreatureVessel
 
 
@@ -63,8 +64,10 @@ func _ready() -> void:
 
 	call_deferred("spawn_initial_food")
 
-	follow_button = creature_card.follow_button
-	follow_button.toggled.connect(toggle_follow)
+	select_parent_bt = creature_card.parent_bt
+	select_parent_bt.pressed.connect(_on_parent_bt_pressed)
+	follow_bt = creature_card.follow_button
+	follow_bt.toggled.connect(toggle_follow)
 
 func _process(_delta: float) -> void:
 	pass
@@ -179,7 +182,7 @@ func select_creature(creature:CreatureVessel) -> void:
 		select_highlight.creature = creature
 		select_highlight.set_visible(true)
 		select_highlight.queue_redraw()
-		creature_card.creature = creature
+		creature_card.set_creature(creature)
 		creature_card.set_visible(true)
 		unfollow_creature()
 		selected_creature = creature
@@ -190,7 +193,7 @@ func deselect_creature() -> void:
 		selected_creature.toggle_details(false)
 		select_highlight.creature = null
 		select_highlight.set_visible(false)
-		creature_card.creature = null
+		creature_card.set_creature(null)
 		creature_card.set_visible(false)
 		unfollow_creature()
 		selected_creature = null
@@ -206,7 +209,7 @@ func follow_creature(creature:CreatureVessel) -> void:
 		unfollow_creature()
 	if followed_creature != creature:
 		camera.followed_node = creature
-		follow_button.set_pressed_no_signal(true)
+		follow_bt.set_pressed_no_signal(true)
 		creature.died.connect(unfollow_creature)
 		followed_creature = creature
 	
@@ -214,5 +217,8 @@ func unfollow_creature() -> void:
 	if followed_creature != null:
 		followed_creature.died.disconnect(unfollow_creature)
 		camera.followed_node = null
-		follow_button.set_pressed_no_signal(false)
+		follow_bt.set_pressed_no_signal(false)
 		followed_creature = null
+
+func _on_parent_bt_pressed() -> void:
+	select_creature(selected_creature.get_parent_vessel())
