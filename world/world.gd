@@ -32,9 +32,13 @@ var c_momentum:float
 @onready var creature_card:CreatureCard = find_child("CreatureCard")
 var hovered_creature:CreatureVessel
 var selected_creature:CreatureVessel
+var featured_creature:CreatureData
 var select_parent_bt:Button
 var follow_bt:Button
 var followed_creature:CreatureVessel
+
+@onready var tree_container:Control = find_child("TreeContainer")
+@onready var family_tree:FamilyTree = find_child("FamilyTree")
 
 
 func _ready() -> void:
@@ -61,6 +65,8 @@ func _ready() -> void:
 	hover_highlight.set_visible(false)
 	select_highlight.set_visible(false)
 	creature_card.set_visible(false)
+	tree_container.set_visible(false)
+	family_tree.creature_selected.connect(feature_creature)
 
 	call_deferred("spawn_initial_food")
 
@@ -75,11 +81,11 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event:InputEvent) -> void:
 	if event.is_action_pressed("left_click"):
 		if hovered_creature != null:
-			select_creature(hovered_creature)
+			feature_creature(hovered_creature.data)
 		else:
-			deselect_creature()
+			unfeature_creature()
 	if event.is_action_pressed("escape"):
-		deselect_creature()
+		unfeature_creature()
 	if event.is_action_pressed("follow"):
 		if selected_creature != null:
 			toggle_follow(followed_creature == null)
@@ -182,8 +188,6 @@ func select_creature(creature:CreatureVessel) -> void:
 		select_highlight.creature = creature
 		select_highlight.set_visible(true)
 		select_highlight.queue_redraw()
-		creature_card.set_creature(creature)
-		creature_card.set_visible(true)
 		unfollow_creature()
 		selected_creature = creature
 
@@ -193,10 +197,28 @@ func deselect_creature() -> void:
 		selected_creature.toggle_details(false)
 		select_highlight.creature = null
 		select_highlight.set_visible(false)
-		creature_card.set_creature(null)
-		creature_card.set_visible(false)
 		unfollow_creature()
 		selected_creature = null
+
+func feature_creature(creature:CreatureData) -> void:
+	if featured_creature != null:
+		unfeature_creature()
+	creature_card.set_creature(creature)
+	creature_card.set_visible(true)
+	family_tree.set_creature(creature)
+	tree_container.set_visible(true)
+	if creature.vessel != null:
+		select_creature(creature.vessel)
+	featured_creature = creature
+
+func unfeature_creature() -> void:
+	if featured_creature != null:
+		creature_card.set_creature(null)
+		creature_card.set_visible(false)
+		family_tree.clear()
+		tree_container.set_visible(false)
+		deselect_creature()
+		featured_creature = null
 
 func toggle_follow(toggled_on:bool) -> void:
 	if toggled_on:
@@ -221,4 +243,4 @@ func unfollow_creature() -> void:
 		followed_creature = null
 
 func _on_parent_bt_pressed() -> void:
-	select_creature(selected_creature.get_parent_vessel())
+	feature_creature(featured_creature.parent)

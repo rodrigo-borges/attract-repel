@@ -24,11 +24,13 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Exibir estatísticas ao finalizar simulação.
 - [ ] Migrar para Godot 4.4.
 - [x] Selecionar rapidamente o pai da criatura selecionada. (2025-03-12)
-- [ ] Navegar pela genealogia de uma criatura.
+- [x] Navegar pela genealogia de uma criatura. (2025-03-13)
 - [ ] Visualizar detalhes da comida.
 - [x] Marcar opcionalmente todos os descendentes da criatura junto dela. (2025-03-12)
 - [x] Visualizar força e LoS apenas da criatura selecionada. (2025-03-12)
 - [ ] Ser alertado quando uma criatura exibe determinado gene.
+- [x] Visualizar detalhes de criaturas que já morreram. (2025-03-13)
+- [ ] Comparar genes entre duas criaturas.
 
 ### Simulação
 

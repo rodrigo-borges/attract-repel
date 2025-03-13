@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://obye55draurt"]
+
+[ext_resource type="Script" path="res://family_tree/family_node.gd" id="1_whp8b"]
+[ext_resource type="Texture2D" uid="uid://b3304qhn7kwc4" path="res://family_tree/dead.png" id="2_qqer8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1m0yn"]
+radius = 12.0
+
+[node name="FamilyNode" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_whp8b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1m0yn")
+
+[node name="DeadIcon" type="Sprite2D" parent="."]
+position = Vector2(6, 6)
+texture = ExtResource("2_qqer8")

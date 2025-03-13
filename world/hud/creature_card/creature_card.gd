@@ -1,7 +1,7 @@
 extends Control
 class_name CreatureCard
 
-@export var creature:CreatureVessel
+@export var creature:CreatureData
 @onready var color_ui:ColorUI = find_child("Color")
 @onready var attraction:Vector3UI = find_child("Attraction")
 @onready var intensity:ValueUI = find_child("Intensity")
@@ -27,13 +27,8 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
 	update_life()
 
-func set_creature(new:CreatureVessel) -> void:
-	if creature != null and creature.get_parent_vessel() != null:
-		if creature.get_parent_vessel().died.is_connected(update_parent_bt):
-			creature.get_parent_vessel().died.disconnect(update_parent_bt)
+func set_creature(new:CreatureData) -> void:
 	creature = new
-	if new != null and new.get_parent_vessel() != null:
-		new.get_parent_vessel().died.connect(update_parent_bt)
 	update_parent_bt()
 	update()
 
@@ -47,15 +42,20 @@ func update() -> void:
 		repr_threshold.value = creature.reproduction_energy_threshold
 		repr_cooldown.value = creature.reproduction_cooldown
 		update_life()
-		marker_selector.update_marker_from_creature(creature)
+		if creature.vessel != null:
+			marker_selector.update_marker_from_creature(creature.vessel)
 
 func update_life() -> void:
 	if creature != null:
-		energy.value = creature.energy
-		repr_cooldown_time.value = creature.reproduction_cooldowm_timer.time_left
-		children.value = creature.data.children.size()
-		descendents.value = creature.data.get_descendents().size()
 		lifespan.value = creature.lifespan
+		children.value = creature.children.size()
+		descendents.value = creature.get_descendents().size()
+		if creature.vessel != null:
+			energy.value = creature.vessel.energy
+			repr_cooldown_time.value = creature.vessel.reproduction_cooldowm_timer.time_left
+		else:
+			energy.value = 0.
+			repr_cooldown_time.value = 0.
 
 func _on_marker_selected(marker:Marker) -> void:
 	mark(marker)
@@ -65,15 +65,15 @@ func _on_mark_desc_toggled(toggled_on:bool) -> void:
 		mark(marker_selector.get_selected_marker())
 
 func mark(marker:Marker) -> void:
-	if creature != null:
-		creature.marker = marker
+	if creature != null and creature.vessel != null:
+		creature.vessel.marker = marker
 		if mark_desc_bt.button_pressed:
-			var desc:Array[CreatureVessel] = creature.get_descendents_vessels()
+			var desc:Array[CreatureVessel] = creature.vessel.get_descendents_vessels()
 			for d in desc:
 				d.marker = marker
 
 func update_parent_bt() -> void:
 	if creature != null:
-		parent_bt.set_disabled(creature.get_parent_vessel() == null)
-		var text:String = "Inexistente" if creature.data.parent == null else ("%x" % creature.data.parent.get_instance_id()).substr(5)
+		parent_bt.set_disabled(creature.parent == null)
+		var text:String = "Inexistente" if creature.parent == null else ("%x" % creature.parent.get_instance_id()).substr(8)
 		parent_bt.set_text(text)

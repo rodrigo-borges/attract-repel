@@ -48,7 +48,7 @@ layout_mode = 2
 title = "Intens."
 value = 1.0
 min_value = 1.0
-max_value = 10.0
+max_value = 30.0
 title_min_width = 60.0
 value_min_width = 30.0
 
@@ -57,7 +57,7 @@ layout_mode = 2
 title = "Alcance"
 value = 100.0
 min_value = 50.0
-max_value = 1000.0
+max_value = 500.0
 title_min_width = 60.0
 value_min_width = 30.0
 
