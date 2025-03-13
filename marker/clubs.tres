@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Marker" load_steps=3 format=3 uid="uid://cm387dwmdbjiq"]
 
-[ext_resource type="Script" path="res://marker/marker.gd" id="1_6hrw1"]
+[ext_resource type="Script" uid="uid://dk4u4ejdblm12" path="res://marker/marker.gd" id="1_6hrw1"]
 [ext_resource type="Texture2D" uid="uid://dqx54s4pnjas6" path="res://marker/clubs_32.png" id="2_dcnie"]
 
 [resource]

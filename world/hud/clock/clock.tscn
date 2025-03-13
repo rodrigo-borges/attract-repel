@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bh6bll2w5jv5g"]
 
-[ext_resource type="Script" path="res://world/hud/clock/clock.gd" id="1_lufbv"]
+[ext_resource type="Script" uid="uid://dxpvivat0fnuo" path="res://world/hud/clock/clock.gd" id="1_lufbv"]
 [ext_resource type="Texture2D" uid="uid://2xkcre5f4y2w" path="res://world/hud/clock/pause.png" id="2_lnyst"]
 [ext_resource type="Texture2D" uid="uid://wim1smy16hhi" path="res://world/hud/clock/play.png" id="3_d7ayy"]
 

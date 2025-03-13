@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://4ucbadkjd5g2"]
 
-[ext_resource type="Script" path="res://family_tree/family_tree.gd" id="1_f8xb0"]
-[ext_resource type="Script" path="res://family_tree/tree_camera.gd" id="2_lw71b"]
-[ext_resource type="Script" path="res://family_tree/family_node_highlight.gd" id="3_jr5cc"]
+[ext_resource type="Script" uid="uid://c37lwlh1qqp2d" path="res://family_tree/family_tree.gd" id="1_f8xb0"]
+[ext_resource type="Script" uid="uid://ct2qg6vbjugxx" path="res://family_tree/tree_camera.gd" id="2_lw71b"]
+[ext_resource type="Script" uid="uid://xtm3a42nfmik" path="res://family_tree/family_node_highlight.gd" id="3_jr5cc"]
 
 [node name="FamilyTree" type="Node2D"]
 script = ExtResource("1_f8xb0")

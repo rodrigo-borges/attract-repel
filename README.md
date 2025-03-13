@@ -22,7 +22,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Finalizar simulação em caso de extinção.
 - [ ] Finalizar simulação através de um botão.
 - [ ] Exibir estatísticas ao finalizar simulação.
-- [ ] Migrar para Godot 4.4.
+- [x] Migrar para Godot 4.4. (2025-03-13)
 - [x] Selecionar rapidamente o pai da criatura selecionada. (2025-03-12)
 - [x] Navegar pela genealogia de uma criatura. (2025-03-13)
 - [ ] Visualizar detalhes da comida.
@@ -31,6 +31,11 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Ser alertado quando uma criatura exibe determinado gene.
 - [x] Visualizar detalhes de criaturas que já morreram. (2025-03-13)
 - [ ] Comparar genes entre duas criaturas.
+- [ ] Escolher o número de gerações na árvore genealógica.
+- [ ] Controlar o zoom da árvore genealógica.
+- [ ] Marcar criaturas mortas e seus descendentes.
+- [ ] Visualizar a quantidade de descendentes vivos de cada criatura.
+- [ ] Visualizar marcadores na árvore genealógica.
 
 ### Simulação
 

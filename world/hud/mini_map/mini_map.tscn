@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://xl8400wsyrr4"]
 
-[ext_resource type="Script" path="res://world/hud/mini_map/mini_map.gd" id="1_uqkq4"]
-[ext_resource type="Script" path="res://world/hud/mini_map/map_view.gd" id="2_r5k5h"]
+[ext_resource type="Script" uid="uid://c147rsxd74tc7" path="res://world/hud/mini_map/mini_map.gd" id="1_uqkq4"]
+[ext_resource type="Script" uid="uid://ibi02y60auvb" path="res://world/hud/mini_map/map_view.gd" id="2_r5k5h"]
 
 [node name="MiniMap" type="PanelContainer"]
 custom_minimum_size = Vector2(150, 150)

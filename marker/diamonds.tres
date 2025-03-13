@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Marker" load_steps=3 format=3 uid="uid://cx5suhgbechty"]
 
-[ext_resource type="Script" path="res://marker/marker.gd" id="1_ck4o1"]
+[ext_resource type="Script" uid="uid://dk4u4ejdblm12" path="res://marker/marker.gd" id="1_ck4o1"]
 [ext_resource type="Texture2D" uid="uid://c04dbgvlpj6ud" path="res://marker/diamonds_32.png" id="2_ovfa8"]
 
 [resource]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://dsatuyar14v2k"]
 
-[ext_resource type="Script" path="res://world/world.gd" id="1_psf47"]
-[ext_resource type="Script" path="res://world/world_camera.gd" id="2_1sg5d"]
+[ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
+[ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
 [ext_resource type="PackedScene" uid="uid://xl8400wsyrr4" path="res://world/hud/mini_map/mini_map.tscn" id="3_3l1a1"]
-[ext_resource type="Script" path="res://entities/creature/creature_highlight.gd" id="3_b14dp"]
+[ext_resource type="Script" uid="uid://cw68nqiabeqjr" path="res://entities/creature/creature_highlight.gd" id="3_b14dp"]
 [ext_resource type="PackedScene" uid="uid://bh6bll2w5jv5g" path="res://world/hud/clock/clock.tscn" id="4_46fr4"]
 [ext_resource type="PackedScene" uid="uid://beirk0bt486wl" path="res://world/hud/line_chart/line_chart.tscn" id="4_qumfv"]
 [ext_resource type="PackedScene" uid="uid://y4xw1cr1uk76" path="res://world/hud/creature_card/creature_card.tscn" id="6_sit8l"]
@@ -121,6 +121,7 @@ size_flags_vertical = 8
 mouse_filter = 0
 
 [node name="SubViewport" type="SubViewport" parent="HUD/MarginContainer/TreeContainer"]
+handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(700, 250)
 render_target_update_mode = 4
