@@ -13,8 +13,8 @@ class_name CreatureCard
 @onready var repr_cooldown_time:ValueUI = find_child("ReprCooldownTime")
 @onready var children:ValueUI = find_child("Children")
 @onready var descendents:ValueUI = find_child("Descendents")
+@onready var alive_descendents:ValueUI = find_child("AliveDescendents")
 @onready var lifespan:ValueUI = find_child("Lifespan")
-@onready var parent_bt:Button = find_child("ParentBt")
 @onready var marker_selector:MarkerButton = find_child("MarkerButton")
 @onready var mark_desc_bt:BaseButton = find_child("MarkDescBt")
 @onready var follow_button:BaseButton = find_child("FollowButton")
@@ -29,7 +29,6 @@ func _process(_delta:float) -> void:
 
 func set_creature(new:CreatureData) -> void:
 	creature = new
-	update_parent_bt()
 	update()
 
 func update() -> void:
@@ -49,7 +48,9 @@ func update_life() -> void:
 	if creature != null:
 		lifespan.value = creature.lifespan
 		children.value = creature.children.size()
-		descendents.value = creature.get_descendents().size()
+		var desc_stats:Array[int] = creature.get_descendents_stats()
+		descendents.value = desc_stats[0]
+		alive_descendents.value = desc_stats[1]
 		if creature.vessel != null:
 			energy.value = creature.vessel.energy
 			repr_cooldown_time.value = creature.vessel.reproduction_cooldowm_timer.time_left
@@ -71,9 +72,3 @@ func mark(marker:Marker) -> void:
 			var desc:Array[CreatureVessel] = creature.vessel.get_descendents_vessels()
 			for d in desc:
 				d.marker = marker
-
-func update_parent_bt() -> void:
-	if creature != null:
-		parent_bt.set_disabled(creature.parent == null)
-		var text:String = "Inexistente" if creature.parent == null else ("%x" % creature.parent.get_instance_id()).substr(8)
-		parent_bt.set_text(text)

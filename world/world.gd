@@ -33,7 +33,6 @@ var c_momentum:float
 var hovered_creature:CreatureVessel
 var selected_creature:CreatureVessel
 var featured_creature:CreatureData
-var select_parent_bt:Button
 var follow_bt:Button
 var followed_creature:CreatureVessel
 
@@ -70,8 +69,6 @@ func _ready() -> void:
 
 	call_deferred("spawn_initial_food")
 
-	select_parent_bt = creature_card.parent_bt
-	select_parent_bt.pressed.connect(_on_parent_bt_pressed)
 	follow_bt = creature_card.follow_button
 	follow_bt.toggled.connect(toggle_follow)
 
@@ -241,6 +238,3 @@ func unfollow_creature() -> void:
 		camera.followed_node = null
 		follow_bt.set_pressed_no_signal(false)
 		followed_creature = null
-
-func _on_parent_bt_pressed() -> void:
-	feature_creature(featured_creature.parent)

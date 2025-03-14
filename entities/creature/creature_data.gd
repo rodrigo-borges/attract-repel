@@ -74,6 +74,16 @@ func get_descendents() -> Array[CreatureData]:
 		descendents.append_array(c.get_descendents())
 	return descendents
 
+func get_descendents_stats() -> Array[int]:
+	var total:int = 0
+	var alive:int = 0
+	var descendents:Array[CreatureData] = get_descendents()
+	for d in descendents:
+		total += 1
+		if d.vessel != null:
+			alive += 1
+	return [total, alive]
+
 static func create(
 		_color:Color, _size_radius:float,
 		_attraction:Vector3, _intensity:float, _sense_radius:float,

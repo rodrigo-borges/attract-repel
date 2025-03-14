@@ -34,8 +34,9 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Escolher o número de gerações na árvore genealógica.
 - [ ] Controlar o zoom da árvore genealógica.
 - [ ] Marcar criaturas mortas e seus descendentes.
-- [ ] Visualizar a quantidade de descendentes vivos de cada criatura.
+- [x] Visualizar a quantidade de descendentes vivos de cada criatura. (2025-03-14)
 - [ ] Visualizar marcadores na árvore genealógica.
+- [ ] Visualizar a geração das criaturas.
 
 ### Simulação
 
@@ -48,3 +49,4 @@ Lista de implementações desejadas, sem ordem específica.
 ### Problemas
 
 - [ ] Quando o jogo está pausado, o controle de zoom e movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.` para controle de pausa, pois `get_tree().paused` estava impedindo interações com a UI.
+- [ ] Sempre que a árvore genealógica é atualizada, a câmera se move para a criatura selecionada, o que pode interromper a análise visual.

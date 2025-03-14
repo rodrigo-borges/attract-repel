@@ -5,6 +5,7 @@ const scene_path:String = "res://family_tree/family_node.tscn"
 static var radius:float = 12.
 
 @onready var dead_icon:Sprite2D = find_child("DeadIcon")
+@onready var desc_label:Label = find_child("Descendents")
 var creature:CreatureData
 var light_color:bool
 
@@ -19,7 +20,8 @@ func _ready() -> void:
 	update()
 
 func _process(_delta:float) -> void:
-	pass
+	var desc_stats:Array[int] = creature.get_descendents_stats()
+	desc_label.set_text("%d\n%d" % desc_stats)
 
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, radius, creature.color)
