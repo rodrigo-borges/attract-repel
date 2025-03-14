@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://4ucbadkjd5g2"]
 
 [ext_resource type="Script" uid="uid://c37lwlh1qqp2d" path="res://family_tree/family_tree.gd" id="1_f8xb0"]
-[ext_resource type="Script" uid="uid://ct2qg6vbjugxx" path="res://family_tree/tree_camera.gd" id="2_lw71b"]
+[ext_resource type="Script" uid="uid://yh7nc1obocxs" path="res://camera/camera.gd" id="2_7qggr"]
 [ext_resource type="Script" uid="uid://xtm3a42nfmik" path="res://family_tree/family_node_highlight.gd" id="3_jr5cc"]
 [ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="4_7qggr"]
 
@@ -10,16 +10,22 @@ script = ExtResource("1_f8xb0")
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(0.871094, 0.366943)
-script = ExtResource("2_lw71b")
+script = ExtResource("2_7qggr")
+keyboard_enabled = false
 
 [node name="ColorRect" type="ColorRect" parent="Camera"]
 z_index = -3
-custom_minimum_size = Vector2(1000, 1000)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -0.871094
+offset_top = -0.366943
+offset_right = -0.871094
+offset_bottom = -0.366943
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 mouse_filter = 1
 color = Color(0.223103, 0.223103, 0.223103, 1)
 

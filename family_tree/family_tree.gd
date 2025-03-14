@@ -8,6 +8,7 @@ signal creature_selected(creature:CreatureData)
 @export var h_spacing:float = 35.
 @export var v_spacing:float = 50.
 @onready var camera:Camera2D = find_child("Camera")
+@onready var bg_rect:Control = find_child("ColorRect")
 var creature:CreatureData
 var creature_node:FamilyNode
 var creatures:Array[CreatureData]
@@ -31,7 +32,9 @@ func _ready() -> void:
 	l_below_input.value_changed.connect(func(value:float):layers_below=int(value);refresh())
 
 func _process(_delta:float) -> void:
-	pass
+	var bg_size:Vector2 = get_viewport().get_visible_rect().size/camera.zoom.x*2.
+	bg_rect.set_size(bg_size)
+	bg_rect.set_position(-bg_size/2.)
 
 func _unhandled_input(event:InputEvent) -> void:
 	if event.is_action_pressed("left_click"):
@@ -44,6 +47,7 @@ func set_creature(_creature:CreatureData, reset_camera:bool=true) -> void:
 	create_tree()
 	if reset_camera:
 		camera.set_position(creature_node.position)
+		camera.set_zoom(Vector2.ONE)
 
 func refresh() -> void:
 	set_creature(creature, false)
@@ -154,6 +158,5 @@ func hover_node(node:FamilyNode) -> void:
 		hovered_node = node
 
 func unhover_node() -> void:
-	if hovered_node != null:
-		hover_highlight.set_visible(false)
-		hovered_node = null
+	hover_highlight.set_visible(false)
+	hovered_node = null
