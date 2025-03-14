@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://4ucbadkjd5g2"]
+[gd_scene load_steps=5 format=3 uid="uid://4ucbadkjd5g2"]
 
 [ext_resource type="Script" uid="uid://c37lwlh1qqp2d" path="res://family_tree/family_tree.gd" id="1_f8xb0"]
 [ext_resource type="Script" uid="uid://ct2qg6vbjugxx" path="res://family_tree/tree_camera.gd" id="2_lw71b"]
 [ext_resource type="Script" uid="uid://xtm3a42nfmik" path="res://family_tree/family_node_highlight.gd" id="3_jr5cc"]
+[ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="4_7qggr"]
 
 [node name="FamilyTree" type="Node2D"]
 script = ExtResource("1_f8xb0")
@@ -31,7 +32,6 @@ script = ExtResource("3_jr5cc")
 color = Color(1, 1, 1, 0.215686)
 
 [node name="HUD" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD"]
 anchors_preset = 15
@@ -44,7 +44,39 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="SpinBox" type="SpinBox" parent="HUD/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Ger. acima"
+label_settings = ExtResource("4_7qggr")
+
+[node name="LayersAbove" type="SpinBox" parent="HUD/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+min_value = 1.0
+value = 1.0
+rounded = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Ger. abaixo"
+label_settings = ExtResource("4_7qggr")
+
+[node name="LayersBelow" type="SpinBox" parent="HUD/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+min_value = 1.0
+value = 1.0
+rounded = true

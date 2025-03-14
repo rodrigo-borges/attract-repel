@@ -20,9 +20,15 @@ var first_layer:int
 @onready var hover_highlight:FamilyNodeHighlight = find_child("HoverHighlight")
 var hovered_node:FamilyNode
 
+@onready var l_above_input:SpinBox = find_child("LayersAbove")
+@onready var l_below_input:SpinBox = find_child("LayersBelow")
+
 
 func _ready() -> void:
-	pass
+	l_above_input.set_value(layers_above)
+	l_below_input.set_value(layers_below)
+	l_above_input.value_changed.connect(func(value:float):layers_above=int(value);refresh())
+	l_below_input.value_changed.connect(func(value:float):layers_below=int(value);refresh())
 
 func _process(_delta:float) -> void:
 	pass
@@ -32,13 +38,15 @@ func _unhandled_input(event:InputEvent) -> void:
 		if hovered_node != null:
 			creature_selected.emit(hovered_node.creature)
 
-func set_creature(_creature:CreatureData) -> void:
+func set_creature(_creature:CreatureData, reset_camera:bool=true) -> void:
 	clear()
 	creature = _creature
 	create_tree()
+	if reset_camera:
+		camera.set_position(creature_node.position)
 
 func refresh() -> void:
-	set_creature(creature)
+	set_creature(creature, false)
 
 func clear() -> void:
 	unhover_node()
@@ -70,8 +78,8 @@ func create_tree() -> void:
 				layer -= 1
 		first_layer = layer
 		create_family_node(eldest, layer)
-		camera.set_position(creature_node.position)
 		select_highlight.set_position(creature_node.position)
+		unhover_node()
 
 func create_family_node(_creature:CreatureData, layer:int) -> FamilyNode:
 	var node:FamilyNode = FamilyNode.create(_creature)

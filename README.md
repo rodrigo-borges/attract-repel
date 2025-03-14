@@ -31,7 +31,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Ser alertado quando uma criatura exibe determinado gene.
 - [x] Visualizar detalhes de criaturas que já morreram. (2025-03-13)
 - [ ] Comparar genes entre duas criaturas.
-- [ ] Escolher o número de gerações na árvore genealógica.
+- [x] Escolher o número de gerações na árvore genealógica. (2025-03-14)
 - [ ] Controlar o zoom da árvore genealógica.
 - [ ] Marcar criaturas mortas e seus descendentes.
 - [x] Visualizar a quantidade de descendentes vivos de cada criatura. (2025-03-14)
@@ -49,4 +49,3 @@ Lista de implementações desejadas, sem ordem específica.
 ### Problemas
 
 - [ ] Quando o jogo está pausado, o controle de zoom e movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.` para controle de pausa, pois `get_tree().paused` estava impedindo interações com a UI.
-- [ ] Sempre que a árvore genealógica é atualizada, a câmera se move para a criatura selecionada, o que pode interromper a análise visual.
