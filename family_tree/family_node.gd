@@ -9,6 +9,7 @@ static var radius:float = 12.
 @onready var desc_label:Label = find_child("Descendents")
 var creature:CreatureData
 var light_color:bool
+var always_show:bool
 
 
 func _ready() -> void:

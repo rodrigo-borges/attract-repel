@@ -23,6 +23,7 @@ var hovered_node:FamilyNode
 
 @onready var l_above_input:SpinBox = find_child("LayersAbove")
 @onready var l_below_input:SpinBox = find_child("LayersBelow")
+@onready var hide_extinct_bt:BaseButton = find_child("HideExtinct")
 
 
 func _ready() -> void:
@@ -30,6 +31,7 @@ func _ready() -> void:
 	l_below_input.set_value(layers_below)
 	l_above_input.value_changed.connect(func(value:float):layers_above=int(value);refresh())
 	l_below_input.value_changed.connect(func(value:float):layers_below=int(value);refresh())
+	hide_extinct_bt.toggled.connect(refresh.unbind(1))
 
 func _process(_delta:float) -> void:
 	var bg_size:Vector2 = get_viewport().get_visible_rect().size/camera.zoom.x*2.
@@ -81,17 +83,21 @@ func create_tree() -> void:
 				eldest = eldest.parent
 				layer -= 1
 		first_layer = layer
-		create_family_node(eldest, layer)
+		create_family_node(eldest, layer, hide_extinct_bt.button_pressed)
 		select_highlight.set_position(creature_node.position)
 		unhover_node()
 
-func create_family_node(_creature:CreatureData, layer:int) -> FamilyNode:
+func create_family_node(_creature:CreatureData, layer:int, hide_extinct:bool) -> FamilyNode:
 	var node:FamilyNode = FamilyNode.create(_creature)
+	var should_hide:bool = hide_extinct and _creature.vessel == null and _creature.get_descendents_stats()[1] == 0
+	if _creature == creature:
+		node.always_show = true
+		creature_node = node
 	if _creature.vessel != null:
 		_creature.vessel.reproduced.connect(refresh.unbind(1))
 		_creature.vessel.died.connect(refresh)
 	var pos:Vector2
-	if layer == layers_above + layers_below:
+	if layer == layers_above + layers_below and not should_hide:
 		pos = Vector2(final_layer_size*h_spacing, v_spacing*layer)
 		place_family_node(node, pos)
 		if _creature.children.size() > 0:
@@ -101,25 +107,28 @@ func create_family_node(_creature:CreatureData, layer:int) -> FamilyNode:
 	else:
 		var children_nodes:Array[FamilyNode] = []
 		for c in _creature.children:
-			var c_node:FamilyNode = create_family_node(c, layer+1)
-			children_nodes.append(c_node)
-		if children_nodes.is_empty():
-			pos = Vector2(final_layer_size*h_spacing, v_spacing*layer)
-			place_family_node(node, pos)
-			final_layer_size += 1
-		else:
-			var x0:float = children_nodes[0].position.x
-			var x1:float = children_nodes[-1].position.x
-			pos = Vector2((x0+x1)/2., v_spacing*layer)
-			place_family_node(node, pos)
-			for c_n in children_nodes:
-				connect_nodes(node, c_n)
-		if layer == first_layer:
-			if _creature.parent != null:
-				var line:Line2D = create_connection_line()
-				line.set_points([pos, pos-Vector2(0.,v_spacing/2.)])
-	if _creature == creature:
-		creature_node = node
+			var c_node:FamilyNode = create_family_node(c, layer+1, hide_extinct)
+			if c_node != null:
+				node.always_show = c_node.always_show
+				children_nodes.append(c_node)
+		if not should_hide or node.always_show:
+			if children_nodes.is_empty():
+				pos = Vector2(final_layer_size*h_spacing, v_spacing*layer)
+				place_family_node(node, pos)
+				final_layer_size += 1
+			else:
+				var x0:float = children_nodes[0].position.x
+				var x1:float = children_nodes[-1].position.x
+				pos = Vector2((x0+x1)/2., v_spacing*layer)
+				place_family_node(node, pos)
+				for c_n in children_nodes:
+					connect_nodes(node, c_n)
+			if layer == first_layer:
+				if _creature.parent != null:
+					var line:Line2D = create_connection_line()
+					line.set_points([pos, pos-Vector2(0.,v_spacing/2.)])
+	if should_hide and not node.always_show:
+		node = null
 	return node
 
 func place_family_node(node:FamilyNode, pos:Vector2) -> void:
