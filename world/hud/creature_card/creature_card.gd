@@ -41,8 +41,7 @@ func update() -> void:
 		repr_threshold.value = creature.reproduction_energy_threshold
 		repr_cooldown.value = creature.reproduction_cooldown
 		update_life()
-		if creature.vessel != null:
-			marker_selector.update_marker_from_creature(creature.vessel)
+		marker_selector.update_marker_from_creature(creature)
 
 func update_life() -> void:
 	if creature != null:
@@ -66,9 +65,14 @@ func _on_mark_desc_toggled(toggled_on:bool) -> void:
 		mark(marker_selector.get_selected_marker())
 
 func mark(marker:Marker) -> void:
-	if creature != null and creature.vessel != null:
-		creature.vessel.marker = marker
+	if creature != null:
+		mark_creature(creature, marker)
 		if mark_desc_bt.button_pressed:
-			var desc:Array[CreatureVessel] = creature.vessel.get_descendents_vessels()
+			var desc:Array[CreatureData] = creature.get_descendents()
 			for d in desc:
-				d.marker = marker
+				mark_creature(d, marker)
+
+func mark_creature(_creature:CreatureData, marker:Marker) -> void:
+	_creature.marker = marker
+	if _creature.vessel != null:
+		_creature.vessel.update_marker()

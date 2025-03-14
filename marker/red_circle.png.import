@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2ny10x2koiaj"
-path="res://.godot/imported/hearts_32.png-7af412f8f900274e6e410127f2cebdec.ctex"
+uid="uid://b8l4o5nn47x8o"
+path="res://.godot/imported/red_circle.png-2e0c9be6c3de21d5ab7b83b7f1c0f854.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://marker/hearts_32.png"
-dest_files=["res://.godot/imported/hearts_32.png-7af412f8f900274e6e410127f2cebdec.ctex"]
+source_file="res://marker/red_circle.png"
+dest_files=["res://.godot/imported/red_circle.png-2e0c9be6c3de21d5ab7b83b7f1c0f854.ctex"]
 
 [params]
 

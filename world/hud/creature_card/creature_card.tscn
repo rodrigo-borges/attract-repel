@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://y4xw1cr1uk76"]
+[gd_scene load_steps=21 format=3 uid="uid://y4xw1cr1uk76"]
 
 [ext_resource type="Script" uid="uid://dupcm8fkwv36p" path="res://world/hud/creature_card/creature_card.gd" id="1_2se0r"]
 [ext_resource type="PackedScene" uid="uid://bdhcqi3n33rlo" path="res://world/hud/creature_card/color_ui.tscn" id="1_yku8q"]
@@ -8,10 +8,42 @@
 [ext_resource type="LabelSettings" uid="uid://llfhtfilv8mq" path="res://world/hud/attribute_label_setting.tres" id="6_s1ufy"]
 [ext_resource type="Script" uid="uid://bje6mc8w70umh" path="res://world/hud/creature_card/marker_button.gd" id="7_uykr0"]
 [ext_resource type="Script" uid="uid://dk4u4ejdblm12" path="res://marker/marker.gd" id="8_i74sm"]
-[ext_resource type="Resource" uid="uid://cm387dwmdbjiq" path="res://marker/clubs.tres" id="9_fk8es"]
-[ext_resource type="Resource" uid="uid://cx5suhgbechty" path="res://marker/diamonds.tres" id="10_cwok2"]
-[ext_resource type="Resource" uid="uid://dlhbaol51l1eg" path="res://marker/hearts.tres" id="11_vsd1d"]
-[ext_resource type="Resource" uid="uid://wub3am8kt3yd" path="res://marker/spades.tres" id="12_spcei"]
+[ext_resource type="Texture2D" uid="uid://e53vfsobi18q" path="res://marker/blue_diamond.png" id="9_khktn"]
+[ext_resource type="Texture2D" uid="uid://d05a1rovd0fr3" path="res://marker/green_square.png" id="10_71dvv"]
+[ext_resource type="Texture2D" uid="uid://cgkft44qriu14" path="res://marker/orange_triangle.png" id="11_yb8vw"]
+[ext_resource type="Texture2D" uid="uid://b3mdik2abcgxh" path="res://marker/purple_triangle.png" id="12_fmcfy"]
+[ext_resource type="Texture2D" uid="uid://b8l4o5nn47x8o" path="res://marker/red_circle.png" id="13_qe86j"]
+[ext_resource type="Texture2D" uid="uid://dp2wumfms72vr" path="res://marker/yellow_hexagon.png" id="14_owo5i"]
+
+[sub_resource type="Resource" id="Resource_mmbpv"]
+script = ExtResource("8_i74sm")
+texture = ExtResource("9_khktn")
+metadata/_custom_type_script = "uid://dk4u4ejdblm12"
+
+[sub_resource type="Resource" id="Resource_kytwh"]
+script = ExtResource("8_i74sm")
+texture = ExtResource("10_71dvv")
+metadata/_custom_type_script = "uid://dk4u4ejdblm12"
+
+[sub_resource type="Resource" id="Resource_tuc3y"]
+script = ExtResource("8_i74sm")
+texture = ExtResource("11_yb8vw")
+metadata/_custom_type_script = "uid://dk4u4ejdblm12"
+
+[sub_resource type="Resource" id="Resource_gho3q"]
+script = ExtResource("8_i74sm")
+texture = ExtResource("12_fmcfy")
+metadata/_custom_type_script = "uid://dk4u4ejdblm12"
+
+[sub_resource type="Resource" id="Resource_ygccs"]
+script = ExtResource("8_i74sm")
+texture = ExtResource("13_qe86j")
+metadata/_custom_type_script = "uid://dk4u4ejdblm12"
+
+[sub_resource type="Resource" id="Resource_vlr37"]
+script = ExtResource("8_i74sm")
+texture = ExtResource("14_owo5i")
+metadata/_custom_type_script = "uid://dk4u4ejdblm12"
 
 [node name="CreatureCard" type="PanelContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -157,8 +189,9 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 focus_mode = 0
+allow_reselect = true
 script = ExtResource("7_uykr0")
-markers = Array[ExtResource("8_i74sm")]([ExtResource("9_fk8es"), ExtResource("10_cwok2"), ExtResource("11_vsd1d"), ExtResource("12_spcei")])
+markers = Array[ExtResource("8_i74sm")]([SubResource("Resource_mmbpv"), SubResource("Resource_kytwh"), SubResource("Resource_tuc3y"), SubResource("Resource_gho3q"), SubResource("Resource_ygccs"), SubResource("Resource_vlr37")])
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

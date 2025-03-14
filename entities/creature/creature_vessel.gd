@@ -41,11 +41,6 @@ var sense_area:Area2D
 var reproduction_cooldowm_timer:Timer
 var attraction_line:Line2D
 var brake_line:Line2D
-var marker:Marker:
-	set(value):
-		marker = value
-		if marker_sprite != null:
-			update_marker()
 var marker_sprite:Sprite2D
 var draw_force_lines:bool = false
 var draw_sense_radius:bool = false
@@ -93,7 +88,7 @@ func _ready() -> void:
 
 	marker_sprite = Sprite2D.new()
 	add_child(marker_sprite)
-	marker_sprite.set_scale(Vector2(.5, .5))
+	marker_sprite.set_scale(Vector2(.75, .75))
 	update_marker()
 
 func _process(_delta:float) -> void:
@@ -166,7 +161,6 @@ func reproduce() -> CreatureVessel:
 	reproduction_cooldowm_timer.start(reproduction_cooldown)
 	var child_data:CreatureData = data.reproduce()
 	var child_vessel = CreatureVessel.create(child_data, energy/2.)
-	child_vessel.marker = marker
 	reproduced.emit(child_vessel)
 	energy /= 2.
 	return child_vessel
@@ -179,9 +173,9 @@ func die() -> void:
 	queue_free()
 
 func update_marker() -> void:
-	var new_texture:Texture2D = null if marker == null else marker.texture
+	var new_texture:Texture2D = null if data.marker == null else data.marker.texture
 	marker_sprite.set_texture(new_texture)
-	marker_sprite.set_visible(marker!=null)
+	marker_sprite.set_visible(data.marker!=null)
 
 func toggle_draw_los(toggled_on:bool) -> void:
 	if toggled_on != draw_sense_radius:

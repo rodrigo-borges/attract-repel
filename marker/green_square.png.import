@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db52gkpoao1ox"
-path="res://.godot/imported/spades_32.png-197ec698e94a7fcb66780e141f6c496f.ctex"
+uid="uid://d05a1rovd0fr3"
+path="res://.godot/imported/green_square.png-86a26122169347d45a0c70f8e2522c32.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://marker/spades_32.png"
-dest_files=["res://.godot/imported/spades_32.png-197ec698e94a7fcb66780e141f6c496f.ctex"]
+source_file="res://marker/green_square.png"
+dest_files=["res://.godot/imported/green_square.png-86a26122169347d45a0c70f8e2522c32.ctex"]
 
 [params]
 

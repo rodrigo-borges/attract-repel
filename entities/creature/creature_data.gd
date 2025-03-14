@@ -30,6 +30,7 @@ var parent:CreatureData
 var children:Array[CreatureData]
 var vessel:CreatureVessel
 var lifespan:float
+var marker:Marker
 
 
 func mutate() -> void:
@@ -63,6 +64,7 @@ func reproduce() -> CreatureData:
 		attraction, intensity, sense_radius,
 		reproduction_energy_threshold, reproduction_cooldown,
 		brake,)
+	creature.marker = marker
 	creature.mutate()
 	creature.parent = self
 	children.append(creature)

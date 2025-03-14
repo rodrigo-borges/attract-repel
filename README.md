@@ -28,12 +28,12 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Visualizar detalhes da comida.
 - [x] Marcar opcionalmente todos os descendentes da criatura junto dela. (2025-03-12)
 - [x] Visualizar força e LoS apenas da criatura selecionada. (2025-03-12)
-- [ ] Ser alertado quando uma criatura exibe determinado gene.
+- [ ] Ser alertado quando uma criatura exibe determinado padrão de gene.
 - [x] Visualizar detalhes de criaturas que já morreram. (2025-03-13)
 - [ ] Comparar genes entre duas criaturas.
 - [x] Escolher o número de gerações na árvore genealógica. (2025-03-14)
 - [ ] Controlar o zoom da árvore genealógica.
-- [ ] Marcar criaturas mortas e seus descendentes.
+- [x] Marcar criaturas mortas e seus descendentes. (2025-03-14)
 - [x] Visualizar a quantidade de descendentes vivos de cada criatura. (2025-03-14)
 - [ ] Visualizar marcadores na árvore genealógica.
 - [ ] Visualizar a geração das criaturas.
