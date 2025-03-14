@@ -2,6 +2,7 @@ extends Control
 class_name CreatureCard
 
 @export var creature:CreatureData
+@onready var generation:ValueUI = find_child("Generation")
 @onready var color_ui:ColorUI = find_child("Color")
 @onready var attraction:Vector3UI = find_child("Attraction")
 @onready var intensity:ValueUI = find_child("Intensity")
@@ -33,6 +34,7 @@ func set_creature(new:CreatureData) -> void:
 
 func update() -> void:
 	if creature != null:
+		generation.value = creature.generation
 		color_ui.color = creature.color
 		attraction.vec = creature.attraction
 		intensity.value = creature.intensity

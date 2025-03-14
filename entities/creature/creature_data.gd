@@ -26,6 +26,7 @@ var reproduction_cooldown:float:
 	set(value): reproduction_cooldown = maxf(value, 0.)
 var brake:float:
 	set(value): brake = clampf(value, 0., 1.)
+var generation:int
 var parent:CreatureData
 var children:Array[CreatureData]
 var vessel:CreatureVessel
@@ -63,7 +64,7 @@ func reproduce() -> CreatureData:
 		color, size_radius,
 		attraction, intensity, sense_radius,
 		reproduction_energy_threshold, reproduction_cooldown,
-		brake,)
+		brake, generation+1)
 	creature.marker = marker
 	creature.mutate()
 	creature.parent = self
@@ -90,7 +91,7 @@ static func create(
 		_color:Color, _size_radius:float,
 		_attraction:Vector3, _intensity:float, _sense_radius:float,
 		_reproduction_energy_threshold:float, _reproduction_cooldown:float,
-		_brake:float,) -> CreatureData:
+		_brake:float, _generation:int=0) -> CreatureData:
 	var creature:CreatureData = CreatureData.new()
 	creature.color = _color
 	creature.size_radius = _size_radius
@@ -100,6 +101,7 @@ static func create(
 	creature.reproduction_energy_threshold = _reproduction_energy_threshold
 	creature.reproduction_cooldown = _reproduction_cooldown
 	creature.brake = _brake
+	creature.generation = _generation
 	creature.parent = null
 	creature.children = []
 	creature.lifespan = 0.

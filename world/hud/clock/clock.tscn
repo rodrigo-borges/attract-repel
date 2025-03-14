@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh6bll2w5jv5g"]
+[gd_scene load_steps=6 format=3 uid="uid://bh6bll2w5jv5g"]
 
 [ext_resource type="Script" uid="uid://dxpvivat0fnuo" path="res://world/hud/clock/clock.gd" id="1_lufbv"]
 [ext_resource type="Texture2D" uid="uid://2xkcre5f4y2w" path="res://world/hud/clock/pause.png" id="2_lnyst"]
 [ext_resource type="Texture2D" uid="uid://wim1smy16hhi" path="res://world/hud/clock/play.png" id="3_d7ayy"]
+[ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="4_0o24t"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0oity"]
 font_size = 20
@@ -22,15 +23,18 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="ClockLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ClockLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "00:00:00"
 label_settings = SubResource("LabelSettings_0oity")
 
-[node name="PauseButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+[node name="PauseButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -41,3 +45,9 @@ texture_normal = ExtResource("2_lnyst")
 texture_pressed = ExtResource("3_d7ayy")
 ignore_texture_size = true
 stretch_mode = 5
+
+[node name="Generation" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Geração 0"
+label_settings = ExtResource("4_0o24t")
+horizontal_alignment = 1

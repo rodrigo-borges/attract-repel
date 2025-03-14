@@ -36,7 +36,9 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Marcar criaturas mortas e seus descendentes. (2025-03-14)
 - [x] Visualizar a quantidade de descendentes vivos de cada criatura. (2025-03-14)
 - [x] Visualizar marcadores na árvore genealógica. (2025-03-14)
-- [ ] Visualizar a geração das criaturas.
+- [x] Visualizar a geração das criaturas. (2025-03-14)
+- [ ] Ocultar ramificações extintas da árvore.
+- [ ] Visualizar distribuição de consumo de energia das criaturas.
 
 ### Simulação
 

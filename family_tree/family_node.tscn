@@ -14,12 +14,13 @@ script = ExtResource("1_whp8b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1m0yn")
 
-[node name="DeadIcon" type="Sprite2D" parent="."]
-position = Vector2(-8, 7)
-texture = ExtResource("2_qqer8")
-
 [node name="Marker" type="Sprite2D" parent="."]
 scale = Vector2(0.9, 0.9)
+
+[node name="DeadIcon" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-8, 7)
+texture = ExtResource("2_qqer8")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 6.0

@@ -12,6 +12,9 @@ var food_spawners:Array[FoodSpawner]
 @onready var camera:WorldCamera = $WorldCamera
 @onready var mini_map:MiniMap = find_child("MiniMap")
 
+@onready var clock:Clock = find_child("Clock")
+var current_gen:int = 0
+
 @export var track_period:float = 1.
 var track_timer:Timer
 @onready var pop_chart:LineChart = find_child("PopChart")
@@ -125,6 +128,8 @@ func _on_reproduction(child:CreatureVessel, parent:CreatureVessel) -> void:
 	spawn_creature(child, parent.global_position + Vector2(randf()*50., randf()*50.))
 	var cord = UmbilicalCord.create(parent, child)
 	add_child(cord)
+	current_gen = maxi(current_gen, child.data.generation)
+	clock.gen_label.set_text("Geração %d" % current_gen)
 
 func update_counters() -> void:
 	c_population = creatures.size()

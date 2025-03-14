@@ -3,6 +3,7 @@ class_name Clock
 
 @onready var clock_label:Label = find_child("ClockLabel")
 @onready var pause_button:BaseButton = find_child("PauseButton")
+@onready var gen_label:Label = find_child("Generation")
 var elapsed_time:float = 0.
 
 func _ready() -> void:

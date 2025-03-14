@@ -4,6 +4,8 @@ class_name ValueUI
 
 @export var title:String = "X":
 	set(value): title = value; update()
+@export var format_string:String = "%.2f":
+	set(value): format_string = value; update()
 @export var value:float = 0.:
 	set(_value): value = _value; update_value()
 @export var min_value:float = -1.:
@@ -34,7 +36,7 @@ func update_value() -> void:
 	if slider != null:
 		slider.set_value(value)
 	if value_label != null:
-		value_label.set_text("%.2f" % value)
+		value_label.set_text(format_string % value)
 
 func update() -> void:
 	if title_label != null:
