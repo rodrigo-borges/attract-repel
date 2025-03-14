@@ -18,6 +18,9 @@ shape = SubResource("CircleShape2D_1m0yn")
 position = Vector2(-8, 7)
 texture = ExtResource("2_qqer8")
 
+[node name="Marker" type="Sprite2D" parent="."]
+scale = Vector2(0.9, 0.9)
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 6.0
 offset_top = -13.0

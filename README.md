@@ -35,7 +35,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Controlar o zoom da árvore genealógica.
 - [x] Marcar criaturas mortas e seus descendentes. (2025-03-14)
 - [x] Visualizar a quantidade de descendentes vivos de cada criatura. (2025-03-14)
-- [ ] Visualizar marcadores na árvore genealógica.
+- [x] Visualizar marcadores na árvore genealógica. (2025-03-14)
 - [ ] Visualizar a geração das criaturas.
 
 ### Simulação
