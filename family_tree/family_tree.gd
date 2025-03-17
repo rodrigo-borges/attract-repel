@@ -22,6 +22,10 @@ var first_layer:int
 @onready var hover_highlight:FamilyNodeHighlight = find_child("HoverHighlight")
 var hovered_node:FamilyNode
 
+var cam_ref_creature:CreatureData
+var cam_ref_node:FamilyNode
+var cam_ref_position:Vector2
+
 @onready var l_above_input:SpinBox = find_child("LayersAbove")
 @onready var l_below_input:SpinBox = find_child("LayersBelow")
 @onready var hide_extinct_bt:BaseButton = find_child("HideExtinct")
@@ -48,7 +52,10 @@ func set_creature(_creature:CreatureData, reset_camera:bool=true) -> void:
 	clear()
 	creature = _creature
 	create_tree()
-	if reset_camera:
+	if cam_ref_node != null:
+		camera.set_global_position(camera.global_position + (cam_ref_node.global_position - cam_ref_position))
+		hover_node(cam_ref_node)
+	elif reset_camera:
 		camera.set_position(creature_node.position)
 		camera.set_zoom(Vector2.ONE)
 
@@ -56,6 +63,10 @@ func refresh() -> void:
 	set_creature(creature, false)
 
 func clear() -> void:
+	if hovered_node != null:
+		cam_ref_creature = hovered_node.creature
+		cam_ref_node = null
+		cam_ref_position = hovered_node.global_position
 	unhover_node()
 	creature = null
 	creature_node = null
@@ -130,6 +141,8 @@ func create_family_node(_creature:CreatureData, layer:int, hide_extinct:bool) ->
 					line.set_points([pos, pos-Vector2(0.,v_spacing/2.)])
 	if should_hide and not node.always_show:
 		node = null
+	if _creature == cam_ref_creature:
+		cam_ref_node = node
 	return node
 
 func place_family_node(node:FamilyNode, pos:Vector2) -> void:

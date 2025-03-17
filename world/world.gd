@@ -71,7 +71,7 @@ func _ready() -> void:
 	creature_card.set_visible(false)
 	comparison_card.set_visible(false)
 	tree_container.set_visible(false)
-	family_tree.creature_hovered.connect(func(c): if c != featured_creature: compare_creature(c))
+	family_tree.creature_hovered.connect(_on_creature_hovered_on_tree)
 	family_tree.creature_selected.connect(feature_creature)
 
 	call_deferred("spawn_initial_food")
@@ -244,6 +244,16 @@ func uncompare_creature() -> void:
 		comparison_card.set_creature(null)
 		comparison_card.set_visible(false)
 		compared_creature = null
+
+func _on_creature_hovered_on_tree(creature:CreatureData) -> void:
+	if creature != null:
+		if creature.vessel != null:
+			hover_creature(creature.vessel)
+		else:
+			compare_creature(creature)
+	else:
+		unhover_creature()
+		uncompare_creature()
 
 func toggle_follow(toggled_on:bool) -> void:
 	if toggled_on:
