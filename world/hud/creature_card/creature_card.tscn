@@ -61,11 +61,14 @@ theme_override_constants/margin_bottom = 5
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Genetics" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Genetics" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GeneticsLabel" type="Label" parent="MarginContainer/VBoxContainer/Genetics"]
 layout_mode = 2
 text = "Genética"
 
-[node name="Generation" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Generation" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Geração"
 format_string = "%d"
@@ -73,17 +76,17 @@ show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
-[node name="Color" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_yku8q")]
+[node name="Color" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("1_yku8q")]
 layout_mode = 2
 
-[node name="Attraction" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_n27h6")]
+[node name="Attraction" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("2_n27h6")]
 layout_mode = 2
 title = "Atração"
 x_title = "R"
 y_title = "G"
 z_title = "B"
 
-[node name="Intensity" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Intensity" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Intens."
 value = 1.0
@@ -92,7 +95,7 @@ max_value = 30.0
 title_min_width = 60.0
 value_min_width = 30.0
 
-[node name="SenseRadius" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="SenseRadius" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Alcance"
 value = 100.0
@@ -101,7 +104,7 @@ max_value = 500.0
 title_min_width = 60.0
 value_min_width = 30.0
 
-[node name="Brake" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Brake" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Freio"
 value = 0.5
@@ -109,12 +112,12 @@ min_value = 0.0
 title_min_width = 60.0
 value_min_width = 30.0
 
-[node name="Reproduction" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Reproduction" type="Label" parent="MarginContainer/VBoxContainer/Genetics"]
 layout_mode = 2
 text = "Reprodução"
 label_settings = ExtResource("5_nkwl6")
 
-[node name="ReprThresh" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="ReprThresh" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Limiar ener."
 min_value = 0.0
@@ -122,7 +125,7 @@ max_value = 100.0
 title_min_width = 60.0
 value_min_width = 30.0
 
-[node name="ReprCooldown" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="ReprCooldown" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Descanso"
 value = 10.0
@@ -134,25 +137,28 @@ value_min_width = 30.0
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Life" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Life" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LifeLabel" type="Label" parent="MarginContainer/VBoxContainer/Life"]
 layout_mode = 2
 text = "Vivência"
 
-[node name="Energy" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Energy" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Energia"
 show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
-[node name="ReprCooldownTime" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="ReprCooldownTime" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Descanso de reprodução"
 show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
-[node name="Children" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Children" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Filhos"
 format_string = "%d"
@@ -160,7 +166,7 @@ show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
-[node name="Descendents" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Descendents" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Descendentes"
 format_string = "%d"
@@ -168,7 +174,7 @@ show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
-[node name="AliveDescendents" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="AliveDescendents" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Desc. vivos"
 format_string = "%d"
@@ -176,7 +182,7 @@ show_slider = false
 title_min_width = 15.0
 value_min_width = 30.0
 
-[node name="Lifespan" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_khe27")]
+[node name="Lifespan" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Tempo de vida"
 show_slider = false
@@ -186,15 +192,18 @@ value_min_width = 30.0
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Actions" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Actions/HBoxContainer"]
 layout_mode = 2
 text = "Marcador"
 label_settings = ExtResource("6_s1ufy")
 
-[node name="MarkerButton" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="MarkerButton" type="OptionButton" parent="MarginContainer/VBoxContainer/Actions/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -204,29 +213,29 @@ allow_reselect = true
 script = ExtResource("7_uykr0")
 markers = Array[ExtResource("8_i74sm")]([SubResource("Resource_mmbpv"), SubResource("Resource_kytwh"), SubResource("Resource_tuc3y"), SubResource("Resource_gho3q"), SubResource("Resource_ygccs"), SubResource("Resource_vlr37")])
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Actions/HBoxContainer2"]
 layout_mode = 2
 text = "Marcar descendentes"
 label_settings = ExtResource("6_s1ufy")
 
-[node name="MarkDescBt" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="MarkDescBt" type="CheckButton" parent="MarginContainer/VBoxContainer/Actions/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 button_pressed = true
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Actions/HBoxContainer3"]
 layout_mode = 2
 text = "Seguir"
 label_settings = ExtResource("6_s1ufy")
 
-[node name="FollowButton" type="CheckButton" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="FollowButton" type="CheckButton" parent="MarginContainer/VBoxContainer/Actions/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0

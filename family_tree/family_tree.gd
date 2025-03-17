@@ -1,6 +1,7 @@
 extends Node2D
 class_name FamilyTree
 
+signal creature_hovered(creature:CreatureData)
 signal creature_selected(creature:CreatureData)
 
 @export var layers_above:int = 1
@@ -164,8 +165,10 @@ func hover_node(node:FamilyNode) -> void:
 	if hovered_node != node:
 		hover_highlight.set_position(node.position)
 		hover_highlight.set_visible(true)
+		creature_hovered.emit(node.creature)
 		hovered_node = node
 
 func unhover_node() -> void:
 	hover_highlight.set_visible(false)
+	creature_hovered.emit(null)
 	hovered_node = null

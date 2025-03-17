@@ -108,10 +108,19 @@ size_flags_vertical = 8
 world = NodePath("../../..")
 camera = NodePath("../../../WorldCamera")
 
-[node name="CreatureCard" parent="HUD/MarginContainer" instance=ExtResource("6_sit8l")]
+[node name="Cards" type="HBoxContainer" parent="HUD/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+
+[node name="CreatureCard" parent="HUD/MarginContainer/Cards" instance=ExtResource("6_sit8l")]
+layout_mode = 2
+
+[node name="ComparisonCard" parent="HUD/MarginContainer/Cards" instance=ExtResource("6_sit8l")]
+layout_mode = 2
+size_flags_vertical = 0
+show_life = false
+show_actions = false
 
 [node name="TreeContainer" type="PanelContainer" parent="HUD/MarginContainer"]
 layout_mode = 2

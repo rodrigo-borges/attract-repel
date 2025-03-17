@@ -30,7 +30,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Visualizar força e LoS apenas da criatura selecionada. (2025-03-12)
 - [ ] Ser alertado quando uma criatura exibe determinado padrão de gene.
 - [x] Visualizar detalhes de criaturas que já morreram. (2025-03-13)
-- [ ] Comparar genes entre duas criaturas.
+- [x] Comparar genes entre duas criaturas. (2025-03-17)
 - [x] Escolher o número de gerações na árvore genealógica. (2025-03-14)
 - [x] Controlar o zoom da árvore genealógica. (2025-03-14)
 - [x] Marcar criaturas mortas e seus descendentes. (2025-03-14)
@@ -39,6 +39,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Visualizar a geração das criaturas. (2025-03-14)
 - [x] Ocultar ramificações extintas da árvore. (2025-03-14)
 - [ ] Visualizar distribuição de consumo de energia das criaturas.
+- [ ] Visualizar histórico de mutações ao longo das gerações.
 
 ### Simulação
 

@@ -33,9 +33,11 @@ var c_momentum:float
 @onready var hover_highlight:CreatureHighlight = find_child("HoverHighlight")
 @onready var select_highlight:CreatureHighlight = find_child("SelectHighlight")
 @onready var creature_card:CreatureCard = find_child("CreatureCard")
+@onready var comparison_card:CreatureCard = find_child("ComparisonCard")
 var hovered_creature:CreatureVessel
 var selected_creature:CreatureVessel
 var featured_creature:CreatureData
+var compared_creature:CreatureData
 var follow_bt:Button
 var followed_creature:CreatureVessel
 
@@ -67,7 +69,9 @@ func _ready() -> void:
 	hover_highlight.set_visible(false)
 	select_highlight.set_visible(false)
 	creature_card.set_visible(false)
+	comparison_card.set_visible(false)
 	tree_container.set_visible(false)
+	family_tree.creature_hovered.connect(func(c): if c != featured_creature: compare_creature(c))
 	family_tree.creature_selected.connect(feature_creature)
 
 	call_deferred("spawn_initial_food")
@@ -172,6 +176,8 @@ func hover_creature(creature:CreatureVessel) -> void:
 		hover_highlight.set_visible(true)
 		hover_highlight.queue_redraw()
 		creature.died.connect(unhover_creature)
+		if creature.data != featured_creature:
+			compare_creature(creature.data)
 		hovered_creature = creature
 
 func unhover_creature() -> void:
@@ -179,6 +185,7 @@ func unhover_creature() -> void:
 		hovered_creature.died.disconnect(unhover_creature)
 		hover_highlight.creature = null
 		hover_highlight.set_visible(false)
+		uncompare_creature()
 		hovered_creature = null
 
 func select_creature(creature:CreatureVessel) -> void:
@@ -211,6 +218,8 @@ func feature_creature(creature:CreatureData) -> void:
 	tree_container.set_visible(true)
 	if creature.vessel != null:
 		select_creature(creature.vessel)
+	if creature == compared_creature:
+		uncompare_creature()
 	featured_creature = creature
 
 func unfeature_creature() -> void:
@@ -221,6 +230,20 @@ func unfeature_creature() -> void:
 		tree_container.set_visible(false)
 		deselect_creature()
 		featured_creature = null
+
+func compare_creature(creature:CreatureData) -> void:
+	if compared_creature != null:
+		uncompare_creature()
+	if compared_creature != creature:
+		comparison_card.set_creature(creature)
+		comparison_card.set_visible(true)
+		compared_creature = creature
+
+func uncompare_creature() -> void:
+	if compared_creature != null:
+		comparison_card.set_creature(null)
+		comparison_card.set_visible(false)
+		compared_creature = null
 
 func toggle_follow(toggled_on:bool) -> void:
 	if toggled_on:

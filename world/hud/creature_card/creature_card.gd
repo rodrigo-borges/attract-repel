@@ -1,7 +1,16 @@
+@tool
 extends Control
 class_name CreatureCard
 
 @export var creature:CreatureData
+@export var show_genetics:bool = true:
+	set(value): show_genetics = value; update_containers_visibility()
+@export var show_life:bool = true:
+	set(value): show_life = value; update_containers_visibility()
+@export var show_actions:bool = true:
+	set(value): show_actions = value; update_containers_visibility()
+
+@onready var genetics_container:Control = find_child("Genetics")
 @onready var generation:ValueUI = find_child("Generation")
 @onready var color_ui:ColorUI = find_child("Color")
 @onready var attraction:Vector3UI = find_child("Attraction")
@@ -10,12 +19,16 @@ class_name CreatureCard
 @onready var brake:ValueUI = find_child("Brake")
 @onready var repr_threshold:ValueUI = find_child("ReprThresh")
 @onready var repr_cooldown:ValueUI = find_child("ReprCooldown")
+
+@onready var life_container:Control = find_child("Life")
 @onready var energy:ValueUI = find_child("Energy")
 @onready var repr_cooldown_time:ValueUI = find_child("ReprCooldownTime")
 @onready var children:ValueUI = find_child("Children")
 @onready var descendents:ValueUI = find_child("Descendents")
 @onready var alive_descendents:ValueUI = find_child("AliveDescendents")
 @onready var lifespan:ValueUI = find_child("Lifespan")
+
+@onready var actions_container:Control = find_child("Actions")
 @onready var marker_selector:MarkerButton = find_child("MarkerButton")
 @onready var mark_desc_bt:BaseButton = find_child("MarkDescBt")
 @onready var follow_button:BaseButton = find_child("FollowButton")
@@ -24,6 +37,7 @@ class_name CreatureCard
 func _ready() -> void:
 	marker_selector.marker_selected.connect(_on_marker_selected)
 	mark_desc_bt.toggled.connect(_on_mark_desc_toggled)
+	update_containers_visibility()
 
 func _process(_delta:float) -> void:
 	update_life()
@@ -58,6 +72,16 @@ func update_life() -> void:
 		else:
 			energy.value = 0.
 			repr_cooldown_time.value = 0.
+
+func update_containers_visibility() -> void:
+	if genetics_container != null:
+		genetics_container.set_visible(show_genetics)
+		find_child("HSeparator").set_visible(show_genetics)
+	if life_container != null:
+		life_container.set_visible(show_life)
+		find_child("HSeparator2").set_visible(show_life)
+	if actions_container != null:
+		actions_container.set_visible(show_actions)
 
 func _on_marker_selected(marker:Marker) -> void:
 	mark(marker)

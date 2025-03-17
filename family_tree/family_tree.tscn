@@ -93,6 +93,7 @@ layout_mode = 2
 [node name="HideExtinct" type="CheckButton" parent="HUD/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 focus_mode = 0
+button_pressed = true
 
 [node name="Label" type="Label" parent="HUD/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
