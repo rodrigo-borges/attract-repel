@@ -49,12 +49,18 @@ func _unhandled_input(event:InputEvent) -> void:
 			creature_selected.emit(hovered_node.creature)
 
 func set_creature(_creature:CreatureData, reset_camera:bool=true) -> void:
+	if hovered_node != null:
+		cam_ref_creature = hovered_node.creature
+		cam_ref_node = null
+		cam_ref_position = hovered_node.global_position
 	clear()
 	creature = _creature
 	create_tree()
 	if cam_ref_node != null:
 		camera.set_global_position(camera.global_position + (cam_ref_node.global_position - cam_ref_position))
 		hover_node(cam_ref_node)
+		cam_ref_node = null
+		cam_ref_creature = null
 	elif reset_camera:
 		camera.set_position(creature_node.position)
 		camera.set_zoom(Vector2.ONE)
@@ -63,10 +69,6 @@ func refresh() -> void:
 	set_creature(creature, false)
 
 func clear() -> void:
-	if hovered_node != null:
-		cam_ref_creature = hovered_node.creature
-		cam_ref_node = null
-		cam_ref_position = hovered_node.global_position
 	unhover_node()
 	creature = null
 	creature_node = null
@@ -182,6 +184,7 @@ func hover_node(node:FamilyNode) -> void:
 		hovered_node = node
 
 func unhover_node() -> void:
-	hover_highlight.set_visible(false)
-	creature_hovered.emit(null)
-	hovered_node = null
+	if hovered_node != null:
+		hover_highlight.set_visible(false)
+		creature_hovered.emit(null)
+		hovered_node = null
