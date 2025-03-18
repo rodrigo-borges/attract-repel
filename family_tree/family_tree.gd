@@ -38,6 +38,9 @@ func _ready() -> void:
 	l_below_input.value_changed.connect(func(value:float):layers_below=int(value);refresh())
 	hide_extinct_bt.toggled.connect(refresh.unbind(1))
 
+	select_highlight.set_visible(false)
+	hover_highlight.set_visible(false)
+
 func _process(_delta:float) -> void:
 	var bg_size:Vector2 = get_viewport().get_visible_rect().size/camera.zoom.x*2.
 	bg_rect.set_size(bg_size)

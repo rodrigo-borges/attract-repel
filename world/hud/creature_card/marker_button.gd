@@ -8,6 +8,7 @@ signal marker_selected(marker:Marker)
 
 
 func _ready() -> void:
+	clear()
 	add_item(" ")
 	for m in markers:
 		add_icon_item(m.texture, m.resource_name)
