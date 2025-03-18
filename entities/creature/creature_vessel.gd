@@ -7,7 +7,9 @@ signal died
 
 static var BASE_FORCE:float = 10000.1
 static var BASE_MAINTENANCE_COST:float = 1.
-static var BASE_MOVEMENT_COST:float = .0003
+static var BASE_MOVEMENT_COST:float = .001
+static var BASE_ATTACK_COST:float = 1.
+static var BASE_ATTACK_DAMAGE:float = 2.
 static var BASE_SENSE_COST:float = .001
 static var BASE_REPRODUCTION_COST:float = 20.
 static var FORCE_LINE_SCALE:float = .1
@@ -20,8 +22,6 @@ static var sense_mask:int = 0b0011
 var data:CreatureData
 var color:Color:
 	get(): return data.color
-var color_vec:Vector3:
-	get(): return data.color_vec
 var size_radius:float:
 	get(): return data.size_radius
 var mass:float:
@@ -30,6 +30,12 @@ var attraction:Vector3:
 	get(): return data.attraction
 var intensity:float:
 	get(): return data.intensity
+var aggression:Vector3:
+	get(): return data.aggression
+var aggression_intensity:float:
+	get(): return data.aggression_intensity
+var aggression_energy_threshold:float:
+	get(): return data.aggression_energy_threshold
 var sense_radius:float:
 	get(): return data.sense_radius
 var reproduction_energy_threshold:float:
@@ -59,6 +65,7 @@ var blink_tween:Tween
 var marker_sprite:Sprite2D
 var draw_force_lines:bool = false
 var draw_sense_radius:bool = false
+var attack_ray:ColoredRay
 
 
 func _ready() -> void:
@@ -113,6 +120,11 @@ func _ready() -> void:
 	marker_sprite.set_scale(Vector2(.75, .75))
 	update_marker()
 
+	attack_ray = ColoredRay.create()
+	add_child(attack_ray)
+	attack_ray.set_z_index(-1)
+	attack_ray.color = color
+
 func _process(_delta:float) -> void:
 	if draw_force_lines:
 		update_force_line(attraction_line, attraction_force)
@@ -143,12 +155,27 @@ func _physics_process(delta: float) -> void:
 		velocity.y = abs(velocity.y)
 	elif global_position.y +size_radius > World.area.end.y:
 		velocity.y = -abs(velocity.y)
+	
+	var aggr_target:CreatureVessel = null
+	var max_aggr:float = 0.
+	if energy > aggression_energy_threshold:
+		for node in nodes_in_sight:
+			if node != self and node is CreatureVessel:
+				var vessel = node as CreatureVessel
+				var _aggr:float = calculate_aggression(vessel)
+				if _aggr > max_aggr:
+					max_aggr = _aggr
+					aggr_target = vessel
+	if aggr_target != null:
+		attack_ray.aim_at(aggr_target)
+		aggr_target.drain_energy(max_aggr * BASE_ATTACK_DAMAGE * delta)
+		drain_energy(max_aggr * BASE_ATTACK_COST * delta)
+	else:
+		attack_ray.stop_aiming()
 
-	energy -= BASE_MAINTENANCE_COST * delta
-	energy -= total_force.length() * delta * BASE_MOVEMENT_COST
-	energy -= sense_radius * delta * BASE_SENSE_COST
-	if energy <= 0.:
-		die()
+	drain_energy(BASE_MAINTENANCE_COST * delta)
+	drain_energy(total_force.length() * delta * BASE_MOVEMENT_COST)
+	drain_energy(sense_radius * delta * BASE_SENSE_COST)
 	
 	var collision:KinematicCollision2D = move_and_collide(velocity*delta)
 	if collision != null:
@@ -197,6 +224,11 @@ func calculate_attraction_force(node:Node2D) -> Vector2:
 	_force /= global_position.distance_squared_to(node.global_position) + 1.
 	return _force
 
+func calculate_aggression(node:Node2D) -> float:
+	var _aggr:float = aggression.x*node.color.r + aggression.y*node.color.g + aggression.z*node.color.b
+	_aggr *= aggression_intensity
+	return _aggr
+
 func reproduce() -> CreatureVessel:
 	energy -= BASE_REPRODUCTION_COST
 	on_reproduction_cooldown = true
@@ -206,6 +238,11 @@ func reproduce() -> CreatureVessel:
 	reproduced.emit(child_vessel)
 	energy /= 2.
 	return child_vessel
+
+func drain_energy(amount:float) -> void:
+	energy -= amount
+	if energy <= 0.:
+		die()
 
 func die() -> void:
 	var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST, 60.)

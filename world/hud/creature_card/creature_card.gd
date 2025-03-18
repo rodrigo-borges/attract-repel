@@ -16,9 +16,12 @@ class_name CreatureCard
 @onready var size_radius:ValueUI = find_child("SizeRadius")
 @onready var mass:ValueUI = find_child("Mass")
 @onready var max_energy:ValueUI = find_child("MaxEnergy")
+@onready var sense_radius:ValueUI = find_child("SenseRadius")
 @onready var attraction:Vector3UI = find_child("Attraction")
 @onready var intensity:ValueUI = find_child("Intensity")
-@onready var sense_radius:ValueUI = find_child("SenseRadius")
+@onready var aggression:Vector3UI = find_child("Aggression")
+@onready var aggr_intensity:ValueUI = find_child("AggrIntensity")
+@onready var aggr_threshold:ValueUI = find_child("AggrThresh")
 @onready var brake:ValueUI = find_child("Brake")
 @onready var repr_threshold:ValueUI = find_child("ReprThresh")
 @onready var repr_cooldown:ValueUI = find_child("ReprCooldown")
@@ -58,9 +61,12 @@ func update() -> void:
 		size_radius.value = creature.size_radius
 		mass.value = creature.mass
 		max_energy.value = creature.max_energy
+		sense_radius.value = creature.sense_radius
 		attraction.vec = creature.attraction
 		intensity.value = creature.intensity
-		sense_radius.value = creature.sense_radius
+		aggression.vec = creature.aggression
+		aggr_intensity.value = creature.aggression_intensity
+		aggr_threshold.value = creature.aggression_energy_threshold
 		brake.value = creature.brake
 		repr_threshold.value = creature.reproduction_energy_threshold
 		repr_cooldown.value = creature.reproduction_cooldown

@@ -1,11 +1,14 @@
 extends Resource
 class_name CreatureData
 
-static var MUTATION_CHANCE:float = .1
-static var COLOR_MUTATION_STD:float = .1
+static var MUTATION_CHANCE:float = .075
+static var COLOR_MUTATION_STD:float = .05
 static var RADIUS_MUTATION_STD:float = 1.
 static var ATTR_MUTATION_STD:float = .3
 static var INTENSITY_MUTATION_STD:float = 1.
+static var AGGR_MUTATION_STD:float = .3
+static var AGGR_INTENSITY_MUTATION_STD:float = 1.
+static var AGGR_ENERGY_THR_MUTATION_STD:float = 5.
 static var SENSE_RADIUS_MUTATION_STD:float = 10.
 static var REPR_ENERGY_THR_MUTATION_STD:float = 5.
 static var REPR_COOLDOWN_MUTATION_STD:float = 5.
@@ -30,6 +33,11 @@ var max_energy:float
 var attraction:Vector3
 var intensity:float:
 	set(value): intensity = maxf(value, 1.)
+var aggression:Vector3
+var aggression_intensity:float:
+	set(value): aggression_intensity = maxf(value, 0.)
+var aggression_energy_threshold:float:
+	set(value): aggression_energy_threshold = clampf(value, 0., max_energy)
 var sense_radius:float:
 	set(value): sense_radius = maxf(value, 50.)
 var reproduction_energy_threshold:float:
@@ -67,6 +75,17 @@ func mutate() -> void:
 	if randf() < MUTATION_CHANCE:
 		intensity += randfn(0., INTENSITY_MUTATION_STD)
 	if randf() < MUTATION_CHANCE:
+		aggression.x += randfn(0., AGGR_MUTATION_STD)
+	if randf() < MUTATION_CHANCE:
+		aggression.y += randfn(0., AGGR_MUTATION_STD)
+	if randf() < MUTATION_CHANCE:
+		aggression.z += randfn(0., AGGR_MUTATION_STD)
+	aggression = aggression.normalized()
+	if randf() < MUTATION_CHANCE:
+		aggression_intensity += randfn(0., AGGR_INTENSITY_MUTATION_STD)
+	if randf() < MUTATION_CHANCE:
+		aggression_energy_threshold += randfn(0., AGGR_ENERGY_THR_MUTATION_STD)
+	if randf() < MUTATION_CHANCE:
 		sense_radius += randfn(0., SENSE_RADIUS_MUTATION_STD)
 	if randf() < MUTATION_CHANCE:
 		reproduction_energy_threshold += randfn(0., REPR_ENERGY_THR_MUTATION_STD)
@@ -80,7 +99,9 @@ func mutate() -> void:
 func reproduce() -> CreatureData:
 	var creature = CreatureData.create(
 		color, size_radius,
-		attraction, intensity, sense_radius,
+		attraction, intensity,
+		aggression, aggression_intensity, aggression_energy_threshold,
+		sense_radius,
 		reproduction_energy_threshold, reproduction_cooldown,
 		brake, incubation_time)
 	creature.generation = generation + 1
@@ -108,7 +129,9 @@ func get_descendents_stats() -> Array[int]:
 
 static func create(
 		_color:Color, _size_radius:float,
-		_attraction:Vector3, _intensity:float, _sense_radius:float,
+		_attraction:Vector3, _intensity:float,
+		_aggression:Vector3, _aggression_intensity:float, _aggression_energy_threshold:float,
+		_sense_radius:float,
 		_reproduction_energy_threshold:float, _reproduction_cooldown:float,
 		_brake:float, _incubation_time:float) -> CreatureData:
 	var creature:CreatureData = CreatureData.new()
@@ -116,6 +139,9 @@ static func create(
 	creature.size_radius = _size_radius
 	creature.attraction = _attraction
 	creature.intensity = _intensity
+	creature.aggression = _aggression
+	creature.aggression_intensity = _aggression_intensity
+	creature.aggression_energy_threshold = _aggression_energy_threshold
 	creature.sense_radius = _sense_radius
 	creature.reproduction_energy_threshold = _reproduction_energy_threshold
 	creature.reproduction_cooldown = _reproduction_cooldown

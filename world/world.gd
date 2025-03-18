@@ -54,7 +54,9 @@ func _ready() -> void:
 	for i in n_creatures:
 		var data = CreatureData.create(
 				Color(randf(), randf(), randf()), randfn(10., 1.),
-				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.), randfn(100., 5.),
+				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.),
+				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.), randfn(40., 5.),
+				randfn(100., 5.),
 				randfn(70., 5.), randfn(10., 1.),
 				randfn(.5, .1), randfn(5., .5))
 		spawn_creature(

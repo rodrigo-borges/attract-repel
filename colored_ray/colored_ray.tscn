@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3cvshsavrx8h"]
+
+[ext_resource type="Script" uid="uid://cj11d28ipdcbw" path="res://colored_ray/colored_ray.gd" id="1_1d2ks"]
+[ext_resource type="Texture2D" uid="uid://cectnhttpfdya" path="res://colored_ray/lightning0.png" id="2_7eqe6"]
+[ext_resource type="Texture2D" uid="uid://cb8tnr1h1jkge" path="res://colored_ray/lightning1.png" id="3_4lkwq"]
+[ext_resource type="Texture2D" uid="uid://ds76v7xisxlsv" path="res://colored_ray/lightning2.png" id="4_chvoy"]
+
+[sub_resource type="Animation" id="Animation_armk7"]
+resource_name = "lightning"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_7eqe6"), ExtResource("3_4lkwq"), ExtResource("4_chvoy"), ExtResource("2_7eqe6")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7eqe6"]
+_data = {
+&"lightning": SubResource("Animation_armk7")
+}
+
+[node name="ColoredRay" type="RayCast2D"]
+target_position = Vector2(1000, 0)
+script = ExtResource("1_1d2ks")
+width = 16.0
+metadata/_custom_type_script = "uid://cj11d28ipdcbw"
+
+[node name="Line" type="Line2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("2_7eqe6")
+texture_mode = 1
+
+[node name="HitParticles" type="CPUParticles2D" parent="."]
+emitting = false
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7eqe6")
+}

@@ -111,6 +111,15 @@ show_slider = false
 title_min_width = 60.0
 value_min_width = 30.0
 
+[node name="SenseRadius" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "R. de visão"
+value = 100.0
+min_value = 50.0
+max_value = 500.0
+title_min_width = 60.0
+value_min_width = 30.0
+
 [node name="Attraction" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("2_n27h6")]
 layout_mode = 2
 title = "Atração"
@@ -127,12 +136,27 @@ max_value = 30.0
 title_min_width = 60.0
 value_min_width = 30.0
 
-[node name="SenseRadius" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
+[node name="Aggression" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("2_n27h6")]
 layout_mode = 2
-title = "Alcance"
-value = 100.0
-min_value = 50.0
-max_value = 500.0
+title = "Agressão"
+x_title = "R"
+y_title = "G"
+z_title = "B"
+
+[node name="AggrIntensity" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Intens."
+value = 1.0
+min_value = 1.0
+max_value = 30.0
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="AggrThresh" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Limiar ener."
+min_value = 0.0
+max_value = 100.0
 title_min_width = 60.0
 value_min_width = 30.0
 
@@ -264,7 +288,7 @@ size_flags_vertical = 4
 focus_mode = 0
 selected = 0
 allow_reselect = true
-item_count = 14
+item_count = 7
 popup/item_0/text = " "
 popup/item_0/id = 0
 popup/item_1/icon = ExtResource("9_khktn")
@@ -279,20 +303,6 @@ popup/item_5/icon = ExtResource("13_qe86j")
 popup/item_5/id = 5
 popup/item_6/icon = ExtResource("14_owo5i")
 popup/item_6/id = 6
-popup/item_7/text = " "
-popup/item_7/id = 7
-popup/item_8/icon = ExtResource("9_khktn")
-popup/item_8/id = 8
-popup/item_9/icon = ExtResource("10_71dvv")
-popup/item_9/id = 9
-popup/item_10/icon = ExtResource("11_yb8vw")
-popup/item_10/id = 10
-popup/item_11/icon = ExtResource("12_fmcfy")
-popup/item_11/id = 11
-popup/item_12/icon = ExtResource("13_qe86j")
-popup/item_12/id = 12
-popup/item_13/icon = ExtResource("14_owo5i")
-popup/item_13/id = 13
 script = ExtResource("7_uykr0")
 markers = Array[ExtResource("8_i74sm")]([SubResource("Resource_mmbpv"), SubResource("Resource_kytwh"), SubResource("Resource_tuc3y"), SubResource("Resource_gho3q"), SubResource("Resource_ygccs"), SubResource("Resource_vlr37")])
 

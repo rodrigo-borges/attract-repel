@@ -38,7 +38,6 @@ func _ready() -> void:
 	l_below_input.value_changed.connect(func(value:float):layers_below=int(value);refresh())
 	hide_extinct_bt.toggled.connect(refresh.unbind(1))
 
-	select_highlight.set_visible(false)
 	hover_highlight.set_visible(false)
 
 func _process(_delta:float) -> void:
