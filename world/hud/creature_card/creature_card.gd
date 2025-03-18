@@ -22,9 +22,11 @@ class_name CreatureCard
 @onready var brake:ValueUI = find_child("Brake")
 @onready var repr_threshold:ValueUI = find_child("ReprThresh")
 @onready var repr_cooldown:ValueUI = find_child("ReprCooldown")
+@onready var incubation_time:ValueUI = find_child("IncubationTime")
 
 @onready var life_container:Control = find_child("Life")
 @onready var energy:ValueUI = find_child("Energy")
+@onready var incubation_left:ValueUI = find_child("IncubationLeft")
 @onready var repr_cooldown_time:ValueUI = find_child("ReprCooldownTime")
 @onready var children:ValueUI = find_child("Children")
 @onready var descendents:ValueUI = find_child("Descendents")
@@ -62,6 +64,7 @@ func update() -> void:
 		brake.value = creature.brake
 		repr_threshold.value = creature.reproduction_energy_threshold
 		repr_cooldown.value = creature.reproduction_cooldown
+		incubation_time.value = creature.incubation_time
 		update_life()
 		marker_selector.update_marker_from_creature(creature)
 
@@ -74,6 +77,7 @@ func update_life() -> void:
 		alive_descendents.value = desc_stats[1]
 		if creature.vessel != null:
 			energy.value = creature.vessel.energy
+			incubation_left.value = creature.vessel.incubation_timer.time_left
 			repr_cooldown_time.value = creature.vessel.reproduction_cooldowm_timer.time_left
 		else:
 			energy.value = 0.

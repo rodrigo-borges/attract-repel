@@ -44,10 +44,10 @@ Lista de implementações desejadas, sem ordem específica.
 ### Simulação
 
 - [ ] Agressão entre criaturas similar à atração.
-- [ ] Tempo de incubação, em que a criatura nasce, mas ainda não é detectada nem detecta outras entidades.
+- [x] Tempo de incubação, em que a criatura nasce, mas ainda não é detectada nem detecta outras entidades. (2025-03-18)
 - [x] Custo de energia proporcional ao tamanho do campo de visão. (2025-03-17)
 - [x] Variação no tamanho das criaturas. (2025-03-17)
-- [x] Inclusão de massa no cálculo de atração/repulsão. (2025-03-17) Removido por aumentar a complexidade da estrutura da comida sem ganhos aparentes para a evolução. (2025-03-18)
+- [x] ~~Inclusão de massa no cálculo de atração/repulsão. (2025-03-17)~~ Removido por aumentar a complexidade da estrutura da comida sem ganhos aparentes para a evolução. (2025-03-18)
 
 ### Problemas
 

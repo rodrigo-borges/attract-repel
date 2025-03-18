@@ -9,8 +9,13 @@ static var BASE_FORCE:float = 10000.1
 static var BASE_MAINTENANCE_COST:float = 1.
 static var BASE_MOVEMENT_COST:float = .0003
 static var BASE_SENSE_COST:float = .001
+static var BASE_REPRODUCTION_COST:float = 20.
 static var FORCE_LINE_SCALE:float = .1
 static var FORCE_LINE_CAP:float = 50.
+
+static var coll_layer:int = 0b0001
+static var coll_mask:int = 0b0010
+static var sense_mask:int = 0b0011
 
 var data:CreatureData
 var color:Color:
@@ -33,6 +38,8 @@ var reproduction_cooldown:float:
 	get(): return data.reproduction_cooldown
 var brake:float:
 	get(): return data.brake
+var incubation_time:float:
+	get(): return data.incubation_time
 var lifespan:float:
 	get(): return data.lifespan
 	set(value): data.lifespan = value
@@ -46,12 +53,16 @@ var sense_area:Area2D
 var reproduction_cooldowm_timer:Timer
 var attraction_line:Line2D
 var brake_line:Line2D
+var incubation_timer:Timer
+var on_incubation:bool
+var blink_tween:Tween
 var marker_sprite:Sprite2D
 var draw_force_lines:bool = false
 var draw_sense_radius:bool = false
 
 
 func _ready() -> void:
+	self.set_motion_mode(MotionMode.MOTION_MODE_FLOATING)
 	self.set_pickable(true)
 	self.set_collision_layer(0b0001)
 	self.set_collision_mask(0b0010)
@@ -62,7 +73,6 @@ func _ready() -> void:
 	add_child(coll_shape)
 
 	sense_area = Area2D.new()
-	sense_area.set_collision_layer(0b0000)
 	sense_area.set_collision_mask(0b0011)
 	var area_shape = CollisionShape2D.new()
 	var area_circle = CircleShape2D.new()
@@ -90,6 +100,13 @@ func _ready() -> void:
 	brake_line.set_width(2.)
 	brake_line.add_point(Vector2.ZERO)
 	brake_line.add_point(Vector2.ZERO)
+
+	incubation_timer = Timer.new()
+	incubation_timer.set_one_shot(true)
+	incubation_timer.timeout.connect(leave_incubation)
+	add_child(incubation_timer)
+	enter_incubation()
+	incubation_timer.start(incubation_time)
 
 	marker_sprite = Sprite2D.new()
 	add_child(marker_sprite)
@@ -149,6 +166,23 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, self.size_radius, self.color)
 	draw_circle(Vector2.ZERO, self.size_radius, Color.BLACK, false)
 
+func enter_incubation() -> void:
+	self.set_collision_layer(0b0100)
+	self.set_collision_mask(0b0000)
+	sense_area.set_collision_mask(0b0000)
+	blink_tween = create_tween().set_loops()
+	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,.1), .5)
+	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,1.), .5)
+	on_incubation = true
+
+func leave_incubation() -> void:
+	self.set_collision_layer(coll_layer)
+	self.set_collision_mask(coll_mask)
+	sense_area.set_collision_mask(sense_mask)
+	blink_tween.kill()
+	set_modulate(Color.WHITE)
+	on_incubation = false
+
 func update_force_line(line:Line2D, force:Vector2) -> void:
 	var line_length:float = min(force.length()*FORCE_LINE_SCALE, FORCE_LINE_CAP)
 	if line_length >= FORCE_LINE_CAP:
@@ -164,7 +198,7 @@ func calculate_attraction_force(node:Node2D) -> Vector2:
 	return _force
 
 func reproduce() -> CreatureVessel:
-	energy -= CreatureData.BASE_REPRODUCTION_COST
+	energy -= BASE_REPRODUCTION_COST
 	on_reproduction_cooldown = true
 	reproduction_cooldowm_timer.start(reproduction_cooldown)
 	var child_data:CreatureData = data.reproduce()
@@ -174,7 +208,7 @@ func reproduce() -> CreatureVessel:
 	return child_vessel
 
 func die() -> void:
-	var corpse:Food = Food.create(self.color, CreatureData.BASE_REPRODUCTION_COST, 60.)
+	var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST, 60.)
 	created_food.emit(corpse)
 	data.vessel = null
 	died.emit()

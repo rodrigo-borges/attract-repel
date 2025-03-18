@@ -1,7 +1,6 @@
 extends Resource
 class_name CreatureData
 
-static var BASE_REPRODUCTION_COST:float = 20.
 static var MUTATION_CHANCE:float = .1
 static var COLOR_MUTATION_STD:float = .1
 static var RADIUS_MUTATION_STD:float = 1.
@@ -11,6 +10,7 @@ static var SENSE_RADIUS_MUTATION_STD:float = 10.
 static var REPR_ENERGY_THR_MUTATION_STD:float = 5.
 static var REPR_COOLDOWN_MUTATION_STD:float = 5.
 static var BRAKE_MUTATION_STD:float = .2
+static var INCUBATION_MUTATION_STD:float = 1.
 
 static var MASS_DENSITY:float = 1.
 static var ENERGY_DENSITY:float = 2.
@@ -38,6 +38,8 @@ var reproduction_cooldown:float:
 	set(value): reproduction_cooldown = maxf(value, 0.)
 var brake:float:
 	set(value): brake = clampf(value, 0., 1.)
+var incubation_time:float:
+	set(value): incubation_time = maxf(value, 0.)
 var generation:int
 var parent:CreatureData
 var children:Array[CreatureData]
@@ -72,16 +74,19 @@ func mutate() -> void:
 		reproduction_cooldown += randfn(0., REPR_COOLDOWN_MUTATION_STD)
 	if randf() < MUTATION_CHANCE:
 		brake += randfn(0., BRAKE_MUTATION_STD)
+	if randf() < MUTATION_CHANCE:
+		incubation_time += randfn(0., INCUBATION_MUTATION_STD)
 	
 func reproduce() -> CreatureData:
 	var creature = CreatureData.create(
 		color, size_radius,
 		attraction, intensity, sense_radius,
 		reproduction_energy_threshold, reproduction_cooldown,
-		brake, generation+1)
+		brake, incubation_time)
+	creature.generation = generation + 1
+	creature.parent = self
 	creature.marker = marker
 	creature.mutate()
-	creature.parent = self
 	children.append(creature)
 	return creature
 
@@ -105,7 +110,7 @@ static func create(
 		_color:Color, _size_radius:float,
 		_attraction:Vector3, _intensity:float, _sense_radius:float,
 		_reproduction_energy_threshold:float, _reproduction_cooldown:float,
-		_brake:float, _generation:int=0) -> CreatureData:
+		_brake:float, _incubation_time:float) -> CreatureData:
 	var creature:CreatureData = CreatureData.new()
 	creature.color = _color
 	creature.size_radius = _size_radius
@@ -115,8 +120,10 @@ static func create(
 	creature.reproduction_energy_threshold = _reproduction_energy_threshold
 	creature.reproduction_cooldown = _reproduction_cooldown
 	creature.brake = _brake
-	creature.generation = _generation
+	creature.incubation_time = _incubation_time
+	creature.generation = 0
 	creature.parent = null
 	creature.children = []
 	creature.lifespan = 0.
+	creature.marker = null
 	return creature

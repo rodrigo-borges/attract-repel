@@ -166,6 +166,16 @@ max_value = 100.0
 title_min_width = 60.0
 value_min_width = 30.0
 
+[node name="IncubationTime" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Incubação"
+format_string = "%.1f"
+value = 10.0
+min_value = 0.0
+max_value = 100.0
+title_min_width = 60.0
+value_min_width = 30.0
+
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -179,6 +189,14 @@ text = "Vivência"
 [node name="Energy" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
 layout_mode = 2
 title = "Energia"
+format_string = "%.1f"
+show_slider = false
+title_min_width = 15.0
+value_min_width = 30.0
+
+[node name="IncubationLeft" parent="MarginContainer/VBoxContainer/Life" instance=ExtResource("4_khe27")]
+layout_mode = 2
+title = "Incubação"
 format_string = "%.1f"
 show_slider = false
 title_min_width = 15.0
