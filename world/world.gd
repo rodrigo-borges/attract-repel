@@ -46,14 +46,14 @@ var followed_creature:CreatureVessel
 
 
 func _ready() -> void:
-	create_spawner(Rect2(Vector2(0., 0.), Vector2(1100.,1600.)), 2., Color(.75,.5,.05), 15., 60.)
-	create_spawner(Rect2(Vector2(900., 0.), Vector2(1100.,1600.)), 4., Color(.05,.5,.75), 15., 60.)
+	create_spawner(Rect2(Vector2(0., 0.), Vector2(1100.,1600.)), 2., Color(.75,.5,.05), 20., 60.)
+	create_spawner(Rect2(Vector2(900., 0.), Vector2(1100.,1600.)), 4., Color(.05,.5,.75), 20., 60.)
 	create_spawner(Rect2(Vector2(0.,1100.), Vector2(2000.,900.)), 2., Color(.05,.9,.05), -20., 60.)
 	create_spawner(Rect2(Vector2(0.,0.), Vector2(2000.,1100.)), .5, Color(.05,.9,.05), -40., 60.)
 	
 	for i in n_creatures:
 		var data = CreatureData.create(
-				Color(randf(), randf(), randf()), 10.,
+				Color(randf(), randf(), randf()), randfn(10., 1.),
 				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.), randfn(100., 5.),
 				randfn(70., 5.), randfn(10., 1.),
 				randfn(.5, .1))
@@ -246,7 +246,7 @@ func uncompare_creature() -> void:
 		compared_creature = null
 
 func _on_creature_hovered_on_tree(creature:CreatureData) -> void:
-	if creature != null:
+	if creature != null and creature != featured_creature:
 		if creature.vessel != null:
 			hover_creature(creature.vessel)
 		else:

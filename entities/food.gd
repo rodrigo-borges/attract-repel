@@ -6,7 +6,11 @@ signal decayed()
 
 const BASE_SIZE:float = 8.
 
-var color:Color
+var color:Color:
+	set(value):
+		color = value
+		color_vec = Vector3(value.r, value.g, value.b)
+var color_vec:Vector3
 var energy_provided:float
 var decay_time:float
 var decay_timer:Timer

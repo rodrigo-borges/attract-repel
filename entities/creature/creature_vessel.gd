@@ -5,17 +5,22 @@ signal reproduced(child:CreatureVessel)
 signal created_food(food:Food)
 signal died
 
-static var BASE_FORCE:float = 100.
+static var BASE_FORCE:float = 10000.1
 static var BASE_MAINTENANCE_COST:float = 1.
-static var BASE_MOVEMENT_COST:float = .1
-static var FORCE_LINE_SCALE:float = 30.
+static var BASE_MOVEMENT_COST:float = .0003
+static var BASE_SENSE_COST:float = .001
+static var FORCE_LINE_SCALE:float = .1
 static var FORCE_LINE_CAP:float = 50.
 
 var data:CreatureData
 var color:Color:
 	get(): return data.color
+var color_vec:Vector3:
+	get(): return data.color_vec
 var size_radius:float:
 	get(): return data.size_radius
+var mass:float:
+	get(): return data.mass
 var attraction:Vector3:
 	get(): return data.attraction
 var intensity:float:
@@ -108,11 +113,11 @@ func _physics_process(delta: float) -> void:
 	attraction_force = Vector2.ZERO
 	var nodes_in_sight:Array[Node2D] = sense_area.get_overlapping_bodies()
 	for node in nodes_in_sight:
-		if "color" in node and node != self:
+		if node != self and "color" in node:
 			attraction_force += calculate_attraction_force(node)
-	brake_force = -velocity * delta * brake
+	brake_force = -velocity * delta * brake * mass
 	total_force = attraction_force + brake_force
-	velocity += total_force
+	velocity += total_force / data.mass
 	if global_position.x - size_radius < World.area.position.x:
 		velocity.x = abs(velocity.x)
 	elif global_position.x + size_radius > World.area.end.x:
@@ -122,8 +127,9 @@ func _physics_process(delta: float) -> void:
 	elif global_position.y +size_radius > World.area.end.y:
 		velocity.y = -abs(velocity.y)
 
-	energy -= total_force.length() * delta * BASE_MOVEMENT_COST
 	energy -= BASE_MAINTENANCE_COST * delta
+	energy -= total_force.length() * delta * BASE_MOVEMENT_COST
+	energy -= sense_radius * delta * BASE_SENSE_COST
 	if energy <= 0.:
 		die()
 	
@@ -132,8 +138,10 @@ func _physics_process(delta: float) -> void:
 		if collision.get_collider() is Food:
 			var food = collision.get_collider() as Food
 			energy += food.energy_provided
-			energy = minf(CreatureData.MAX_ENERGY, energy)
+			energy = minf(data.max_energy, energy)
 			food.consume()
+		else:
+			print("colliding with %s" % collision.get_collider())
 
 func _draw() -> void:
 	if draw_sense_radius:
@@ -207,7 +215,7 @@ func get_descendents_vessels() -> Array[CreatureVessel]:
 
 static func create(
 		_data:CreatureData,
-		_energy:float=CreatureData.MAX_ENERGY/2.) -> CreatureVessel:
+		_energy:float=_data.max_energy/2.) -> CreatureVessel:
 	var creature:CreatureVessel = CreatureVessel.new()
 	creature.data = _data
 	creature.energy = _energy

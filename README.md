@@ -45,11 +45,12 @@ Lista de implementações desejadas, sem ordem específica.
 
 - [ ] Agressão entre criaturas similar à atração.
 - [ ] Tempo de incubação, em que a criatura nasce, mas ainda não é detectada nem detecta outras entidades.
-- [ ] Custo de energia proporcional ao tamanho do campo de visão.
-- [ ] Variação no tamanho das criaturas.
-- [ ] Inclusão de massa no cálculo de atração/repulsão.
+- [x] Custo de energia proporcional ao tamanho do campo de visão. (2025-03-17)
+- [x] Variação no tamanho das criaturas. (2025-03-17)
+- [x] Inclusão de massa no cálculo de atração/repulsão. (2025-03-17) Removido por aumentar a complexidade da estrutura da comida sem ganhos aparentes para a evolução. (2025-03-18)
 
 ### Problemas
 
 - [x] Quando o jogo está pausado, o controle de zoom e movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.` para controle de pausa, pois `get_tree().paused` estava impedindo interações com a UI. (2025-03-14)
 - [x] Toda atualização na árvore genealógica remove o hover do mouse, interrompendo a análise visual. (2025-03-17)
+- [ ] O dropdown de marcadores está mostrando a lista duplicada, sendo que clicar em uma opção da segunda metade lança erro de posição fora da lista.

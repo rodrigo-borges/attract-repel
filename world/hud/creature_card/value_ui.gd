@@ -5,7 +5,7 @@ class_name ValueUI
 @export var title:String = "X":
 	set(value): title = value; update()
 @export var format_string:String = "%.2f":
-	set(value): format_string = value; update()
+	set(value): format_string = value; update_value()
 @export var value:float = 0.:
 	set(_value): value = _value; update_value()
 @export var min_value:float = -1.:

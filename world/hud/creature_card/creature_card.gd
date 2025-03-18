@@ -13,6 +13,9 @@ class_name CreatureCard
 @onready var genetics_container:Control = find_child("Genetics")
 @onready var generation:ValueUI = find_child("Generation")
 @onready var color_ui:ColorUI = find_child("Color")
+@onready var size_radius:ValueUI = find_child("SizeRadius")
+@onready var mass:ValueUI = find_child("Mass")
+@onready var max_energy:ValueUI = find_child("MaxEnergy")
 @onready var attraction:Vector3UI = find_child("Attraction")
 @onready var intensity:ValueUI = find_child("Intensity")
 @onready var sense_radius:ValueUI = find_child("SenseRadius")
@@ -50,6 +53,9 @@ func update() -> void:
 	if creature != null:
 		generation.value = creature.generation
 		color_ui.color = creature.color
+		size_radius.value = creature.size_radius
+		mass.value = creature.mass
+		max_energy.value = creature.max_energy
 		attraction.vec = creature.attraction
 		intensity.value = creature.intensity
 		sense_radius.value = creature.sense_radius

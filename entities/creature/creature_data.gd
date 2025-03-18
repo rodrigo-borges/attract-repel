@@ -1,10 +1,10 @@
 extends Resource
 class_name CreatureData
 
-static var MAX_ENERGY:float = 100.
 static var BASE_REPRODUCTION_COST:float = 20.
 static var MUTATION_CHANCE:float = .1
 static var COLOR_MUTATION_STD:float = .1
+static var RADIUS_MUTATION_STD:float = 1.
 static var ATTR_MUTATION_STD:float = .3
 static var INTENSITY_MUTATION_STD:float = 1.
 static var SENSE_RADIUS_MUTATION_STD:float = 10.
@@ -12,16 +12,28 @@ static var REPR_ENERGY_THR_MUTATION_STD:float = 5.
 static var REPR_COOLDOWN_MUTATION_STD:float = 5.
 static var BRAKE_MUTATION_STD:float = .2
 
-var color:Color
+static var MASS_DENSITY:float = 1.
+static var ENERGY_DENSITY:float = 2.
+
+var color:Color:
+	set(value):
+		color = value
+		color_vec = Vector3(value.r, value.g, value.b)
+var color_vec:Vector3
 var size_radius:float:
-	set(value): size_radius = maxf(value, 1.)
+	set(value):
+		size_radius = maxf(value, 1.)
+		mass = PI*size_radius*size_radius*MASS_DENSITY
+		max_energy = 2*PI*size_radius*ENERGY_DENSITY
+var mass:float
+var max_energy:float
 var attraction:Vector3
 var intensity:float:
 	set(value): intensity = maxf(value, 1.)
 var sense_radius:float:
 	set(value): sense_radius = maxf(value, 50.)
 var reproduction_energy_threshold:float:
-	set(value): reproduction_energy_threshold = clampf(value, 0., MAX_ENERGY)
+	set(value): reproduction_energy_threshold = clampf(value, 0., max_energy)
 var reproduction_cooldown:float:
 	set(value): reproduction_cooldown = maxf(value, 0.)
 var brake:float:
@@ -41,6 +53,8 @@ func mutate() -> void:
 		color.g = clampf(color.r + randfn(0., COLOR_MUTATION_STD), 0., 1.)
 	if randf() < MUTATION_CHANCE:
 		color.b = clampf(color.r + randfn(0., COLOR_MUTATION_STD), 0., 1.)
+	if randf() < MUTATION_CHANCE:
+		size_radius += randfn(0., RADIUS_MUTATION_STD)
 	if randf() < MUTATION_CHANCE:
 		attraction.x += randfn(0., ATTR_MUTATION_STD)
 	if randf() < MUTATION_CHANCE:
