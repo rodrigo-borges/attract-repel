@@ -7,6 +7,8 @@ class_name Camera
 @export var drag_enabled:bool = true
 @export var keyboard_enabled:bool = true
 @export var move_speed:float = 300.
+@export var area:Rect2 = Rect2()
+@export var leak_tolerance:float = 100.
 
 var moving:bool = false
 var previous_mouse_position:Vector2
@@ -24,6 +26,17 @@ func _process(delta:float) -> void:
 	if keyboard_enabled:
 		var input_direction:Vector2 = Input.get_vector("left", "right", "up", "down")
 		global_position += input_direction * delta * move_speed
+
+	if area.size > Vector2.ZERO:
+		var size:Vector2 = get_viewport().get_visible_rect().size
+		if size.x/zoom.x > area.size.x + leak_tolerance*2.:
+			global_position.x = area.size.x/2. + area.position.x
+		else:
+			global_position.x = clampf(global_position.x, area.position.x+size.x/2./zoom.x-leak_tolerance, area.end.x-size.x/2./zoom.x+leak_tolerance)
+		if size.y/zoom.y > area.size.y + leak_tolerance*2.:
+			global_position.y = area.size.y/2. + area.position.y
+		else:
+			global_position.y = clampf(global_position.y, area.position.y+size.y/2./zoom.y-leak_tolerance, area.end.y-size.y/2./zoom.y+leak_tolerance)
 
 	previous_mouse_position = get_viewport().get_mouse_position()
 

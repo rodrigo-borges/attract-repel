@@ -144,13 +144,13 @@ func _physics_process(delta: float) -> void:
 	brake_force = -velocity * delta * brake * mass
 	total_force = attraction_force + brake_force
 	velocity += total_force / data.mass
-	if global_position.x - size_radius < World.area.position.x:
+	if global_position.x - size_radius < 0.: #World.area.position.x:
 		velocity.x = abs(velocity.x)
-	elif global_position.x + size_radius > World.area.end.x:
+	elif global_position.x + size_radius > 2000.: #World.area.end.x:
 		velocity.x = -abs(velocity.x)
-	if global_position.y - size_radius < World.area.position.y:
+	if global_position.y - size_radius < 0: #World.area.position.y:
 		velocity.y = abs(velocity.y)
-	elif global_position.y +size_radius > World.area.end.y:
+	elif global_position.y +size_radius > 2000.: #World.area.end.y:
 		velocity.y = -abs(velocity.y)
 	
 	var aggr_target:CreatureVessel = null
@@ -291,9 +291,11 @@ func get_descendents_vessels() -> Array[CreatureVessel]:
 
 static func create(
 		_data:CreatureData,
-		_energy:float=_data.max_energy/2.) -> CreatureVessel:
+		_energy:float=-1.) -> CreatureVessel:
 	var creature:CreatureVessel = CreatureVessel.new()
 	creature.data = _data
+	if _energy < 0.:
+		_energy = _data.max_energy/2.
 	creature.energy = _energy
 	_data.vessel = creature
 	return creature

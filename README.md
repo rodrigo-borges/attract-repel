@@ -15,10 +15,11 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Barrar visão das criaturas em obstáculos.
 - [ ] Alterar atributos da criatura selecionada.
 - [ ] Visualizar relação de criaturas ordenadas por desempenho.
-- [ ] Limitar nascimento inicial a spawners de criaturas.
-- [ ] Variar surgimento de comida baseado em parâmetros.
+- [x] Limitar nascimento inicial a spawners de criaturas. (2025-03-20)
+- [x] Variar surgimento de comida baseado em parâmetros. (2025-03-20)
 - [ ] Adicionar, remover e editar obstáculos.
 - [ ] Adicionar, remover e editar spawners de comida.
+- [ ] Adicionar, remover e editar spawners de criatura.
 - [ ] Finalizar simulação em caso de extinção.
 - [ ] Finalizar simulação através de um botão.
 - [ ] Exibir estatísticas ao finalizar simulação.

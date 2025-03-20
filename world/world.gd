@@ -1,12 +1,10 @@
 extends Node2D
 class_name World
 
-static var area:Rect2 = Rect2(Vector2.ZERO, Vector2(2000., 2000.))
-
-@export var n_creatures:int = 10
-@export var initial_food_spawn_time:int = 30
+@export var data:WorldData
 var creatures:Array[CreatureVessel]
 var foods:Array[Food]
+var creature_spawners:Array[CreatureSpawner]
 var food_spawners:Array[FoodSpawner]
 
 @onready var camera:WorldCamera = $WorldCamera
@@ -46,22 +44,18 @@ var followed_creature:CreatureVessel
 
 
 func _ready() -> void:
-	create_spawner(Rect2(Vector2(0., 0.), Vector2(1100.,1600.)), 2., Color(.75,.5,.05), 20., 60.)
-	create_spawner(Rect2(Vector2(900., 0.), Vector2(1100.,1600.)), 4., Color(.05,.5,.75), 20., 60.)
-	create_spawner(Rect2(Vector2(0.,1100.), Vector2(2000.,900.)), 2., Color(.05,.9,.05), -20., 60.)
-	create_spawner(Rect2(Vector2(0.,0.), Vector2(2000.,1100.)), .5, Color(.05,.9,.05), -40., 60.)
+	for c_spawner in data.creature_spawners:
+		var spawner = CreatureSpawner.create(c_spawner)
+		spawner.created_creature.connect(spawn_creature)
+		creature_spawners.append(spawner)
+		add_child(spawner)
 	
-	for i in n_creatures:
-		var data = CreatureData.create(
-				Color(randf(), randf(), randf()), randfn(10., 1.),
-				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.),
-				Vector3(randfn(0., 1.), randfn(0., 1.), randfn(0., 1.)).normalized(), randfn(2., 1.), randfn(40., 5.),
-				randfn(100., 5.),
-				randfn(70., 5.), randfn(10., 1.),
-				randfn(.5, .1), randfn(5., .5))
-		spawn_creature(
-			CreatureVessel.create(data),
-			Vector2(randf()*area.size.x, randf()*area.size.y))
+	for f_spawner in data.food_spawners:
+		var spawner = FoodSpawner.create(f_spawner)
+		spawner.created_food.connect(spawn_food)
+		add_child(spawner)
+		food_spawners.append(spawner)
+	call_deferred("spawn_initial_food")
 
 	track_timer = Timer.new()
 	add_child(track_timer)
@@ -76,10 +70,11 @@ func _ready() -> void:
 	family_tree.creature_hovered.connect(_on_creature_hovered_on_tree)
 	family_tree.creature_selected.connect(feature_creature)
 
-	call_deferred("spawn_initial_food")
-
 	follow_bt = creature_card.follow_button
 	follow_bt.toggled.connect(toggle_follow)
+
+	camera.area = data.area
+	camera.set_position(data.area.position + data.area.size/2.)
 
 func _process(_delta: float) -> void:
 	pass
@@ -97,17 +92,11 @@ func _unhandled_input(event:InputEvent) -> void:
 			toggle_follow(followed_creature == null)
 
 func _draw() -> void:
-	draw_rect(area, Color.BLACK, false)
-
-func create_spawner(_area:Rect2, rate:float, color:Color, energy:float, decay_time:float) -> void:
-	var spawner:FoodSpawner = FoodSpawner.create(_area, rate, color, energy, decay_time)
-	add_child(spawner)
-	spawner.created_food.connect(spawn_food)
-	food_spawners.append(spawner)
+	draw_rect(data.area, Color.BLACK, false)
 
 func spawn_initial_food() -> void:
 	for s in food_spawners:
-		var amount:int = int(initial_food_spawn_time * s.spawn_rate)
+		var amount:int = int(data.initial_food_spawn_time * s.data.spawn_rate)
 		for _a in amount:
 			s.spawn()
 
@@ -117,21 +106,25 @@ func spawn_food(food:Food, pos:Vector2) -> void:
 	food.tree_exited.connect(foods.erase.bind(food))
 	foods.append(food)
 
-func spawn_creature(creature:CreatureVessel, pos:Vector2) -> void:
-	add_child(creature)
-	creature.set_global_position(pos)
-	creature.reproduced.connect(_on_reproduction.bind(creature))
-	creature.created_food.connect(_on_food_creation.bind(creature))
-	creature.died.connect(creatures.erase.bind(creature))
-	creature.mouse_entered.connect(_on_creature_mouse_entered.bind(creature))
-	creature.mouse_exited.connect(_on_creature_mouse_exited.bind(creature))
-	creatures.append(creature)
+func spawn_creature(creature:CreatureData, pos:Vector2) -> void:
+	var vessel = CreatureVessel.create(creature)
+	spawn_vessel(vessel, pos)
+
+func spawn_vessel(vessel:CreatureVessel, pos:Vector2) -> void:
+	add_child(vessel)
+	vessel.set_global_position(pos)
+	vessel.reproduced.connect(_on_reproduction.bind(vessel))
+	vessel.created_food.connect(_on_food_creation.bind(vessel))
+	vessel.died.connect(creatures.erase.bind(vessel))
+	vessel.mouse_entered.connect(_on_creature_mouse_entered.bind(vessel))
+	vessel.mouse_exited.connect(_on_creature_mouse_exited.bind(vessel))
+	creatures.append(vessel)
 
 func _on_food_creation(food:Food, creature:CreatureVessel) -> void:
 	spawn_food(food, creature.global_position)
 
 func _on_reproduction(child:CreatureVessel, parent:CreatureVessel) -> void:
-	spawn_creature(child, parent.global_position + Vector2(randf()*50., randf()*50.))
+	spawn_vessel(child, parent.global_position + Vector2(randf()*50., randf()*50.))
 	var cord = UmbilicalCord.create(parent, child)
 	add_child(cord)
 	current_gen = maxi(current_gen, child.data.generation)

@@ -11,8 +11,8 @@ func _ready() -> void:
 
 func _process(_delta:float) -> void:
 	if world != null and camera != null:
-		var map_scale:float = max(world.area.size.x/map.size.x, world.area.size.y/map.size.y)
-		var world_rect:Rect2 = Rect2(world.area)
+		var map_scale:float = max(world.data.area.size.x/map.size.x, world.data.area.size.y/map.size.y)
+		var world_rect:Rect2 = Rect2(world.data.area)
 		world_rect.size /= map_scale
 		var camera_rect:Rect2 = camera.get_viewport_rect()
 		camera_rect.size.x /= camera.zoom.x
