@@ -90,11 +90,8 @@ func _ready() -> void:
 
 	reproduction_cooldowm_timer = Timer.new()
 	reproduction_cooldowm_timer.set_one_shot(true)
-	reproduction_cooldowm_timer.timeout.connect(
-		func(): on_reproduction_cooldown = false)
+	reproduction_cooldowm_timer.timeout.connect(leave_reproduction_cooldown)
 	add_child(reproduction_cooldowm_timer)
-	on_reproduction_cooldown = true
-	reproduction_cooldowm_timer.start(reproduction_cooldown)
 
 	attraction_line = Line2D.new()
 	add_child(attraction_line)
@@ -131,7 +128,7 @@ func _process(_delta:float) -> void:
 		update_force_line(brake_line, brake_force)
 
 func _physics_process(delta: float) -> void:
-	if Engine.time_scale <= 0.:
+	if Engine.time_scale <= 0. or on_incubation:
 		return
 
 	lifespan += delta
@@ -208,7 +205,15 @@ func leave_incubation() -> void:
 	sense_area.set_collision_mask(sense_mask)
 	blink_tween.kill()
 	set_modulate(Color.WHITE)
+	enter_reproduction_cooldown()
 	on_incubation = false
+
+func enter_reproduction_cooldown() -> void:
+	on_reproduction_cooldown = true
+	reproduction_cooldowm_timer.start(reproduction_cooldown)
+
+func leave_reproduction_cooldown() -> void:
+	on_reproduction_cooldown = false
 
 func update_force_line(line:Line2D, force:Vector2) -> void:
 	var line_length:float = min(force.length()*FORCE_LINE_SCALE, FORCE_LINE_CAP)
