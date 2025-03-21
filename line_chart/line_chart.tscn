@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://beirk0bt486wl"]
 
-[ext_resource type="Script" uid="uid://c0xirgnimlo30" path="res://world/hud/line_chart/line_plot.gd" id="1_gan5o"]
-[ext_resource type="Script" uid="uid://bew3yllorekqx" path="res://world/hud/line_chart/line_chart.gd" id="1_k4rao"]
+[ext_resource type="Script" uid="uid://c0xirgnimlo30" path="res://line_chart/line_plot.gd" id="1_gan5o"]
+[ext_resource type="Script" uid="uid://bew3yllorekqx" path="res://line_chart/line_chart.gd" id="1_k4rao"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_026nw"]
 font_size = 12

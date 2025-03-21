@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://obye55draurt"]
 
-[ext_resource type="Script" uid="uid://cbh8gkfgt1iqq" path="res://family_tree/family_node.gd" id="1_whp8b"]
-[ext_resource type="Texture2D" uid="uid://b3304qhn7kwc4" path="res://family_tree/dead.png" id="2_qqer8"]
+[ext_resource type="Script" uid="uid://cbh8gkfgt1iqq" path="res://family_node/family_node.gd" id="1_whp8b"]
+[ext_resource type="Texture2D" uid="uid://b3304qhn7kwc4" path="res://family_node/dead.png" id="2_qqer8"]
 [ext_resource type="LabelSettings" uid="uid://llfhtfilv8mq" path="res://world/hud/attribute_label_setting.tres" id="3_lo623"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1m0yn"]

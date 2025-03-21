@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bdhcqi3n33rlo"]
 
-[ext_resource type="Script" uid="uid://7dsc3hdrrt3r" path="res://world/hud/creature_card/color_ui.gd" id="1_ogh0u"]
+[ext_resource type="Script" uid="uid://7dsc3hdrrt3r" path="res://creature_card/color_ui.gd" id="1_ogh0u"]
 [ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="2_hlnqg"]
-[ext_resource type="PackedScene" uid="uid://d2gua8cqell5g" path="res://world/hud/creature_card/value_ui.tscn" id="3_4ngmk"]
+[ext_resource type="PackedScene" uid="uid://d2gua8cqell5g" path="res://creature_card/value_ui.tscn" id="3_4ngmk"]
 
 [node name="ColorUI" type="VBoxContainer"]
 script = ExtResource("1_ogh0u")

@@ -1,7 +1,7 @@
 extends StaticBody2D
 class_name FamilyNode
 
-const scene_path:String = "res://family_tree/family_node.tscn"
+const scene_path:String = "res://family_node/family_node.tscn"
 static var radius:float = 12.
 
 @onready var dead_icon:Sprite2D = find_child("DeadIcon")

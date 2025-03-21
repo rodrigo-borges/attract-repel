@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2gua8cqell5g"]
 
-[ext_resource type="Script" uid="uid://be3vgx4fsfcxy" path="res://world/hud/creature_card/value_ui.gd" id="1_4m6ma"]
+[ext_resource type="Script" uid="uid://be3vgx4fsfcxy" path="res://creature_card/value_ui.gd" id="1_4m6ma"]
 [ext_resource type="LabelSettings" uid="uid://llfhtfilv8mq" path="res://world/hud/attribute_label_setting.tres" id="1_juxkf"]
 
 [node name="ValueUI" type="HBoxContainer"]
