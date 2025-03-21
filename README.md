@@ -12,7 +12,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Adicionar marcador em uma criatura que será passado para seus descendentes. (2025-03-10)
 - [ ] Visualizar métricas agrupadas por marcador.
 - [x] Colidir e quicar criaturas com obstáculos genéricos. (2025-03-21)
-- [ ] Barrar visão das criaturas em obstáculos.
+- [x] Barrar visão das criaturas em obstáculos. (2025-03-21)
 - [ ] Alterar atributos da criatura selecionada.
 - [ ] Visualizar relação de criaturas ordenadas por desempenho.
 - [x] Limitar nascimento inicial a spawners de criaturas. (2025-03-20)

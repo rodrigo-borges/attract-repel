@@ -9,6 +9,8 @@ var food_spawners:Array[FoodSpawner]
 var obstacles:Array[Obstacle]
 
 @onready var boundaries:StaticBody2D = find_child("Boundaries")
+@onready var creature_container:Node2D = find_child("Creatures")
+@onready var food_container:Node2D = find_child("Food")
 @onready var camera:WorldCamera = $WorldCamera
 @onready var mini_map:MiniMap = find_child("MiniMap")
 
@@ -129,7 +131,7 @@ func spawn_initial_food() -> void:
 			s.spawn()
 
 func spawn_food(food:Food, pos:Vector2) -> void:
-	add_child(food)
+	food_container.add_child(food)
 	food.set_global_position(pos)
 	food.tree_exited.connect(foods.erase.bind(food))
 	foods.append(food)
@@ -139,7 +141,7 @@ func spawn_creature(creature:CreatureData, pos:Vector2) -> void:
 	spawn_vessel(vessel, pos)
 
 func spawn_vessel(vessel:CreatureVessel, pos:Vector2) -> void:
-	add_child(vessel)
+	creature_container.add_child(vessel)
 	vessel.set_global_position(pos)
 	vessel.reproduced.connect(_on_reproduction.bind(vessel))
 	vessel.created_food.connect(_on_food_creation.bind(vessel))

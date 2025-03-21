@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=21 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
@@ -26,7 +26,7 @@ sense_radius_mean = 100.0
 sense_radius_std = 10.0
 attraction_mean = Vector3(0, 0, 0)
 attraction_std = 0.25
-intensity_mean = 3.0
+intensity_mean = 5.0
 intensity_std = 0.5
 aggression_mean = Vector3(0, 0, 0)
 aggression_std = 0.25
@@ -76,6 +76,12 @@ area = Rect2(500, 200, 250, 250)
 texture = ExtResource("5_ocfjn")
 metadata/_custom_type_script = "uid://bmn80wmho4wsq"
 
+[sub_resource type="Resource" id="Resource_ysn08"]
+script = ExtResource("4_mad0u")
+area = Rect2(150, 300, 1000, 10)
+texture = ExtResource("5_ocfjn")
+metadata/_custom_type_script = "uid://bmn80wmho4wsq"
+
 [sub_resource type="Resource" id="Resource_dqqhb"]
 script = ExtResource("4_ocfjn")
 area = Rect2(0, 0, 2000, 2000)
@@ -84,7 +90,7 @@ boundary_width = 20.0
 initial_food_spawn_time = 60
 creature_spawners = Array[ExtResource("2_ov2xu")]([SubResource("Resource_ov2xu")])
 food_spawners = Array[ExtResource("3_mad0u")]([SubResource("Resource_mad0u"), SubResource("Resource_ocfjn")])
-obstacles = Array[ExtResource("4_mad0u")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre")])
+obstacles = Array[ExtResource("4_mad0u")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre"), SubResource("Resource_ysn08")])
 metadata/_custom_type_script = "uid://ddhs3u0gu31t2"
 
 [node name="World" type="Node2D"]
@@ -106,6 +112,10 @@ color = Color(1, 1, 1, 0.588235)
 [node name="Boundaries" type="StaticBody2D" parent="."]
 collision_layer = 4
 collision_mask = 0
+
+[node name="Creatures" type="Node2D" parent="."]
+
+[node name="Food" type="Node2D" parent="."]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 process_mode = 3

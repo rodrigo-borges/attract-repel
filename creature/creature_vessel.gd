@@ -50,6 +50,7 @@ var lifespan:float:
 	get(): return data.lifespan
 	set(value): data.lifespan = value
 
+var alive:bool
 var energy:float
 var on_reproduction_cooldown:bool
 var attraction_force:Vector2
@@ -66,6 +67,8 @@ var marker_sprite:Sprite2D
 var draw_force_lines:bool = false
 var draw_sense_radius:bool = false
 var attack_ray:ColoredRay
+var sensed_nodes:Array[Node2D]
+var sense_rays:Array[RayCast2D]
 
 
 func _ready() -> void:
@@ -140,7 +143,26 @@ func _physics_process(delta: float) -> void:
 	var nodes_in_sight:Array[Node2D] = sense_area.get_overlapping_bodies()
 	for node in nodes_in_sight:
 		if node != self and "color" in node:
-			attraction_force += calculate_attraction_force(node)
+			if node in sensed_nodes:
+				var idx:int = sensed_nodes.find(node)
+				sense_rays[idx].set_target_position(to_local(node.global_position))
+				if !sense_rays[idx].is_colliding():
+					attraction_force += calculate_attraction_force(node)
+			else:
+				var ray = RayCast2D.new()
+				add_child(ray)
+				ray.set_collision_mask(0b0100)
+				ray.set_target_position(to_local(node.global_position))
+				sensed_nodes.append(node)
+				sense_rays.append(ray)
+	for i in range(sensed_nodes.size()-1, -1, -1):
+		if !is_instance_valid(sensed_nodes[i]) or sensed_nodes[i] not in nodes_in_sight:
+			sensed_nodes.pop_at(i)
+			var ray:RayCast2D = sense_rays.pop_at(i)
+			ray.queue_free()
+	if sense_rays.size() != sensed_nodes.size():
+		print("Difference: %d" % (sense_rays.size()-sensed_nodes.size()))
+
 	brake_force = -velocity * delta * brake * mass
 	total_force = attraction_force + brake_force
 	velocity += total_force / data.mass
@@ -150,12 +172,14 @@ func _physics_process(delta: float) -> void:
 	if energy > aggression_energy_threshold:
 		for node in nodes_in_sight:
 			if node != self and node is CreatureVessel:
-				var vessel = node as CreatureVessel
-				var _aggr:float = calculate_aggression(vessel)
-				if _aggr > max_aggr:
-					max_aggr = _aggr
-					aggr_target = vessel
-	if aggr_target != null:
+				var idx:int = sensed_nodes.find(node)
+				if !sense_rays[idx].is_colliding():
+					var vessel = node as CreatureVessel
+					var _aggr:float = calculate_aggression(vessel)
+					if _aggr > max_aggr:
+						max_aggr = _aggr
+						aggr_target = vessel
+	if is_instance_valid(aggr_target):
 		attack_ray.aim_at(aggr_target)
 		aggr_target.drain_energy(max_aggr * BASE_ATTACK_DAMAGE * delta)
 		drain_energy(max_aggr * BASE_ATTACK_COST * delta)
@@ -186,6 +210,7 @@ func enter_incubation() -> void:
 	self.set_collision_layer(0b1000)
 	self.set_collision_mask(0b0000)
 	sense_area.set_collision_mask(0b0000)
+	sense_area.set_monitoring(false)
 	blink_tween = create_tween().set_loops()
 	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,.1), .5)
 	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,1.), .5)
@@ -195,9 +220,11 @@ func leave_incubation() -> void:
 	self.set_collision_layer(coll_layer)
 	self.set_collision_mask(coll_mask)
 	sense_area.set_collision_mask(sense_mask)
+	sense_area.set_monitoring(true)
 	blink_tween.kill()
 	set_modulate(Color.WHITE)
 	enter_reproduction_cooldown()
+	alive = true
 	on_incubation = false
 
 func enter_reproduction_cooldown() -> void:
@@ -242,11 +269,13 @@ func drain_energy(amount:float) -> void:
 		die()
 
 func die() -> void:
-	var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST, 60.)
-	created_food.emit(corpse)
-	data.vessel = null
-	died.emit()
-	queue_free()
+	if alive:
+		var corpse:Food = Food.create(self.color, BASE_REPRODUCTION_COST, 60.)
+		created_food.emit(corpse)
+		data.vessel = null
+		died.emit()
+		queue_free()
+		alive = false
 
 func update_marker() -> void:
 	var new_texture:Texture2D = null if data.marker == null else data.marker.texture

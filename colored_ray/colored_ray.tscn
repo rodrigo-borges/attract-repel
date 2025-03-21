@@ -27,6 +27,7 @@ _data = {
 }
 
 [node name="ColoredRay" type="RayCast2D"]
+enabled = false
 target_position = Vector2(0, 0)
 script = ExtResource("1_1d2ks")
 width = 16.0

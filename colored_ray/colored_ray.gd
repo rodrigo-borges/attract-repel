@@ -55,10 +55,10 @@ func aim_at(_target:CollisionObject2D) -> void:
 		target = _target
 
 func stop_aiming() -> void:
-	if target != null:
-		animation_player.stop()
-		enabled = false
-		target = null
+	set_target_position(Vector2.ZERO)
+	animation_player.stop()
+	enabled = false
+	target = null
 
 func _update_line() -> void:
 	line.set_width(width)
