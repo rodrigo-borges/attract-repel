@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8whfelcf5ii3"]
+
+[ext_resource type="Script" uid="uid://dgpbyghvnvxc2" path="res://obstacle/obstacle.gd" id="1_utmkd"]
+
+[node name="Obstacle" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_utmkd")
+metadata/_custom_type_script = "uid://dgpbyghvnvxc2"
+
+[node name="Shape" type="CollisionShape2D" parent="."]

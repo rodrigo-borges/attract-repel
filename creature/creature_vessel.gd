@@ -16,7 +16,7 @@ static var FORCE_LINE_SCALE:float = .1
 static var FORCE_LINE_CAP:float = 50.
 
 static var coll_layer:int = 0b0001
-static var coll_mask:int = 0b0010
+static var coll_mask:int = 0b0110
 static var sense_mask:int = 0b0011
 
 var data:CreatureData
@@ -144,14 +144,6 @@ func _physics_process(delta: float) -> void:
 	brake_force = -velocity * delta * brake * mass
 	total_force = attraction_force + brake_force
 	velocity += total_force / data.mass
-	if global_position.x - size_radius < 0.: #World.area.position.x:
-		velocity.x = abs(velocity.x)
-	elif global_position.x + size_radius > 2000.: #World.area.end.x:
-		velocity.x = -abs(velocity.x)
-	if global_position.y - size_radius < 0: #World.area.position.y:
-		velocity.y = abs(velocity.y)
-	elif global_position.y +size_radius > 2000.: #World.area.end.y:
-		velocity.y = -abs(velocity.y)
 	
 	var aggr_target:CreatureVessel = null
 	var max_aggr:float = 0.
@@ -182,7 +174,7 @@ func _physics_process(delta: float) -> void:
 			energy = minf(data.max_energy, energy)
 			food.consume()
 		else:
-			print("colliding with %s" % collision.get_collider())
+			velocity = velocity.bounce(collision.get_normal())
 
 func _draw() -> void:
 	if draw_sense_radius:
@@ -191,7 +183,7 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, self.size_radius, Color.BLACK, false)
 
 func enter_incubation() -> void:
-	self.set_collision_layer(0b0100)
+	self.set_collision_layer(0b1000)
 	self.set_collision_mask(0b0000)
 	sense_area.set_collision_mask(0b0000)
 	blink_tween = create_tween().set_loops()

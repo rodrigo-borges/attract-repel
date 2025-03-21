@@ -6,7 +6,9 @@ var creatures:Array[CreatureVessel]
 var foods:Array[Food]
 var creature_spawners:Array[CreatureSpawner]
 var food_spawners:Array[FoodSpawner]
+var obstacles:Array[Obstacle]
 
+@onready var boundaries:StaticBody2D = find_child("Boundaries")
 @onready var camera:WorldCamera = $WorldCamera
 @onready var mini_map:MiniMap = find_child("MiniMap")
 
@@ -57,6 +59,16 @@ func _ready() -> void:
 		food_spawners.append(spawner)
 	call_deferred("spawn_initial_food")
 
+	for obs in data.obstacles:
+		var obstacle = Obstacle.create(obs)
+		add_child(obstacle)
+		obstacles.append(obstacle)
+	
+	create_world_boundary(Vector2.DOWN, data.area.position.y)
+	create_world_boundary(Vector2.UP, -data.area.end.y)
+	create_world_boundary(Vector2.LEFT, -data.area.end.x)
+	create_world_boundary(Vector2.RIGHT, data.area.position.x)
+
 	track_timer = Timer.new()
 	add_child(track_timer)
 	track_timer.timeout.connect(update_counters)
@@ -93,6 +105,22 @@ func _unhandled_input(event:InputEvent) -> void:
 
 func _draw() -> void:
 	draw_rect(data.area, Color.BLACK, false)
+	if data.boundary_texture != null:
+		var w:float = data.boundary_width
+		var v_size:Vector2 = Vector2(w, data.area.size.y)
+		var h_size:Vector2 = Vector2(data.area.size.x, w)
+		draw_texture_rect(data.boundary_texture, Rect2(data.area.position-Vector2(0.,w), h_size), true, Color.BLACK)
+		draw_texture_rect(data.boundary_texture, Rect2(data.area.position+Vector2(0.,data.area.size.y), h_size), true, Color.BLACK)
+		draw_texture_rect(data.boundary_texture, Rect2(data.area.position+Vector2(data.area.size.x,0.), v_size), true, Color.BLACK)
+		draw_texture_rect(data.boundary_texture, Rect2(data.area.position-Vector2(w,0.), v_size), true, Color.BLACK)
+
+func create_world_boundary(normal:Vector2, distance:float) -> void:
+	var shape_node = CollisionShape2D.new()
+	boundaries.add_child(shape_node)
+	var shape = WorldBoundaryShape2D.new()
+	shape.set_normal(normal)
+	shape.set_distance(distance)
+	shape_node.set_shape(shape)
 
 func spawn_initial_food() -> void:
 	for s in food_spawners:

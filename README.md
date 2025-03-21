@@ -11,7 +11,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Destacar janela com câmera seguindo criatura.
 - [x] Adicionar marcador em uma criatura que será passado para seus descendentes. (2025-03-10)
 - [ ] Visualizar métricas agrupadas por marcador.
-- [ ] Colidir e quicar criaturas com obstáculos genéricos.
+- [x] Colidir e quicar criaturas com obstáculos genéricos. (2025-03-21)
 - [ ] Barrar visão das criaturas em obstáculos.
 - [ ] Alterar atributos da criatura selecionada.
 - [ ] Visualizar relação de criaturas ordenadas por desempenho.
