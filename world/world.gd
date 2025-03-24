@@ -19,6 +19,7 @@ var obstacles:Array[Obstacle]
 @onready var food_spawner_list:Control = find_child("FoodSpawners")
 @onready var obstacle_list:Control = find_child("Obstacles")
 var selected_world_element:Node2D
+var world_element_selector:WorldElementSelector
 var editable_rect:EditableRect
 
 var game_modes:Array[String] = ["sim", "edit"]
@@ -64,24 +65,24 @@ func _ready() -> void:
 		spawner.created_creature.connect(spawn_creature)
 		add_child(spawner)
 		creature_spawners.append(spawner)
-		var button:WorldElementButton = create_world_element_button(spawner, c_spawner, "Nascedouro")
-		creature_spawner_list.add_child(button)
+		var selector:WorldElementSelector = create_world_element_selector(spawner, c_spawner, "Nascedouro")
+		creature_spawner_list.add_child(selector)
 	
 	for f_spawner in data.food_spawners:
 		var spawner = FoodSpawner.create(f_spawner)
 		spawner.created_food.connect(spawn_food)
 		add_child(spawner)
 		food_spawners.append(spawner)
-		var button:WorldElementButton = create_world_element_button(spawner, f_spawner, "Comedouro")
-		food_spawner_list.add_child(button)
+		var selector:WorldElementSelector = create_world_element_selector(spawner, f_spawner, "Comedouro")
+		food_spawner_list.add_child(selector)
 	call_deferred("spawn_initial_food")
 
 	for obs in data.obstacles:
 		var obstacle = Obstacle.create(obs)
 		add_child(obstacle)
 		obstacles.append(obstacle)
-		var button:WorldElementButton = create_world_element_button(obstacle, obs, "Obstáculo")
-		obstacle_list.add_child(button)
+		var selector:WorldElementSelector = create_world_element_selector(obstacle, obs, "Obstáculo")
+		obstacle_list.add_child(selector)
 	
 	create_world_boundary(Vector2.DOWN, data.area.position.y)
 	create_world_boundary(Vector2.UP, -data.area.end.y)
@@ -108,6 +109,8 @@ func _ready() -> void:
 	camera.set_position(data.area.position + data.area.size/2.)
 	camera.zoom_changed.connect(_on_world_camera_zoom_changed)
 
+	toggle_sim_mode()
+
 func _process(_delta: float) -> void:
 	pass
 
@@ -131,6 +134,8 @@ func _unhandled_input(event:InputEvent) -> void:
 	elif game_mode == "edit":
 		if event.is_action_pressed("escape"):
 			deselect_world_element()
+		if event.is_action_pressed("delete"):
+			delete_current_world_element()
 
 func _draw() -> void:
 	draw_rect(data.area, Color.BLACK, false)
@@ -330,7 +335,7 @@ func unfollow_creature() -> void:
 		follow_bt.set_pressed_no_signal(false)
 		followed_creature = null
 
-func select_world_element(element:Node2D) -> void:
+func select_world_element(element:Node2D, selector:WorldElementSelector) -> void:
 	if element == selected_world_element:
 		return
 	elif selected_world_element != null:
@@ -345,6 +350,7 @@ func select_world_element(element:Node2D) -> void:
 			selected_world_element.update()
 			selected_world_element.set_visible(true))
 		selected_world_element = element
+		world_element_selector = selector
 
 func deselect_world_element() -> void:
 	if selected_world_element != null:
@@ -352,19 +358,33 @@ func deselect_world_element() -> void:
 			editable_rect.queue_free()
 			editable_rect = null
 		selected_world_element = null
+	if world_element_selector != null:
+		world_element_selector.select_button.set_pressed_no_signal(false)
+		world_element_selector = null
 
-func create_world_element_button(element:Node2D, _data:Resource, text:String) -> WorldElementButton:
-	var button = WorldElementButton.create(_data)
-	button.set_text(text)
-	button.toggled.connect(_on_world_element_button_toggled.bind(element))
-	return button
+func create_world_element_selector(element:Node2D, _data:Resource, text:String) -> WorldElementSelector:
+	var selector = WorldElementSelector.create(_data)
+	selector.text = text
+	selector.toggled.connect(_on_world_element_button_toggled.bind(element, selector))
+	selector.deleted.connect(delete_world_element.bind(element, selector))
+	return selector
 
-func _on_world_element_button_toggled(toggled_on:bool, world_element:Node2D) -> void:
+func _on_world_element_button_toggled(toggled_on:bool, world_element:Node2D, selector:WorldElementSelector) -> void:
 	if toggled_on:
-		select_world_element(world_element)
+		select_world_element(world_element, selector)
 	else:
 		if selected_world_element == world_element:
 			deselect_world_element()
+
+func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void:
+	if element == selected_world_element:
+		deselect_world_element()
+	element.queue_free()
+	selector.queue_free()
+
+func delete_current_world_element() -> void:
+	if selected_world_element != null:
+		delete_world_element(selected_world_element, world_element_selector)
 
 func _on_world_camera_zoom_changed() -> void:
 	if editable_rect != null:

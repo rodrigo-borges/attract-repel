@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://doh3mvwjdk7r"]
+
+[ext_resource type="Script" uid="uid://440sp7quxjt7" path="res://world_element/world_element_selector.gd" id="1_ah2ru"]
+[ext_resource type="ButtonGroup" uid="uid://d05mux3mkwi3h" path="res://world_element/world_elements_bt_group.tres" id="2_2iffs"]
+[ext_resource type="Texture2D" uid="uid://dxm22tu427obo" path="res://world_element/trash_16px.png" id="3_n0ruh"]
+
+[node name="WorldElementSelector" type="HBoxContainer"]
+offset_right = 102.0
+offset_bottom = 31.0
+script = ExtResource("1_ah2ru")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+button_group = ExtResource("2_2iffs")
+text = "Texto"
+alignment = 0
+
+[node name="Delete" type="Button" parent="."]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+icon = ExtResource("3_n0ruh")
+icon_alignment = 1

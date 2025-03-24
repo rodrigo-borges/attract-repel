@@ -137,6 +137,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="Charts" type="PanelContainer" parent="HUD/MarginContainer"]
+visible = false
 self_modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -250,7 +251,7 @@ layers_above = 3
 layers_below = 3
 
 [node name="WorldElements" type="PanelContainer" parent="HUD/MarginContainer"]
-visible = false
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 
@@ -271,36 +272,65 @@ horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="CreatureSpawners" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/CreatureSpawners"]
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Nascedouros"
 label_settings = ExtResource("14_dqqhb")
 
+[node name="CreatureSpawners" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateCSpawnerBt" type="Button" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = "Criar"
+
 [node name="HSeparator" type="HSeparator" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="FoodSpawners" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/FoodSpawners"]
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
-text = "Cochos"
+text = "Comedouros"
 label_settings = ExtResource("14_dqqhb")
+
+[node name="FoodSpawners" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="CreateFSpawnerBt" type="Button" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = "Criar"
 
 [node name="HSeparator2" type="HSeparator" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Obstacles" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Obstacles"]
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Obstáculos"
 label_settings = ExtResource("14_dqqhb")
+
+[node name="Obstacles" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="CreateObstableBt" type="Button" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+text = "Criar"

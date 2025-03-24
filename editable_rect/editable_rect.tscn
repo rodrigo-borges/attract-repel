@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ch8ba8elg8pj5" path="res://editable_rect/drag_square.png" id="3_tu8jw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nh5cw"]
-radius = 8.0
+radius = 16.0
 
 [node name="EditableRect" type="Node2D"]
 script = ExtResource("1_xnyxl")
