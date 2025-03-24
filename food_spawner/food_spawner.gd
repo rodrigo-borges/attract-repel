@@ -18,6 +18,10 @@ func _draw() -> void:
 	draw_rect(data.area, data.color*Color(1.,1.,1.,.05))
 	draw_rect(data.area, data.color, false)
 
+func update() -> void:
+	if data != null:
+		queue_redraw()
+
 func spawn() -> void:
 	var color:Color = data.color + Color(randfn(0., data.color_std), randfn(0., data.color_std), randfn(0., data.color_std))
 	var food:Food = Food.create(color, data.energy_provided, data.decay_time)

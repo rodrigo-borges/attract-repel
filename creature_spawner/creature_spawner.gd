@@ -14,6 +14,10 @@ func _draw() -> void:
 	draw_rect(data.area, data.color_mean*Color(1.,1.,1.,.05))
 	draw_rect(data.area, data.color_mean, false)
 
+func update() -> void:
+	if data != null:
+		queue_redraw()
+
 func spawn_creatures() -> void:
 	for _i in data.amount:
 		spawn()

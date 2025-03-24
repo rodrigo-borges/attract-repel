@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://2di3e4ptictk"]
+
+[ext_resource type="Script" uid="uid://xu43m7dh6154" path="res://editable_rect/editable_rect.gd" id="1_xnyxl"]
+[ext_resource type="Texture2D" uid="uid://cgpdepg81ksvy" path="res://editable_rect/handle.png" id="2_ug4au"]
+[ext_resource type="Texture2D" uid="uid://ch8ba8elg8pj5" path="res://editable_rect/drag_square.png" id="3_tu8jw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nh5cw"]
+radius = 8.0
+
+[node name="EditableRect" type="Node2D"]
+script = ExtResource("1_xnyxl")
+rect = Rect2(20, 20, 100, 200)
+
+[node name="HandleNW" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandleNW"]
+shape = SubResource("CircleShape2D_nh5cw")
+
+[node name="Sprite2D" type="Sprite2D" parent="HandleNW"]
+texture = ExtResource("2_ug4au")
+
+[node name="HandleNE" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandleNE"]
+shape = SubResource("CircleShape2D_nh5cw")
+
+[node name="Sprite2D" type="Sprite2D" parent="HandleNE"]
+texture = ExtResource("2_ug4au")
+
+[node name="HandleSE" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandleSE"]
+shape = SubResource("CircleShape2D_nh5cw")
+
+[node name="Sprite2D" type="Sprite2D" parent="HandleSE"]
+texture = ExtResource("2_ug4au")
+
+[node name="HandleSW" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandleSW"]
+shape = SubResource("CircleShape2D_nh5cw")
+
+[node name="Sprite2D" type="Sprite2D" parent="HandleSW"]
+texture = ExtResource("2_ug4au")
+
+[node name="Dragger" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dragger"]
+shape = SubResource("CircleShape2D_nh5cw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Dragger"]
+texture = ExtResource("3_tu8jw")

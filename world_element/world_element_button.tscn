@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://deogh8hexnat5"]
+
+[ext_resource type="ButtonGroup" uid="uid://d05mux3mkwi3h" path="res://world_element/world_elements_bt_group.tres" id="1_7mhu8"]
+[ext_resource type="Script" uid="uid://cr3fouhglvxxy" path="res://world_element/world_element_button.gd" id="2_1w8nk"]
+
+[node name="WorldElementButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+focus_mode = 0
+toggle_mode = true
+button_group = ExtResource("1_7mhu8")
+text = "Cocho"
+script = ExtResource("2_1w8nk")

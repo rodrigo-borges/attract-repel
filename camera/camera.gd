@@ -1,6 +1,8 @@
 extends Camera2D
 class_name Camera
 
+signal zoom_changed()
+
 @export var zoom_enabled:bool = true
 @export var zoom_intensity:float = 1.3
 @export var zoom_duration:float = .1
@@ -48,12 +50,14 @@ func _unhandled_input(event:InputEvent) -> void:
 				tween.tween_property(self, "zoom", zoom*zoom_intensity, zoom_duration).set_trans(Tween.TRANS_CUBIC)
 			else:
 				zoom *= zoom_intensity
+			zoom_changed.emit()
 		elif event.is_action_pressed("zoom_out"):
 			if Engine.time_scale > 0.:
 				var tween:Tween = get_tree().create_tween()
 				tween.tween_property(self, "zoom", zoom/zoom_intensity, zoom_duration).set_trans(Tween.TRANS_CUBIC)
 			else:
 				zoom /= zoom_intensity
+			zoom_changed.emit()
 	if drag_enabled:
 		if event.is_action_pressed("middle_click"):
 			moving = true

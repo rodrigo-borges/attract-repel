@@ -17,9 +17,11 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Visualizar relação de criaturas ordenadas por desempenho.
 - [x] Limitar nascimento inicial a spawners de criaturas. (2025-03-20)
 - [x] Variar surgimento de comida baseado em parâmetros. (2025-03-20)
-- [ ] Adicionar, remover e editar obstáculos.
-- [ ] Adicionar, remover e editar spawners de comida.
-- [ ] Adicionar, remover e editar spawners de criatura.
+- [x] Mover e deformar elementos do mundo. (2025-03-24)
+- [ ] Criar e deletar obstáculos.
+- [ ] Alterar configurações de nascedouros.
+- [ ] Alterar configurações de comedouros.
+- [ ] Criar e deletar nascedouros e comedouros.
 - [ ] Finalizar simulação em caso de extinção.
 - [ ] Finalizar simulação através de um botão.
 - [ ] Exibir estatísticas ao finalizar simulação.

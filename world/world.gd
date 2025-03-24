@@ -11,14 +11,25 @@ var obstacles:Array[Obstacle]
 @onready var boundaries:StaticBody2D = find_child("Boundaries")
 @onready var creature_container:Node2D = find_child("Creatures")
 @onready var food_container:Node2D = find_child("Food")
-@onready var camera:WorldCamera = $WorldCamera
+@onready var camera:WorldCamera = find_child("WorldCamera")
 @onready var mini_map:MiniMap = find_child("MiniMap")
+
+@onready var world_elements_container = find_child("WorldElements")
+@onready var creature_spawner_list:Control = find_child("CreatureSpawners")
+@onready var food_spawner_list:Control = find_child("FoodSpawners")
+@onready var obstacle_list:Control = find_child("Obstacles")
+var selected_world_element:Node2D
+var editable_rect:EditableRect
+
+var game_modes:Array[String] = ["sim", "edit"]
+var game_mode:String = "sim"
 
 @onready var clock:Clock = find_child("Clock")
 var current_gen:int = 0
 
 @export var track_period:float = 1.
 var track_timer:Timer
+@onready var charts:Control = find_child("Charts")
 @onready var pop_chart:LineChart = find_child("PopChart")
 @onready var lifespan_chart:LineChart = find_child("LifespanChart")
 @onready var food_chart:LineChart = find_child("FoodChart")
@@ -51,20 +62,26 @@ func _ready() -> void:
 	for c_spawner in data.creature_spawners:
 		var spawner = CreatureSpawner.create(c_spawner)
 		spawner.created_creature.connect(spawn_creature)
-		creature_spawners.append(spawner)
 		add_child(spawner)
+		creature_spawners.append(spawner)
+		var button:WorldElementButton = create_world_element_button(spawner, c_spawner, "Nascedouro")
+		creature_spawner_list.add_child(button)
 	
 	for f_spawner in data.food_spawners:
 		var spawner = FoodSpawner.create(f_spawner)
 		spawner.created_food.connect(spawn_food)
 		add_child(spawner)
 		food_spawners.append(spawner)
+		var button:WorldElementButton = create_world_element_button(spawner, f_spawner, "Comedouro")
+		food_spawner_list.add_child(button)
 	call_deferred("spawn_initial_food")
 
 	for obs in data.obstacles:
 		var obstacle = Obstacle.create(obs)
 		add_child(obstacle)
 		obstacles.append(obstacle)
+		var button:WorldElementButton = create_world_element_button(obstacle, obs, "Obstáculo")
+		obstacle_list.add_child(button)
 	
 	create_world_boundary(Vector2.DOWN, data.area.position.y)
 	create_world_boundary(Vector2.UP, -data.area.end.y)
@@ -89,21 +106,31 @@ func _ready() -> void:
 
 	camera.area = data.area
 	camera.set_position(data.area.position + data.area.size/2.)
+	camera.zoom_changed.connect(_on_world_camera_zoom_changed)
 
 func _process(_delta: float) -> void:
 	pass
 
 func _unhandled_input(event:InputEvent) -> void:
-	if event.is_action_pressed("left_click"):
-		if hovered_creature != null:
-			feature_creature(hovered_creature.data)
-		else:
+	if event.is_action_pressed("toggle_game_mode"):
+		if game_mode == "sim":
+			toggle_edit_mode()
+		elif game_mode == "edit":
+			toggle_sim_mode()
+	if game_mode == "sim":
+		if event.is_action_pressed("left_click"):
+			if hovered_creature != null:
+				feature_creature(hovered_creature.data)
+			else:
+				unfeature_creature()
+		if event.is_action_pressed("escape"):
 			unfeature_creature()
-	if event.is_action_pressed("escape"):
-		unfeature_creature()
-	if event.is_action_pressed("follow"):
-		if selected_creature != null:
-			toggle_follow(followed_creature == null)
+		if event.is_action_pressed("follow"):
+			if selected_creature != null:
+				toggle_follow(followed_creature == null)
+	elif game_mode == "edit":
+		if event.is_action_pressed("escape"):
+			deselect_world_element()
 
 func _draw() -> void:
 	draw_rect(data.area, Color.BLACK, false)
@@ -187,7 +214,8 @@ func update_counters() -> void:
 	momentum_chart.add_value(c_momentum)
 
 func _on_creature_mouse_entered(creature:CreatureVessel) -> void:
-	hover_creature(creature)
+	if game_mode == "sim":
+		hover_creature(creature)
 
 func _on_creature_mouse_exited(creature:CreatureVessel) -> void:
 	if hovered_creature == creature:
@@ -301,3 +329,58 @@ func unfollow_creature() -> void:
 		camera.followed_node = null
 		follow_bt.set_pressed_no_signal(false)
 		followed_creature = null
+
+func select_world_element(element:Node2D) -> void:
+	if element == selected_world_element:
+		return
+	elif selected_world_element != null:
+		deselect_world_element()
+	if "data" in element and "area" in element.data:
+		editable_rect = EditableRect.create(element.data.area, Color.WHITE)
+		add_child(editable_rect)
+		editable_rect.camera_zoom = camera.zoom
+		editable_rect.started_editing.connect(func(): selected_world_element.set_visible(false))
+		editable_rect.rect_updated.connect(func():
+			selected_world_element.data.area = editable_rect.rect
+			selected_world_element.update()
+			selected_world_element.set_visible(true))
+		selected_world_element = element
+
+func deselect_world_element() -> void:
+	if selected_world_element != null:
+		if editable_rect != null:
+			editable_rect.queue_free()
+			editable_rect = null
+		selected_world_element = null
+
+func create_world_element_button(element:Node2D, _data:Resource, text:String) -> WorldElementButton:
+	var button = WorldElementButton.create(_data)
+	button.set_text(text)
+	button.toggled.connect(_on_world_element_button_toggled.bind(element))
+	return button
+
+func _on_world_element_button_toggled(toggled_on:bool, world_element:Node2D) -> void:
+	if toggled_on:
+		select_world_element(world_element)
+	else:
+		if selected_world_element == world_element:
+			deselect_world_element()
+
+func _on_world_camera_zoom_changed() -> void:
+	if editable_rect != null:
+		editable_rect.camera_zoom = camera.zoom
+
+func toggle_edit_mode() -> void:
+	clock.toggle_pause(true)
+	unhover_creature()
+	unfeature_creature()
+	uncompare_creature()
+	charts.set_visible(false)
+	world_elements_container.set_visible(true)
+	game_mode = "edit"
+
+func toggle_sim_mode() -> void:
+	deselect_world_element()
+	world_elements_container.set_visible(false)
+	charts.set_visible(true)
+	game_mode = "sim"

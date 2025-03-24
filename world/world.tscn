@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=22 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://33r1i1onh2nf" path="res://obstacle/obstacle_texture.png" id="5_ocfjn"]
 [ext_resource type="PackedScene" uid="uid://y4xw1cr1uk76" path="res://creature_card/creature_card.tscn" id="6_sit8l"]
 [ext_resource type="PackedScene" uid="uid://4ucbadkjd5g2" path="res://family_tree/family_tree.tscn" id="8_ugd32"]
+[ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="14_dqqhb"]
 
 [sub_resource type="Resource" id="Resource_ov2xu"]
 script = ExtResource("2_ov2xu")
@@ -247,3 +248,59 @@ render_target_update_mode = 4
 [node name="FamilyTree" parent="HUD/MarginContainer/TreeContainer/MarginContainer/VBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("8_ugd32")]
 layers_above = 3
 layers_below = 3
+
+[node name="WorldElements" type="PanelContainer" parent="HUD/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/MarginContainer/WorldElements"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Elementos"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CreatureSpawners" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/CreatureSpawners"]
+layout_mode = 2
+text = "Nascedouros"
+label_settings = ExtResource("14_dqqhb")
+
+[node name="HSeparator" type="HSeparator" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FoodSpawners" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/FoodSpawners"]
+layout_mode = 2
+text = "Cochos"
+label_settings = ExtResource("14_dqqhb")
+
+[node name="HSeparator2" type="HSeparator" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Obstacles" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Obstacles"]
+layout_mode = 2
+text = "Obstáculos"
+label_settings = ExtResource("14_dqqhb")
