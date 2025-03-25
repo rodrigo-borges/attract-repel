@@ -73,12 +73,7 @@ func _ready() -> void:
 		creature_spawner_list.add_child(selector)
 	
 	for f_spawner in data.food_spawners:
-		var spawner = FoodSpawner.create(f_spawner)
-		spawner.created_food.connect(spawn_food)
-		add_child(spawner)
-		food_spawners.append(spawner)
-		var selector:WorldElementSelector = create_world_element_selector(spawner, f_spawner, "Comedouro")
-		food_spawner_list.add_child(selector)
+		create_food_spawner(f_spawner)
 	call_deferred("spawn_initial_food")
 
 	for obs in data.obstacles:
@@ -110,6 +105,7 @@ func _ready() -> void:
 	camera.zoom_changed.connect(_on_world_camera_zoom_changed)
 
 	food_spawner_card.value_changed.connect(_on_food_spawner_card_updated)
+	create_f_spawner_bt.pressed.connect(create_food_spawner)
 	create_obstacle_bt.pressed.connect(create_obstacle)
 
 	toggle_sim_mode()
@@ -397,6 +393,20 @@ func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void
 func delete_current_world_element() -> void:
 	if selected_world_element != null:
 		delete_world_element(selected_world_element, world_element_selector)
+
+func create_food_spawner(_data:FoodSpawnerData=null) -> void:
+	if _data == null:
+		_data = FoodSpawnerData.create(
+			Rect2(camera.position, Vector2(100.,100.)),
+			1., Color.WHITE, 0., 10., 60.)
+	var spawner = FoodSpawner.create(_data)
+	spawner.created_food.connect(spawn_food)
+	add_child(spawner)
+	food_spawners.append(spawner)
+	var selector:WorldElementSelector = create_world_element_selector(spawner, _data, "Comedouro")
+	food_spawner_list.add_child(selector)
+	if game_mode == "edit":
+		select_world_element(spawner, selector)
 
 func create_obstacle(_data:ObstacleData=null) -> void:
 	if _data == null:

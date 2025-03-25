@@ -22,7 +22,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Duplicar elementos do mundo.
 - [x] Criar obstáculos. (2025-03-25)
 - [ ] Alterar configurações de nascedouros.
-- [ ] Criar comedouros.
+- [x] Criar comedouros. (2025-03-25)
 - [x] Alterar configurações de comedouros. (2025-03-25)
 - [ ] Criar comedouros.
 - [ ] Finalizar simulação em caso de extinção.
