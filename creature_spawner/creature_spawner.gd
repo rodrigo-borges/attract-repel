@@ -8,7 +8,6 @@ signal created_creature(creature:CreatureData, pos:Vector2)
 
 func _ready() -> void:
 	set_z_index(-2)
-	spawn_creatures()
 
 func _draw() -> void:
 	draw_rect(data.area, data.color_mean*Color(1.,1.,1.,.05))
@@ -17,10 +16,6 @@ func _draw() -> void:
 func update() -> void:
 	if data != null:
 		queue_redraw()
-
-func spawn_creatures() -> void:
-	for _i in data.amount:
-		spawn()
 
 func spawn() -> void:
 	var color:Color = data.color_mean + Color(randfn(0., data.color_std), randfn(0., data.color_std), randfn(0., data.color_std))

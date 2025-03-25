@@ -1,0 +1,328 @@
+[gd_scene load_steps=7 format=3 uid="uid://c238lbc20111h"]
+
+[ext_resource type="PackedScene" uid="uid://bdhcqi3n33rlo" path="res://creature_card/color_ui.tscn" id="1_icb6f"]
+[ext_resource type="Script" uid="uid://o60cslwx276p" path="res://creature_spawner/creature_spawner_card.gd" id="1_jl306"]
+[ext_resource type="PackedScene" uid="uid://d2gua8cqell5g" path="res://creature_card/value_ui.tscn" id="2_jl306"]
+[ext_resource type="PackedScene" uid="uid://tfnus5sdeeeb" path="res://creature_card/vector3_ui.tscn" id="3_11h2l"]
+[ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="4_76xvv"]
+
+[sub_resource type="Theme" id="Theme_icb6f"]
+default_font_size = 12
+
+[node name="CreatureSpawnerCard" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_jl306")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Nascedouro"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Color" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("1_icb6f")]
+layout_mode = 2
+title = "Cor"
+editable = true
+
+[node name="SizeRadius" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Tamanho"
+format_string = "%.1f"
+value = 1.0
+min_value = 1.0
+max_value = 30.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="SenseRadius" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "R. de visão"
+format_string = "%.1f"
+value = 100.0
+min_value = 50.0
+max_value = 500.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Attraction" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("3_11h2l")]
+layout_mode = 2
+title = "Atração"
+x_title = "R"
+y_title = "G"
+z_title = "B"
+editable = true
+
+[node name="Intensity" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Intens."
+value = 1.0
+min_value = 1.0
+max_value = 30.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Brake" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Freio"
+value = 0.5
+min_value = 0.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Aggression" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("3_11h2l")]
+layout_mode = 2
+title = "Agressão"
+x_title = "R"
+y_title = "G"
+z_title = "B"
+editable = true
+
+[node name="AggrIntensity" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Intens."
+format_string = "%.1f"
+value = 1.0
+min_value = 1.0
+max_value = 30.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="AggrThresh" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Limiar ener."
+format_string = "%.1f"
+min_value = 0.0
+max_value = 100.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reprodução"
+label_settings = ExtResource("4_76xvv")
+
+[node name="ReprThresh" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Limiar ener."
+format_string = "%.1f"
+min_value = 0.0
+max_value = 100.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="ReprCooldown" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Descanso"
+format_string = "%.1f"
+value = 10.0
+min_value = 0.0
+max_value = 100.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="IncubationTime" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Incubação"
+format_string = "%.1f"
+value = 10.0
+min_value = 0.0
+max_value = 100.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ColorSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+custom_minimum_size = Vector2(0, 57)
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="SizeRadiusSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 10.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="SenseRadiusSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 100.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="AttractionSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="IntensitySTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 10.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="BrakeSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Control3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="AggrSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="AggrIntensitySTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 10.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="AggrThreshSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 50.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="Control4" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="ReprThreshSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 50.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="ReprCooldownSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 50.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="IncubationTimeSTD" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("2_jl306")]
+layout_mode = 2
+title = "Variação"
+format_string = "%.1f"
+min_value = 0.0
+max_value = 50.0
+editable = true
+title_min_width = 60.0
+value_min_width = 30.0
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Quantidade:"
+label_settings = ExtResource("4_76xvv")
+
+[node name="SpawnAmount" type="SpinBox" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = SubResource("Theme_icb6f")
+min_value = 1.0
+value = 1.0
+rounded = true
+
+[node name="SpawnBt" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "Gerar"

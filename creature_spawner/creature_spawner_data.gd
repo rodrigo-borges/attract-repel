@@ -2,7 +2,6 @@ extends Resource
 class_name CreatureSpawnerData
 
 @export var area:Rect2
-@export var amount:int
 @export var color_mean:Color
 @export var color_std:float
 @export var size_radius_mean:float

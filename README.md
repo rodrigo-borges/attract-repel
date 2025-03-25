@@ -21,10 +21,10 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Deletar elementos do mundo. (2025-03-24)
 - [ ] Duplicar elementos do mundo.
 - [x] Criar obstáculos. (2025-03-25)
-- [ ] Alterar configurações de nascedouros.
-- [x] Criar comedouros. (2025-03-25)
+- [x] Alterar configurações de nascedouros. (2025-03-25)
+- [ ] Criar nascedouros.
 - [x] Alterar configurações de comedouros. (2025-03-25)
-- [ ] Criar comedouros.
+- [x] Criar comedouros. (2025-03-25)
 - [ ] Finalizar simulação em caso de extinção.
 - [ ] Finalizar simulação através de um botão.
 - [ ] Exibir estatísticas ao finalizar simulação.
@@ -46,6 +46,8 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Ocultar ramificações extintas da árvore. (2025-03-14)
 - [ ] Visualizar distribuição de consumo de energia das criaturas.
 - [ ] Visualizar histórico de mutações ao longo das gerações.
+- [ ] Salvar cenários.
+- [ ] Carregar cenários salvos.
 
 ### Simulação
 

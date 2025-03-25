@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=24 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
@@ -15,11 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://4ucbadkjd5g2" path="res://family_tree/family_tree.tscn" id="8_ugd32"]
 [ext_resource type="PackedScene" uid="uid://cvf7yf84caxyx" path="res://food_spawner/food_spawner_card.tscn" id="13_b2suy"]
 [ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="14_dqqhb"]
+[ext_resource type="PackedScene" uid="uid://c238lbc20111h" path="res://creature_spawner/creature_spawner_card.tscn" id="14_h8lre"]
 
 [sub_resource type="Resource" id="Resource_ov2xu"]
 script = ExtResource("2_ov2xu")
 area = Rect2(100, 100, 1800, 300)
-amount = 20
 color_mean = Color(0.485703, 0.485704, 0.485703, 1)
 color_std = 0.1
 size_radius_mean = 10.0
@@ -217,6 +217,12 @@ show_life = false
 show_actions = false
 
 [node name="FoodSpawnerCard" parent="HUD/MarginContainer" instance=ExtResource("13_b2suy")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="CreatureSpawnerCard" parent="HUD/MarginContainer" instance=ExtResource("14_h8lre")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 0

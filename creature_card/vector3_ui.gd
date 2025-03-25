@@ -2,6 +2,8 @@
 extends Control
 class_name Vector3UI
 
+signal value_changed()
+
 @export var vec:Vector3:
 	set(value): vec = value; update_sliders()
 @export var title:String = "Vec":
@@ -22,6 +24,8 @@ class_name Vector3UI
 	set(value): min_value = value; update()
 @export var max_value:float = 1.:
 	set(value): max_value = value; update()
+@export var editable:bool = false:
+	set(value): editable = value; update()
 @onready var title_label:Label = find_child("VectorName")
 @onready var x:ValueUI = find_child("VectorX")
 @onready var y:ValueUI = find_child("VectorY")
@@ -29,6 +33,10 @@ class_name Vector3UI
 
 
 func _ready() -> void:
+	x.value_changed.connect(_on_value_changed)
+	y.value_changed.connect(_on_value_changed)
+	z.value_changed.connect(_on_value_changed)
+	update_sliders()
 	update()
 
 func update_sliders() -> void:
@@ -52,3 +60,8 @@ func update_ui(ui:ValueUI, ui_title:String) -> void:
 	ui.min_value = min_value
 	ui.max_value = max_value
 	ui.central_tick = central_tick
+	ui.editable = editable
+
+func _on_value_changed() -> void:
+	vec = Vector3(x.value, y.value, z.value)
+	value_changed.emit()
