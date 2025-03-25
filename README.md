@@ -25,6 +25,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Criar nascedouros. (2025-03-25)
 - [x] Alterar configurações de comedouros. (2025-03-25)
 - [x] Criar comedouros. (2025-03-25)
+- [x] Gerar quantidade arbitrárica de comida num comedouro. (2025-03-25)
 - [ ] Finalizar simulação em caso de extinção.
 - [ ] Finalizar simulação através de um botão.
 - [ ] Exibir estatísticas ao finalizar simulação.

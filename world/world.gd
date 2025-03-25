@@ -67,11 +67,8 @@ var followed_creature:CreatureVessel
 func _ready() -> void:
 	for c_spawner in data.creature_spawners:
 		create_creature_spawner(c_spawner)
-	
 	for f_spawner in data.food_spawners:
 		create_food_spawner(f_spawner)
-	call_deferred("spawn_initial_food")
-
 	for obs in data.obstacles:
 		create_obstacle(obs)
 
@@ -103,6 +100,7 @@ func _ready() -> void:
 	creature_spawner_card.value_changed.connect(_on_creature_spawner_card_updated)
 	creature_spawner_card.spawn_pressed.connect(_on_creature_spawner_spawn_pressed)
 	food_spawner_card.value_changed.connect(_on_food_spawner_card_updated)
+	food_spawner_card.spawn_pressed.connect(_on_food_spawner_spawn_pressed)
 	create_c_spawner_bt.pressed.connect(create_creature_spawner)
 	create_f_spawner_bt.pressed.connect(create_food_spawner)
 	create_obstacle_bt.pressed.connect(create_obstacle)
@@ -153,12 +151,6 @@ func create_world_boundary(normal:Vector2, distance:float) -> void:
 	shape.set_normal(normal)
 	shape.set_distance(distance)
 	shape_node.set_shape(shape)
-
-func spawn_initial_food() -> void:
-	for s in food_spawners:
-		var amount:int = int(data.initial_food_spawn_time * s.data.spawn_rate)
-		for _a in amount:
-			s.spawn()
 
 func spawn_food(food:Food, pos:Vector2) -> void:
 	food_container.add_child(food)
@@ -395,6 +387,12 @@ func _on_creature_spawner_spawn_pressed(amount:int) -> void:
 func _on_food_spawner_card_updated() -> void:
 	if selected_world_element is FoodSpawner:
 		selected_world_element.update()
+
+func _on_food_spawner_spawn_pressed(time:float) -> void:
+	if selected_world_element is FoodSpawner:
+		var amount:int = int(time * selected_world_element.data.spawn_rate)
+		for _a in amount:
+			selected_world_element.spawn()
 
 func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void:
 	if element == selected_world_element:

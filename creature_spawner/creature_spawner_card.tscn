@@ -316,7 +316,7 @@ label_settings = ExtResource("4_76xvv")
 layout_mode = 2
 theme = SubResource("Theme_icb6f")
 min_value = 1.0
-value = 1.0
+value = 10.0
 rounded = true
 
 [node name="SpawnBt" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]

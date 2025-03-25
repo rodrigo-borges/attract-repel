@@ -89,7 +89,6 @@ script = ExtResource("4_ocfjn")
 area = Rect2(0, 0, 2000, 2000)
 boundary_texture = ExtResource("5_ocfjn")
 boundary_width = 20.0
-initial_food_spawn_time = 60
 creature_spawners = Array[ExtResource("2_ov2xu")]([SubResource("Resource_ov2xu")])
 food_spawners = Array[ExtResource("3_mad0u")]([SubResource("Resource_mad0u"), SubResource("Resource_ocfjn")])
 obstacles = Array[ExtResource("4_mad0u")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre"), SubResource("Resource_ysn08")])

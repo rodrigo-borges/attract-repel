@@ -3,6 +3,7 @@ extends Control
 class_name FoodSpawnerCard
 
 signal value_changed()
+signal spawn_pressed(time:float)
 
 @export var data:FoodSpawnerData
 
@@ -12,6 +13,9 @@ signal value_changed()
 @onready var energy_provided:ValueUI = find_child("EnergyProvided")
 @onready var decay_time:ValueUI = find_child("DecayTime")
 
+@onready var spawn_amount:Range = find_child("SpawnAmount")
+@onready var spawn_bt:Button = find_child("SpawnBt")
+
 
 func _ready() -> void:
     color.value_changed.connect(_on_value_changed)
@@ -19,6 +23,7 @@ func _ready() -> void:
     spawn_rate.value_changed.connect(_on_value_changed)
     energy_provided.value_changed.connect(_on_value_changed)
     decay_time.value_changed.connect(_on_value_changed)
+    spawn_bt.pressed.connect(func(): spawn_pressed.emit(spawn_amount.value))
 
 func set_data(new:FoodSpawnerData) -> void:
     data = new

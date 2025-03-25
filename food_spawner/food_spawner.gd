@@ -6,12 +6,12 @@ signal created_food(food:Food, pos:Vector2)
 @export var data:FoodSpawnerData
 var spawn_timer:Timer
 
+
 func _ready() -> void:
 	spawn_timer = Timer.new()
 	add_child(spawn_timer)
 	spawn_timer.timeout.connect(spawn)
 	spawn_timer.start(1./data.spawn_rate)
-
 	set_z_index(-2)
 
 func _draw() -> void:
