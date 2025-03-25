@@ -19,7 +19,8 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Variar surgimento de comida baseado em parâmetros. (2025-03-20)
 - [x] Mover e deformar elementos do mundo. (2025-03-24)
 - [x] Deletar elementos do mundo. (2025-03-24)
-- [ ] Criar obstáculos.
+- [ ] Duplicar elementos do mundo.
+- [x] Criar obstáculos. (2025-03-25)
 - [ ] Alterar configurações de nascedouros.
 - [ ] Criar comedouros.
 - [ ] Alterar configurações de comedouros.

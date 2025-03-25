@@ -18,6 +18,9 @@ var obstacles:Array[Obstacle]
 @onready var creature_spawner_list:Control = find_child("CreatureSpawners")
 @onready var food_spawner_list:Control = find_child("FoodSpawners")
 @onready var obstacle_list:Control = find_child("Obstacles")
+@onready var create_c_spawner_bt:Button = find_child("CreateCSpawnerBt")
+@onready var create_f_spawner_bt:Button = find_child("CreateFSpawnerBt")
+@onready var create_obstacle_bt:Button = find_child("CreateObstacleBt")
 var selected_world_element:Node2D
 var world_element_selector:WorldElementSelector
 var editable_rect:EditableRect
@@ -78,12 +81,8 @@ func _ready() -> void:
 	call_deferred("spawn_initial_food")
 
 	for obs in data.obstacles:
-		var obstacle = Obstacle.create(obs)
-		add_child(obstacle)
-		obstacles.append(obstacle)
-		var selector:WorldElementSelector = create_world_element_selector(obstacle, obs, "Obstáculo")
-		obstacle_list.add_child(selector)
-	
+		create_obstacle(obs)
+
 	create_world_boundary(Vector2.DOWN, data.area.position.y)
 	create_world_boundary(Vector2.UP, -data.area.end.y)
 	create_world_boundary(Vector2.LEFT, -data.area.end.x)
@@ -108,6 +107,8 @@ func _ready() -> void:
 	camera.area = data.area
 	camera.set_position(data.area.position + data.area.size/2.)
 	camera.zoom_changed.connect(_on_world_camera_zoom_changed)
+
+	create_obstacle_bt.pressed.connect(create_obstacle)
 
 	toggle_sim_mode()
 
@@ -350,6 +351,7 @@ func select_world_element(element:Node2D, selector:WorldElementSelector) -> void
 			selected_world_element.update()
 			selected_world_element.set_visible(true))
 		selected_world_element = element
+		selector.select_button.set_pressed_no_signal(true)
 		world_element_selector = selector
 
 func deselect_world_element() -> void:
@@ -385,6 +387,19 @@ func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void
 func delete_current_world_element() -> void:
 	if selected_world_element != null:
 		delete_world_element(selected_world_element, world_element_selector)
+
+func create_obstacle(_data:ObstacleData=null) -> void:
+	if _data == null:
+		_data = ObstacleData.create(
+			Rect2(camera.position, Vector2(100.,100.)),
+			data.boundary_texture)
+	var obstacle = Obstacle.create(_data)
+	add_child(obstacle)
+	obstacles.append(obstacle)
+	var selector:WorldElementSelector = create_world_element_selector(obstacle, _data, "Obstáculo")
+	obstacle_list.add_child(selector)
+	if game_mode == "edit":
+		select_world_element(obstacle, selector)
 
 func _on_world_camera_zoom_changed() -> void:
 	if editable_rect != null:

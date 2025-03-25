@@ -329,7 +329,7 @@ label_settings = ExtResource("14_dqqhb")
 [node name="Obstacles" type="VBoxContainer" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 
-[node name="CreateObstableBt" type="Button" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
+[node name="CreateObstacleBt" type="Button" parent="HUD/MarginContainer/WorldElements/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
