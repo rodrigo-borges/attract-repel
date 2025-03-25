@@ -2,6 +2,8 @@
 extends Control
 class_name ValueUI
 
+signal value_changed()
+
 @export var title:String = "X":
 	set(value): title = value; update()
 @export var format_string:String = "%.2f":
@@ -30,6 +32,7 @@ class_name ValueUI
 
 
 func _ready() -> void:
+	slider.drag_ended.connect(_on_drag_ended)
 	update()
 
 func update_value() -> void:
@@ -53,3 +56,8 @@ func update() -> void:
 		value_label.set_custom_minimum_size(Vector2(value_min_width, 0.))
 		value_label.set_h_size_flags(
 			SizeFlags.SIZE_SHRINK_END + SizeFlags.SIZE_EXPAND*int(!show_slider))
+
+func _on_drag_ended(_value_changed:bool) -> void:
+	if _value_changed:
+		value = slider.value
+		value_changed.emit()

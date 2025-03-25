@@ -23,7 +23,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Criar obstáculos. (2025-03-25)
 - [ ] Alterar configurações de nascedouros.
 - [ ] Criar comedouros.
-- [ ] Alterar configurações de comedouros.
+- [x] Alterar configurações de comedouros. (2025-03-25)
 - [ ] Criar comedouros.
 - [ ] Finalizar simulação em caso de extinção.
 - [ ] Finalizar simulação através de um botão.

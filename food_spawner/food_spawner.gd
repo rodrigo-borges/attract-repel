@@ -20,6 +20,7 @@ func _draw() -> void:
 
 func update() -> void:
 	if data != null:
+		spawn_timer.set_wait_time(1./data.spawn_rate)
 		queue_redraw()
 
 func spawn() -> void:

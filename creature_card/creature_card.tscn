@@ -78,6 +78,7 @@ value_min_width = 30.0
 
 [node name="Color" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("1_yku8q")]
 layout_mode = 2
+editable = null
 
 [node name="SizeRadius" parent="MarginContainer/VBoxContainer/Genetics" instance=ExtResource("4_khe27")]
 layout_mode = 2

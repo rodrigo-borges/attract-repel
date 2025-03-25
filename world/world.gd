@@ -21,6 +21,7 @@ var obstacles:Array[Obstacle]
 @onready var create_c_spawner_bt:Button = find_child("CreateCSpawnerBt")
 @onready var create_f_spawner_bt:Button = find_child("CreateFSpawnerBt")
 @onready var create_obstacle_bt:Button = find_child("CreateObstacleBt")
+@onready var food_spawner_card:FoodSpawnerCard = find_child("FoodSpawnerCard")
 var selected_world_element:Node2D
 var world_element_selector:WorldElementSelector
 var editable_rect:EditableRect
@@ -108,6 +109,7 @@ func _ready() -> void:
 	camera.set_position(data.area.position + data.area.size/2.)
 	camera.zoom_changed.connect(_on_world_camera_zoom_changed)
 
+	food_spawner_card.value_changed.connect(_on_food_spawner_card_updated)
 	create_obstacle_bt.pressed.connect(create_obstacle)
 
 	toggle_sim_mode()
@@ -353,6 +355,9 @@ func select_world_element(element:Node2D, selector:WorldElementSelector) -> void
 		selected_world_element = element
 		selector.select_button.set_pressed_no_signal(true)
 		world_element_selector = selector
+		if element is FoodSpawner:
+			food_spawner_card.set_data(element.data)
+			food_spawner_card.set_visible(true)
 
 func deselect_world_element() -> void:
 	if selected_world_element != null:
@@ -360,6 +365,7 @@ func deselect_world_element() -> void:
 			editable_rect.queue_free()
 			editable_rect = null
 		selected_world_element = null
+		food_spawner_card.set_visible(false)
 	if world_element_selector != null:
 		world_element_selector.select_button.set_pressed_no_signal(false)
 		world_element_selector = null
@@ -377,6 +383,10 @@ func _on_world_element_button_toggled(toggled_on:bool, world_element:Node2D, sel
 	else:
 		if selected_world_element == world_element:
 			deselect_world_element()
+
+func _on_food_spawner_card_updated() -> void:
+	if selected_world_element is FoodSpawner:
+		selected_world_element.update()
 
 func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void:
 	if element == selected_world_element:
@@ -417,5 +427,6 @@ func toggle_edit_mode() -> void:
 func toggle_sim_mode() -> void:
 	deselect_world_element()
 	world_elements_container.set_visible(false)
+	food_spawner_card.set_visible(false)
 	charts.set_visible(true)
 	game_mode = "sim"
