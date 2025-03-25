@@ -66,12 +66,7 @@ var followed_creature:CreatureVessel
 
 func _ready() -> void:
 	for c_spawner in data.creature_spawners:
-		var spawner = CreatureSpawner.create(c_spawner)
-		spawner.created_creature.connect(spawn_creature)
-		add_child(spawner)
-		creature_spawners.append(spawner)
-		var selector:WorldElementSelector = create_world_element_selector(spawner, c_spawner, "Nascedouro")
-		creature_spawner_list.add_child(selector)
+		create_creature_spawner(c_spawner)
 	
 	for f_spawner in data.food_spawners:
 		create_food_spawner(f_spawner)
@@ -108,6 +103,7 @@ func _ready() -> void:
 	creature_spawner_card.value_changed.connect(_on_creature_spawner_card_updated)
 	creature_spawner_card.spawn_pressed.connect(_on_creature_spawner_spawn_pressed)
 	food_spawner_card.value_changed.connect(_on_food_spawner_card_updated)
+	create_c_spawner_bt.pressed.connect(create_creature_spawner)
 	create_f_spawner_bt.pressed.connect(create_food_spawner)
 	create_obstacle_bt.pressed.connect(create_obstacle)
 
@@ -409,6 +405,19 @@ func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void
 func delete_current_world_element() -> void:
 	if selected_world_element != null:
 		delete_world_element(selected_world_element, world_element_selector)
+
+func create_creature_spawner(_data:CreatureSpawnerData=null) -> void:
+	if _data == null:
+		_data = CreatureSpawnerData.new()
+		_data.area = Rect2(camera.position, Vector2(100.,100.))
+	var spawner = CreatureSpawner.create(_data)
+	spawner.created_creature.connect(spawn_creature)
+	add_child(spawner)
+	creature_spawners.append(spawner)
+	var selector:WorldElementSelector = create_world_element_selector(spawner, _data, "Nascedouro")
+	creature_spawner_list.add_child(selector)
+	if game_mode == "edit":
+		select_world_element(spawner, selector)
 
 func create_food_spawner(_data:FoodSpawnerData=null) -> void:
 	if _data == null:

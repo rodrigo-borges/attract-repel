@@ -22,7 +22,7 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Duplicar elementos do mundo.
 - [x] Criar obstáculos. (2025-03-25)
 - [x] Alterar configurações de nascedouros. (2025-03-25)
-- [ ] Criar nascedouros.
+- [x] Criar nascedouros. (2025-03-25)
 - [x] Alterar configurações de comedouros. (2025-03-25)
 - [x] Criar comedouros. (2025-03-25)
 - [ ] Finalizar simulação em caso de extinção.
@@ -64,3 +64,4 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] O dropdown de marcadores está mostrando a lista duplicada, sendo que clicar em uma opção da segunda metade lança erro de posição fora da lista. (2025-03-18)
 - [ ] Algumas colisões com comida não estão sendo processadas, de forma que a criatura fica parada escorada na comida.
 - [ ] Depois de algumas dezenas de gerações, a árvore genealógica está travando o jogo e causando crashes (só aparentemente, porque não é lançado nenhum erro). Redesenhar toda a árvore em todo evento de nascimento ou morte, especificamente com a chamada de `get_descendents()`, é o maior gargalo de desempenho segundo o profiler.
+- [ ] Criaturas podem nascer dentro ou através de obstáculos. Isso acontece porque os filhos nascem a uma distância aleatória do pai sem nenhuma checagem de viabilidade. Com a inclusão do tempo de incubação, talvez a solução mais simples seja fazer com que os filhos nasçam na mesma posição do pai.
