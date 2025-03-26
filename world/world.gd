@@ -4,9 +4,6 @@ class_name World
 @export var data:WorldData
 var creatures:Array[CreatureVessel]
 var foods:Array[Food]
-var creature_spawners:Array[CreatureSpawner]
-var food_spawners:Array[FoodSpawner]
-var obstacles:Array[Obstacle]
 
 @onready var boundaries:StaticBody2D = find_child("Boundaries")
 @onready var creature_container:Node2D = find_child("Creatures")
@@ -365,6 +362,7 @@ func create_world_element_selector(element:Node2D, _data:Resource, text:String) 
 	var selector = WorldElementSelector.create(_data)
 	selector.text = text
 	selector.toggled.connect(_on_world_element_button_toggled.bind(element, selector))
+	selector.duplicated.connect(duplicate_world_element.bind(element))
 	selector.deleted.connect(delete_world_element.bind(element, selector))
 	return selector
 
@@ -394,9 +392,26 @@ func _on_food_spawner_spawn_pressed(time:float) -> void:
 		for _a in amount:
 			selected_world_element.spawn()
 
+func duplicate_world_element(element:Node2D) -> void:
+	if element is CreatureSpawner:
+		var _data:CreatureSpawnerData = element.data.duplicate(true)
+		create_creature_spawner(_data)
+	elif element is FoodSpawner:
+		var _data:FoodSpawnerData = element.data.duplicate(true)
+		create_food_spawner(_data)
+	elif element is Obstacle:
+		var _data:ObstacleData = element.data.duplicate(true)
+		create_obstacle(_data)
+
 func delete_world_element(element:Node2D, selector:WorldElementSelector) -> void:
 	if element == selected_world_element:
 		deselect_world_element()
+	if element is CreatureSpawner:
+		data.creature_spawners.erase(element.data)
+	elif element is FoodSpawner:
+		data.food_spawners.erase(element.data)
+	elif element is Obstacle:
+		data.obstacles.erase(element.data)
 	element.queue_free()
 	selector.queue_free()
 
@@ -411,7 +426,8 @@ func create_creature_spawner(_data:CreatureSpawnerData=null) -> void:
 	var spawner = CreatureSpawner.create(_data)
 	spawner.created_creature.connect(spawn_creature)
 	add_child(spawner)
-	creature_spawners.append(spawner)
+	if _data not in data.creature_spawners:
+		data.creature_spawners.append(_data)
 	var selector:WorldElementSelector = create_world_element_selector(spawner, _data, "Nascedouro")
 	creature_spawner_list.add_child(selector)
 	if game_mode == "edit":
@@ -425,7 +441,8 @@ func create_food_spawner(_data:FoodSpawnerData=null) -> void:
 	var spawner = FoodSpawner.create(_data)
 	spawner.created_food.connect(spawn_food)
 	add_child(spawner)
-	food_spawners.append(spawner)
+	if _data not in data.food_spawners:
+		data.food_spawners.append(_data)
 	var selector:WorldElementSelector = create_world_element_selector(spawner, _data, "Comedouro")
 	food_spawner_list.add_child(selector)
 	if game_mode == "edit":
@@ -438,7 +455,8 @@ func create_obstacle(_data:ObstacleData=null) -> void:
 			data.boundary_texture)
 	var obstacle = Obstacle.create(_data)
 	add_child(obstacle)
-	obstacles.append(obstacle)
+	if _data not in data.obstacles:
+		data.obstacles.append(_data)
 	var selector:WorldElementSelector = create_world_element_selector(obstacle, _data, "Obstáculo")
 	obstacle_list.add_child(selector)
 	if game_mode == "edit":

@@ -10,8 +10,16 @@ func _ready() -> void:
 	set_z_index(-2)
 
 func _draw() -> void:
+	var x0:float = data.area.position.x
+	var y0:float = data.area.position.y
+	var x1:float = data.area.end.x
+	var y1:float = data.area.end.y
+	var dash_length:float = 10.
+	draw_dashed_line(Vector2(x0, y0), Vector2(x1, y0), data.color_mean, -1., dash_length)
+	draw_dashed_line(Vector2(x1, y0), Vector2(x1, y1), data.color_mean, -1., dash_length)
+	draw_dashed_line(Vector2(x1, y1), Vector2(x0, y1), data.color_mean, -1., dash_length)
+	draw_dashed_line(Vector2(x0, y1), Vector2(x0, y0), data.color_mean, -1., dash_length)
 	draw_rect(data.area, data.color_mean*Color(1.,1.,1.,.05))
-	draw_rect(data.area, data.color_mean, false)
 
 func update() -> void:
 	if data != null:
