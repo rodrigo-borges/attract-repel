@@ -51,7 +51,8 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Carregar cenários salvos. (2025-03-26)
 - [x] Visualizar lista de cenários salvos. (2025-03-26)
 - [ ] Visualizar prévia de um cenário.
-- [ ] Deletar cenários salvos.
+- [x] Deletar cenários salvos. (2025-03-26)
+- [ ] Carregar cenários pré-configurados.
 - [ ] Navegar por um menu inicial.
 
 ### Simulação
@@ -64,7 +65,8 @@ Lista de implementações desejadas, sem ordem específica.
 
 ### Problemas
 
-- [x] Quando o jogo está pausado, o controle de zoom e movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.` para controle de pausa, pois `get_tree().paused` estava impedindo interações com a UI. (2025-03-14)
+- [x] Quando o jogo está pausado, o controle de zoom não funciona. O motivo é o uso do `Engine.time_scale = 0.` para controle de pausa, pois `get_tree().paused` estava impedindo interações com a UI. (2025-03-14)
+- [ ] Quando o jogo está pausado, o movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.`.
 - [x] Toda atualização na árvore genealógica remove o hover do mouse, interrompendo a análise visual. (2025-03-17)
 - [x] O dropdown de marcadores está mostrando a lista duplicada, sendo que clicar em uma opção da segunda metade lança erro de posição fora da lista. (2025-03-18)
 - [ ] Algumas colisões com comida não estão sendo processadas, de forma que a criatura fica parada escorada na comida.

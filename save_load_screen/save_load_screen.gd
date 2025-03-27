@@ -58,7 +58,11 @@ func save_world() -> void:
 	if world_data != null:
 		world_data.resource_name = save_name_edit.text
 		var world_dict:Dictionary = world_data.to_dict()
-		var file_name:String = save_name_edit.text + ".json"
+		var world_name:String = save_name_edit.text
+		var file_name:String = world_name + ".json"
+		var file_exists:bool = FileAccess.file_exists(worlds_dir + file_name)
+		if file_exists:
+			delete_world(world_selectors.find_child(world_name))
 		var file_text:String = JSON.stringify(world_dict)
 		var file:FileAccess = FileAccess.open("%s%s" % [worlds_dir, file_name], FileAccess.WRITE)
 		file.store_string(file_text)
@@ -71,10 +75,19 @@ func load_world() -> void:
 
 func create_selector(data:WorldData) -> void:
 	var selector = WorldSelector.create(data)
+	selector.name = data.resource_name
 	world_selectors.add_child(selector)
+	selector.set_owner(world_selectors)
 	selector.toggled.connect(_on_selector_toggled.bind(selector))
+	selector.deleted.connect(delete_world.bind(selector))
 
 func _on_selector_toggled(toggled_on:bool, selector:WorldSelector) -> void:
 	if toggled_on:
 		current_selector = selector
+		save_name_edit.set_text(selector.name)
 	load_bt.set_disabled(!is_instance_valid(current_selector))
+
+func delete_world(selector:WorldSelector) -> void:
+	var file_name:String = selector.world_data.resource_name + ".json"
+	DirAccess.remove_absolute("%s%s" % [worlds_dir, file_name])
+	selector.queue_free()
