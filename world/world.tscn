@@ -90,7 +90,7 @@ script = ExtResource("4_ocfjn")
 area = Rect2(0, 0, 2000, 2000)
 boundary_texture = ExtResource("5_ocfjn")
 boundary_width = 20.0
-creature_spawners = [SubResource("Resource_ov2xu")]
+creature_spawners = Array[ExtResource("2_ov2xu")]([SubResource("Resource_ov2xu")])
 food_spawners = Array[ExtResource("3_mad0u")]([SubResource("Resource_mad0u"), SubResource("Resource_ocfjn")])
 obstacles = Array[ExtResource("4_mad0u")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre"), SubResource("Resource_ysn08")])
 metadata/_custom_type_script = "uid://ddhs3u0gu31t2"
@@ -228,7 +228,6 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-data = null
 
 [node name="TreeContainer" type="PanelContainer" parent="HUD/MarginContainer"]
 layout_mode = 2

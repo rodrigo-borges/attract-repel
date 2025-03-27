@@ -88,6 +88,7 @@ func _on_selector_toggled(toggled_on:bool, selector:WorldSelector) -> void:
 	load_bt.set_disabled(!is_instance_valid(current_selector))
 
 func delete_world(selector:WorldSelector) -> void:
+	selector.set_name("Deleted")
 	var file_name:String = selector.world_data.resource_name + ".json"
 	DirAccess.remove_absolute("%s%s" % [worlds_dir, file_name])
 	selector.queue_free()

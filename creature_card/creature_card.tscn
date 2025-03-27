@@ -141,7 +141,7 @@ value_min_width = 30.0
 layout_mode = 2
 title = "Freio"
 value = 0.5
-min_value = 0.0
+min_value = 0.1
 title_min_width = 60.0
 value_min_width = 30.0
 

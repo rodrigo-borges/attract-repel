@@ -45,7 +45,7 @@ var reproduction_energy_threshold:float:
 var reproduction_cooldown:float:
 	set(value): reproduction_cooldown = maxf(value, 0.)
 var brake:float:
-	set(value): brake = clampf(value, 0., 1.)
+	set(value): brake = clampf(value, .1, 1.)
 var incubation_time:float:
 	set(value): incubation_time = maxf(value, 0.)
 var generation:int

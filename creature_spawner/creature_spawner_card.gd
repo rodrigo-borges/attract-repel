@@ -15,6 +15,8 @@ signal spawn_pressed(amount:int)
 @onready var sense_radius_std:ValueUI = find_child("SenseRadiusSTD")
 @onready var attraction_mean:Vector3UI = find_child("Attraction")
 @onready var attraction_std:ValueUI = find_child("AttractionSTD")
+@onready var intensity_mean:ValueUI = find_child("Intensity")
+@onready var intensity_std:ValueUI = find_child("IntensitySTD")
 @onready var aggression_mean:Vector3UI = find_child("Aggression")
 @onready var aggression_std:ValueUI = find_child("AggrSTD")
 @onready var aggression_intensity_mean:ValueUI = find_child("AggrIntensity")
@@ -43,6 +45,8 @@ func _ready() -> void:
 	sense_radius_std.value_changed.connect(_on_value_changed)
 	attraction_mean.value_changed.connect(_on_value_changed)
 	attraction_std.value_changed.connect(_on_value_changed)
+	intensity_mean.value_changed.connect(_on_value_changed)
+	intensity_std.value_changed.connect(_on_value_changed)
 	aggression_mean.value_changed.connect(_on_value_changed)
 	aggression_std.value_changed.connect(_on_value_changed)
 	aggression_intensity_mean.value_changed.connect(_on_value_changed)
@@ -73,6 +77,8 @@ func update() -> void:
 		sense_radius_std.value = data.sense_radius_std
 		attraction_mean.vec = data.attraction_mean
 		attraction_std.value = data.attraction_std
+		intensity_mean.value = data.intensity_mean
+		intensity_std.value = data.intensity_std
 		aggression_mean.vec = data.aggression_mean
 		aggression_std.value = data.aggression_std
 		aggression_intensity_mean.value = data.aggression_intensity_mean
@@ -98,6 +104,8 @@ func update_data() -> void:
 		data.sense_radius_std = sense_radius_std.value
 		data.attraction_mean = attraction_mean.vec
 		data.attraction_std = attraction_std.value
+		data.intensity_mean = intensity_mean.value
+		data.intensity_std = intensity_std.value
 		data.aggression_mean = aggression_mean.vec
 		data.aggression_std = aggression_std.value
 		data.aggression_intensity_mean = aggression_intensity_mean.value
