@@ -1,6 +1,8 @@
 extends Node2D
 class_name World
 
+static var scene_path:String = "res://world/world.tscn"
+
 @export var data:WorldData
 var creatures:Array[CreatureVessel]
 var foods:Array[Food]
@@ -23,6 +25,8 @@ var foods:Array[Food]
 var selected_world_element:Node2D
 var world_element_selector:WorldElementSelector
 var editable_rect:EditableRect
+
+@onready var save_load_screen:SaveLoadScreen = find_child("SaveLoadScreen")
 
 var game_modes:Array[String] = ["sim", "edit"]
 var game_mode:String = "sim"
@@ -102,6 +106,10 @@ func _ready() -> void:
 	create_f_spawner_bt.pressed.connect(create_food_spawner)
 	create_obstacle_bt.pressed.connect(create_obstacle)
 
+	save_load_screen.world_data = data
+	save_load_screen.set_visible(false)
+	save_load_screen.world_loaded.connect(_on_world_loaded)
+
 	toggle_edit_mode()
 
 func _process(_delta: float) -> void:
@@ -113,6 +121,13 @@ func _unhandled_input(event:InputEvent) -> void:
 			toggle_edit_mode()
 		elif game_mode == "edit":
 			toggle_sim_mode()
+	elif event.is_action_pressed("save"):
+		save_load_screen.toggle_save_mode()
+		save_load_screen.set_visible(true)
+	elif event.is_action_pressed("load"):
+		save_load_screen.toggle_load_mode()
+		save_load_screen.set_visible(true)
+
 	if game_mode == "sim":
 		if event.is_action_pressed("left_click"):
 			if hovered_creature != null:
@@ -480,3 +495,9 @@ func toggle_sim_mode() -> void:
 	world_elements_container.set_visible(false)
 	charts.set_visible(true)
 	game_mode = "sim"
+
+func _on_world_loaded(new_data:WorldData) -> void:
+	var new_world:World = load(scene_path).instantiate()
+	new_world.data = new_data
+	get_tree().root.add_child(new_world)
+	queue_free()

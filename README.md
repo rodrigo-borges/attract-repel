@@ -47,8 +47,11 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Ocultar ramificações extintas da árvore. (2025-03-14)
 - [ ] Visualizar distribuição de consumo de energia das criaturas.
 - [ ] Visualizar histórico de mutações ao longo das gerações.
-- [ ] Salvar cenários.
-- [ ] Carregar cenários salvos.
+- [x] Salvar cenários. (2025-03-26)
+- [x] Carregar cenários salvos. (2025-03-26)
+- [x] Visualizar lista de cenários salvos. (2025-03-26)
+- [ ] Visualizar prévia de um cenário.
+- [ ] Deletar cenários salvos.
 - [ ] Navegar por um menu inicial.
 
 ### Simulação

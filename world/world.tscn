@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=25 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cvf7yf84caxyx" path="res://food_spawner/food_spawner_card.tscn" id="13_b2suy"]
 [ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="14_dqqhb"]
 [ext_resource type="PackedScene" uid="uid://c238lbc20111h" path="res://creature_spawner/creature_spawner_card.tscn" id="14_h8lre"]
+[ext_resource type="PackedScene" uid="uid://cwmxc1u65epmp" path="res://save_load_screen/save_load_screen.tscn" id="17_ysn08"]
 
 [sub_resource type="Resource" id="Resource_ov2xu"]
 script = ExtResource("2_ov2xu")
@@ -89,7 +90,7 @@ script = ExtResource("4_ocfjn")
 area = Rect2(0, 0, 2000, 2000)
 boundary_texture = ExtResource("5_ocfjn")
 boundary_width = 20.0
-creature_spawners = Array[ExtResource("2_ov2xu")]([SubResource("Resource_ov2xu")])
+creature_spawners = [SubResource("Resource_ov2xu")]
 food_spawners = Array[ExtResource("3_mad0u")]([SubResource("Resource_mad0u"), SubResource("Resource_ocfjn")])
 obstacles = Array[ExtResource("4_mad0u")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre"), SubResource("Resource_ysn08")])
 metadata/_custom_type_script = "uid://ddhs3u0gu31t2"
@@ -227,6 +228,7 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+data = null
 
 [node name="TreeContainer" type="PanelContainer" parent="HUD/MarginContainer"]
 layout_mode = 2
@@ -347,3 +349,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 text = "Criar"
+
+[node name="SaveLoadScreen" parent="HUD/MarginContainer" instance=ExtResource("17_ysn08")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

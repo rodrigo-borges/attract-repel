@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://hlex37u3fdq4"]
+
+[ext_resource type="Script" uid="uid://jujeuxwmciko" path="res://world/world_selector.gd" id="1_7tstm"]
+[ext_resource type="ButtonGroup" uid="uid://wmgmku36owfa" path="res://world/world_bt_group.tres" id="1_drpw0"]
+[ext_resource type="Texture2D" uid="uid://b2xc40ghm8vi5" path="res://world_element/trash.png" id="2_7tstm"]
+
+[node name="WorldSelector" type="HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_7tstm")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+button_group = ExtResource("1_drpw0")
+text = "Nome do cenário"
+alignment = 0
+autowrap_mode = 3
+
+[node name="Delete" type="Button" parent="."]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+icon = ExtResource("2_7tstm")
+icon_alignment = 1

@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwmxc1u65epmp"]
+
+[ext_resource type="Texture2D" uid="uid://c0hah5mh1dov6" path="res://world_element/x.png" id="1_3urwo"]
+[ext_resource type="Script" uid="uid://c7txah626tind" path="res://save_load_screen/save_load_screen.gd" id="1_nofeo"]
+
+[node name="SaveLoadScreen" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_nofeo")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScreenTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Salvar cenário"
+
+[node name="ExitBt" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+icon = ExtResource("1_3urwo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="WorldList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Visualização"
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 2
+
+[node name="SaveBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/SaveBar"]
+layout_mode = 2
+text = "Nome:"
+
+[node name="SaveNameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/SaveBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 1
+text = "NovoCenario"
+max_length = 20
+
+[node name="SaveBt" type="Button" parent="MarginContainer/VBoxContainer/SaveBar"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+text = "Salvar"
+
+[node name="LoadBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadBt" type="Button" parent="MarginContainer/VBoxContainer/LoadBar"]
+layout_mode = 2
+size_flags_horizontal = 6
+focus_mode = 0
+disabled = true
+text = "Carregar"
