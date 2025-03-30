@@ -11,6 +11,8 @@ config_version=5
 [application]
 
 config/name="attract-repel"
+config/version="0.0.1"
+run/main_scene="uid://b4v0nb6jhi5kw"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

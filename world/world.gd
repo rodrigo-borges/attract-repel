@@ -497,7 +497,11 @@ func toggle_sim_mode() -> void:
 	game_mode = "sim"
 
 func _on_world_loaded(new_data:WorldData) -> void:
-	var new_world:World = load(scene_path).instantiate()
-	new_world.data = new_data
+	var new_world = World.create(new_data)
 	get_tree().root.add_child(new_world)
 	queue_free()
+
+static func create(_data:WorldData) -> World:
+	var world:World = load(scene_path).instantiate()
+	world.data = _data
+	return world

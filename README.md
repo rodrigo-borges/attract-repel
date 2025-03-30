@@ -53,7 +53,8 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Visualizar prévia de um cenário.
 - [x] Deletar cenários salvos. (2025-03-26)
 - [ ] Carregar cenários pré-configurados.
-- [ ] Navegar por um menu inicial.
+- [x] Navegar por um menu inicial. (2025-03-30)
+- [ ] Mostrar obstáculos no mini-mapa.
 
 ### Simulação
 
