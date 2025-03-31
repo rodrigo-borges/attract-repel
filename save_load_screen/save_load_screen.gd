@@ -1,7 +1,7 @@
 extends Control
 class_name SaveLoadScreen
 
-signal closed()
+signal close_pressed()
 signal world_loaded(world_data:WorldData)
 
 @export var worlds_dir:String = "user://save/worlds/"
@@ -20,10 +20,20 @@ var world_data:WorldData
 func _ready() -> void:    
 	create_worlds_dir()
 	list_worlds()
-	exit_bt.pressed.connect(func():set_visible(false); closed.emit())
+	exit_bt.pressed.connect(close_pressed.emit)
 	save_name_edit.text_changed.connect(_on_name_edit_text_changed.unbind(1))
 	save_bt.pressed.connect(save_world)
 	load_bt.pressed.connect(load_world)
+
+func open(mode:String) -> void:
+	if mode == "save":
+		toggle_save_mode()
+	elif mode == "load":
+		toggle_load_mode()
+	set_visible(true)
+
+func close() -> void:
+	set_visible(false)
 
 func toggle_save_mode() -> void:
 	screen_title.set_text("Salvar cenário")

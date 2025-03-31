@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=26 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cvf7yf84caxyx" path="res://food_spawner/food_spawner_card.tscn" id="13_b2suy"]
 [ext_resource type="LabelSettings" uid="uid://bse0aa8ieynyj" path="res://world/hud/category_label_setting.tres" id="14_dqqhb"]
 [ext_resource type="PackedScene" uid="uid://c238lbc20111h" path="res://creature_spawner/creature_spawner_card.tscn" id="14_h8lre"]
+[ext_resource type="PackedScene" uid="uid://bisllsvrnukgr" path="res://pause_menu/pause_menu.tscn" id="17_m0cxt"]
 [ext_resource type="PackedScene" uid="uid://cwmxc1u65epmp" path="res://save_load_screen/save_load_screen.tscn" id="17_ysn08"]
 
 [sub_resource type="Resource" id="Resource_ov2xu"]
@@ -348,6 +349,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 text = "Criar"
+
+[node name="PauseMenu" parent="HUD/MarginContainer" instance=ExtResource("17_m0cxt")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="SaveLoadScreen" parent="HUD/MarginContainer" instance=ExtResource("17_ysn08")]
 layout_mode = 2

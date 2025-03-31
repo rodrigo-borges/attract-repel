@@ -55,6 +55,8 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Carregar cenários pré-configurados.
 - [x] Navegar por um menu inicial. (2025-03-30)
 - [ ] Mostrar obstáculos no mini-mapa.
+- [ ] Selecionar e desselecionar elementos de mundo clicando neles.
+- [x] Navegar por um menu de pausa com opções de salvar, carregar e sair. [2025-03-31]
 
 ### Simulação
 
@@ -73,3 +75,4 @@ Lista de implementações desejadas, sem ordem específica.
 - [ ] Algumas colisões com comida não estão sendo processadas, de forma que a criatura fica parada escorada na comida.
 - [ ] Depois de algumas dezenas de gerações, a árvore genealógica está travando o jogo e causando crashes (só aparentemente, porque não é lançado nenhum erro). Redesenhar toda a árvore em todo evento de nascimento ou morte, especificamente com a chamada de `get_descendents()`, é o maior gargalo de desempenho segundo o profiler.
 - [ ] Criaturas podem nascer dentro ou através de obstáculos. Isso acontece porque os filhos nascem a uma distância aleatória do pai sem nenhuma checagem de viabilidade. Com a inclusão do tempo de incubação, talvez a solução mais simples seja fazer com que os filhos nasçam na mesma posição do pai.
+- [x] Escrever nomes de cenário com espaço pausa/retoma a simulação. [2025-03-31]

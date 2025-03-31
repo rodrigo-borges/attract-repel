@@ -26,13 +26,14 @@ var selected_world_element:Node2D
 var world_element_selector:WorldElementSelector
 var editable_rect:EditableRect
 
+@onready var pause_menu:PauseMenu = find_child("PauseMenu")
 @onready var save_load_screen:SaveLoadScreen = find_child("SaveLoadScreen")
+@onready var clock:Clock = find_child("Clock")
+var current_gen:int = 0
+var pause_allowed:bool = true
 
 var game_modes:Array[String] = ["sim", "edit"]
 var game_mode:String = "sim"
-
-@onready var clock:Clock = find_child("Clock")
-var current_gen:int = 0
 
 @export var track_period:float = 1.
 var track_timer:Timer
@@ -106,9 +107,16 @@ func _ready() -> void:
 	create_f_spawner_bt.pressed.connect(create_food_spawner)
 	create_obstacle_bt.pressed.connect(create_obstacle)
 
+	pause_menu.set_visible(false)
+	pause_menu.resume_pressed.connect(close_pause_menu)
+	pause_menu.save_pressed.connect(save_load_screen.open.bind("save"))
+	pause_menu.load_pressed.connect(save_load_screen.open.bind("load"))
+	pause_menu.exit_pressed.connect(MainMenu.load.bind(self))
 	save_load_screen.world_data = data
 	save_load_screen.set_visible(false)
+	save_load_screen.close_pressed.connect(save_load_screen.close)
 	save_load_screen.world_loaded.connect(_on_world_loaded)
+	clock.pause_bt_toggled.connect(toggle_pause)
 
 	toggle_edit_mode()
 
@@ -121,12 +129,6 @@ func _unhandled_input(event:InputEvent) -> void:
 			toggle_edit_mode()
 		elif game_mode == "edit":
 			toggle_sim_mode()
-	elif event.is_action_pressed("save"):
-		save_load_screen.toggle_save_mode()
-		save_load_screen.set_visible(true)
-	elif event.is_action_pressed("load"):
-		save_load_screen.toggle_load_mode()
-		save_load_screen.set_visible(true)
 
 	if game_mode == "sim":
 		if event.is_action_pressed("left_click"):
@@ -135,15 +137,24 @@ func _unhandled_input(event:InputEvent) -> void:
 			else:
 				unfeature_creature()
 		if event.is_action_pressed("escape"):
-			unfeature_creature()
+			if featured_creature == null:
+				open_pause_menu()
+			else:
+				unfeature_creature()
 		if event.is_action_pressed("follow"):
 			if selected_creature != null:
 				toggle_follow(followed_creature == null)
 	elif game_mode == "edit":
 		if event.is_action_pressed("escape"):
-			deselect_world_element()
+			if selected_world_element == null:
+				open_pause_menu()
+			else:
+				deselect_world_element()
 		if event.is_action_pressed("delete"):
 			delete_current_world_element()
+	
+	if pause_allowed and Input.is_action_just_pressed("pause"):
+		toggle_pause(Engine.time_scale > 0.)
 
 func _draw() -> void:
 	draw_rect(data.area, Color.BLACK, false)
@@ -482,7 +493,8 @@ func _on_world_camera_zoom_changed() -> void:
 		editable_rect.camera_zoom = camera.zoom
 
 func toggle_edit_mode() -> void:
-	clock.toggle_pause(true)
+	toggle_pause(true)
+	pause_allowed = false
 	unhover_creature()
 	unfeature_creature()
 	uncompare_creature()
@@ -491,15 +503,43 @@ func toggle_edit_mode() -> void:
 	game_mode = "edit"
 
 func toggle_sim_mode() -> void:
+	pause_allowed = true
 	deselect_world_element()
 	world_elements_container.set_visible(false)
 	charts.set_visible(true)
 	game_mode = "sim"
 
 func _on_world_loaded(new_data:WorldData) -> void:
-	var new_world = World.create(new_data)
-	get_tree().root.add_child(new_world)
-	queue_free()
+	World.load(new_data, self)
+
+func toggle_pause(pause:bool) -> void:
+	if pause_allowed:
+		if pause:
+			Engine.set_time_scale(0.)
+		else:
+			Engine.set_time_scale(1.)
+	clock.toggle_pause(Engine.time_scale <= 0.)
+
+func open_pause_menu() -> void:
+	toggle_pause(true)
+	pause_allowed = false
+	camera.drag_enabled = false
+	camera.zoom_enabled = false
+	pause_menu.open()
+
+func close_pause_menu() -> void:
+	pause_allowed = true
+	if game_mode == "sim":
+		toggle_pause(false)
+	camera.drag_enabled = true
+	camera.zoom_enabled = true
+	pause_menu.close()
+
+static func load(_data:WorldData, caller:Node, destructive:bool=true) -> void:
+	var world = World.create(_data)
+	caller.get_tree().root.add_child(world)
+	if destructive:
+		caller.queue_free()
 
 static func create(_data:WorldData) -> World:
 	var world:World = load(scene_path).instantiate()
