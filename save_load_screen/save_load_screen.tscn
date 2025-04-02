@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwmxc1u65epmp"]
+[gd_scene load_steps=5 format=3 uid="uid://cwmxc1u65epmp"]
 
 [ext_resource type="Texture2D" uid="uid://c0hah5mh1dov6" path="res://world_element/x.png" id="1_3urwo"]
 [ext_resource type="Script" uid="uid://c7txah626tind" path="res://save_load_screen/save_load_screen.gd" id="1_nofeo"]
 [ext_resource type="StyleBox" uid="uid://rdep22xlvwc3" path="res://pause_menu/menu_style.tres" id="1_yxbja"]
+[ext_resource type="Script" uid="uid://bjy7dgd1b0mqp" path="res://world_preview/world_preview.gd" id="4_yxbja"]
 
 [node name="SaveLoadScreen" type="PanelContainer"]
 offset_right = 40.0
@@ -48,9 +49,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Pré-visualização"
 
-[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="WorldPreview" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
+script = ExtResource("4_yxbja")
 
 [node name="SaveBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

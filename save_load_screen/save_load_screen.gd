@@ -5,6 +5,7 @@ signal close_pressed()
 signal world_loaded(world_data:WorldData)
 
 @export var worlds_dir:String = "user://save/worlds/"
+@onready var world_preview:WorldPreview = find_child("WorldPreview")
 @onready var screen_title:Label = find_child("ScreenTitle")
 @onready var exit_bt:Button = find_child("ExitBt")
 @onready var world_selectors:Control = find_child("WorldList")
@@ -94,6 +95,7 @@ func create_selector(data:WorldData) -> void:
 func _on_selector_toggled(toggled_on:bool, selector:WorldSelector) -> void:
 	if toggled_on:
 		current_selector = selector
+		world_preview.set_data(selector.world_data)
 		save_name_edit.set_text(selector.name)
 	load_bt.set_disabled(!is_instance_valid(current_selector))
 

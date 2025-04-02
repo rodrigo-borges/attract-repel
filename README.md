@@ -3,7 +3,7 @@ Aquário de criaturas que são atraídas ou repelidas por cores
 
 ## Roadmap
 
-Lista de implementações desejadas, sem ordem específica.
+Lista de funcionalidades desejadas, sem ordem específica. Funcionalidades com **em negrito** foram priorizadas para o lançamento da versão 0.1.0.
 
 ### Experiência
 
@@ -26,13 +26,12 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Alterar configurações de comedouros. (2025-03-25)
 - [x] Criar comedouros. (2025-03-25)
 - [x] Gerar quantidade arbitrárica de comida num comedouro. (2025-03-25)
-- [ ] Finalizar simulação em caso de extinção.
-- [ ] Finalizar simulação através de um botão.
-- [ ] Exibir estatísticas ao finalizar simulação.
+- [x] Finalizar simulação através de um botão. (2025-03-31)
+- [ ] **Exibir estatísticas ao finalizar simulação.**
 - [x] Migrar para Godot 4.4. (2025-03-13)
 - [x] Selecionar rapidamente o pai da criatura selecionada. (2025-03-12)
 - [x] Navegar pela genealogia de uma criatura. (2025-03-13)
-- [ ] Visualizar detalhes da comida.
+- [ ] **Visualizar detalhes da comida.**
 - [x] Marcar opcionalmente todos os descendentes da criatura junto dela. (2025-03-12)
 - [x] Visualizar força e LoS apenas da criatura selecionada. (2025-03-12)
 - [ ] Ser alertado quando uma criatura exibe determinado padrão de gene.
@@ -50,13 +49,18 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] Salvar cenários. (2025-03-26)
 - [x] Carregar cenários salvos. (2025-03-26)
 - [x] Visualizar lista de cenários salvos. (2025-03-26)
-- [ ] Visualizar prévia de um cenário.
+- [x] Visualizar prévia de um cenário. (2025-04-02)
 - [x] Deletar cenários salvos. (2025-03-26)
-- [ ] Carregar cenários pré-configurados.
+- [ ] **Carregar cenários pré-configurados.**
 - [x] Navegar por um menu inicial. (2025-03-30)
-- [ ] Mostrar obstáculos no mini-mapa.
+- [ ] **Mostrar obstáculos no mini-mapa.**
 - [ ] Selecionar e desselecionar elementos de mundo clicando neles.
-- [x] Navegar por um menu de pausa com opções de salvar, carregar e sair. [2025-03-31]
+- [x] Navegar por um menu de pausa com opções de salvar, carregar e sair. (2025-03-31)
+- [ ] Adicionar uma descrição aos cenários.
+- [ ] Nomear elementos do mundo.
+- [ ] Reordenar lista de elementos do mundo.
+- [ ] **Ver instruções de como usar o simulador.**
+- [ ] Configurar as constantes da simulação.
 
 ### Simulação
 
@@ -74,5 +78,6 @@ Lista de implementações desejadas, sem ordem específica.
 - [x] O dropdown de marcadores está mostrando a lista duplicada, sendo que clicar em uma opção da segunda metade lança erro de posição fora da lista. (2025-03-18)
 - [ ] Algumas colisões com comida não estão sendo processadas, de forma que a criatura fica parada escorada na comida.
 - [ ] Depois de algumas dezenas de gerações, a árvore genealógica está travando o jogo e causando crashes (só aparentemente, porque não é lançado nenhum erro). Redesenhar toda a árvore em todo evento de nascimento ou morte, especificamente com a chamada de `get_descendents()`, é o maior gargalo de desempenho segundo o profiler.
-- [ ] Criaturas podem nascer dentro ou através de obstáculos. Isso acontece porque os filhos nascem a uma distância aleatória do pai sem nenhuma checagem de viabilidade. Com a inclusão do tempo de incubação, talvez a solução mais simples seja fazer com que os filhos nasçam na mesma posição do pai.
+- [ ] **Criaturas podem nascer dentro ou através de obstáculos. Isso acontece porque os filhos nascem a uma distância aleatória do pai sem nenhuma checagem de viabilidade. Com a inclusão do tempo de incubação, talvez a solução mais simples seja fazer com que os filhos nasçam na mesma posição do pai.**
 - [x] Escrever nomes de cenário com espaço pausa/retoma a simulação. [2025-03-31]
+- [ ] **Em resoluções menores, abrir os detalhes de uma criatura distorce o posicionamento dos outros elementos do HUD. Isso acontece porque o cartão ficou muito longo e pode ser resolvido usando um ScrollContainer.**
