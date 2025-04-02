@@ -1,16 +1,12 @@
-[gd_scene load_steps=26 format=3 uid="uid://dsatuyar14v2k"]
+[gd_scene load_steps=15 format=3 uid="uid://dsatuyar14v2k"]
 
 [ext_resource type="Script" uid="uid://ck8ccimgosgw6" path="res://world/world.gd" id="1_psf47"]
 [ext_resource type="Script" uid="uid://5y6p0fgw5ciw" path="res://world/world_camera.gd" id="2_1sg5d"]
-[ext_resource type="Script" uid="uid://bdc10mq6m1mi3" path="res://creature_spawner/creature_spawner_data.gd" id="2_ov2xu"]
+[ext_resource type="Resource" uid="uid://5rbclm50o1s5" path="res://default_worlds/Mundo Padrão.tres" id="2_dqqhb"]
 [ext_resource type="PackedScene" uid="uid://xl8400wsyrr4" path="res://world/hud/mini_map/mini_map.tscn" id="3_3l1a1"]
 [ext_resource type="Script" uid="uid://cw68nqiabeqjr" path="res://creature/creature_highlight.gd" id="3_b14dp"]
-[ext_resource type="Script" uid="uid://dd3bvba3uik6e" path="res://food_spawner/food_spawner_data.gd" id="3_mad0u"]
 [ext_resource type="PackedScene" uid="uid://bh6bll2w5jv5g" path="res://world/hud/clock/clock.tscn" id="4_46fr4"]
-[ext_resource type="Script" uid="uid://bmn80wmho4wsq" path="res://obstacle/obstacle_data.gd" id="4_mad0u"]
-[ext_resource type="Script" uid="uid://ddhs3u0gu31t2" path="res://world/world_data.gd" id="4_ocfjn"]
 [ext_resource type="PackedScene" uid="uid://beirk0bt486wl" path="res://line_chart/line_chart.tscn" id="4_qumfv"]
-[ext_resource type="Texture2D" uid="uid://33r1i1onh2nf" path="res://obstacle/obstacle_texture.png" id="5_ocfjn"]
 [ext_resource type="PackedScene" uid="uid://y4xw1cr1uk76" path="res://creature_card/creature_card.tscn" id="6_sit8l"]
 [ext_resource type="PackedScene" uid="uid://4ucbadkjd5g2" path="res://family_tree/family_tree.tscn" id="8_ugd32"]
 [ext_resource type="PackedScene" uid="uid://cvf7yf84caxyx" path="res://food_spawner/food_spawner_card.tscn" id="13_b2suy"]
@@ -19,86 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://bisllsvrnukgr" path="res://pause_menu/pause_menu.tscn" id="17_m0cxt"]
 [ext_resource type="PackedScene" uid="uid://cwmxc1u65epmp" path="res://save_load_screen/save_load_screen.tscn" id="17_ysn08"]
 
-[sub_resource type="Resource" id="Resource_ov2xu"]
-script = ExtResource("2_ov2xu")
-area = Rect2(100, 100, 1800, 300)
-color_mean = Color(0.485703, 0.485704, 0.485703, 1)
-color_std = 0.1
-size_radius_mean = 10.0
-size_radius_std = 1.0
-sense_radius_mean = 100.0
-sense_radius_std = 10.0
-attraction_mean = Vector3(0, 0, 0)
-attraction_std = 0.25
-intensity_mean = 5.0
-intensity_std = 0.5
-aggression_mean = Vector3(0, 0, 0)
-aggression_std = 0.25
-aggression_intensity_mean = 3.0
-aggression_intensity_std = 0.5
-aggression_energy_threshold_mean = 50.0
-aggression_energy_threshold_std = 10.0
-reproduction_energy_threshold_mean = 50.0
-reproduction_energy_threshold_std = 10.0
-reproduction_cooldown_mean = 10.0
-reproduction_cooldown_std = 2.0
-brake_mean = 0.5
-brake_std = 0.1
-incubation_time_mean = 5.0
-incubation_time_std = 1.0
-metadata/_custom_type_script = "uid://bdc10mq6m1mi3"
-
-[sub_resource type="Resource" id="Resource_mad0u"]
-script = ExtResource("3_mad0u")
-area = Rect2(50, 50, 925, 950)
-spawn_rate = 1.0
-color = Color(0.87451, 0.192157, 0, 1)
-color_std = 0.05
-energy_provided = 20.0
-decay_time = 60.0
-metadata/_custom_type_script = "uid://dd3bvba3uik6e"
-
-[sub_resource type="Resource" id="Resource_ocfjn"]
-script = ExtResource("3_mad0u")
-area = Rect2(1025, 50, 925, 800)
-spawn_rate = 2.0
-color = Color(0, 0.192157, 0.901961, 1)
-color_std = 0.1
-energy_provided = 10.0
-decay_time = 60.0
-metadata/_custom_type_script = "uid://dd3bvba3uik6e"
-
-[sub_resource type="Resource" id="Resource_b2suy"]
-script = ExtResource("4_mad0u")
-area = Rect2(1500, 500, 100, 300)
-texture = ExtResource("5_ocfjn")
-metadata/_custom_type_script = "uid://bmn80wmho4wsq"
-
-[sub_resource type="Resource" id="Resource_h8lre"]
-script = ExtResource("4_mad0u")
-area = Rect2(500, 200, 250, 250)
-texture = ExtResource("5_ocfjn")
-metadata/_custom_type_script = "uid://bmn80wmho4wsq"
-
-[sub_resource type="Resource" id="Resource_ysn08"]
-script = ExtResource("4_mad0u")
-area = Rect2(150, 300, 1000, 10)
-texture = ExtResource("5_ocfjn")
-metadata/_custom_type_script = "uid://bmn80wmho4wsq"
-
-[sub_resource type="Resource" id="Resource_dqqhb"]
-script = ExtResource("4_ocfjn")
-area = Rect2(0, 0, 2000, 2000)
-boundary_texture = ExtResource("5_ocfjn")
-boundary_width = 20.0
-creature_spawners = Array[ExtResource("2_ov2xu")]([SubResource("Resource_ov2xu")])
-food_spawners = Array[ExtResource("3_mad0u")]([SubResource("Resource_mad0u"), SubResource("Resource_ocfjn")])
-obstacles = Array[ExtResource("4_mad0u")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre"), SubResource("Resource_ysn08")])
-metadata/_custom_type_script = "uid://ddhs3u0gu31t2"
-
 [node name="World" type="Node2D"]
 script = ExtResource("1_psf47")
-data = SubResource("Resource_dqqhb")
+data = ExtResource("2_dqqhb")
 
 [node name="WorldCamera" type="Camera2D" parent="."]
 process_mode = 3

@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func _on_start_pressed() -> void:
     center_content.set_visible(false)
-    save_load_screen.set_visible(true)
+    save_load_screen.open("load")
 
 func _on_exit_pressed() -> void:
     get_tree().quit()

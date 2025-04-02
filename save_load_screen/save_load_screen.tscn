@@ -31,11 +31,30 @@ icon = ExtResource("1_3urwo")
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="WorldListTabs" type="TabContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-horizontal_scroll_mode = 0
+theme_override_font_sizes/font_size = 12
+current_tab = 0
+tab_focus_mode = 0
 
-[node name="WorldList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ScrollContainer"]
+[node name="DefaultWorlds" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/WorldListTabs"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_yxbja")
+horizontal_scroll_mode = 0
+metadata/_tab_index = 0
+
+[node name="DefaultWorldList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/WorldListTabs/DefaultWorlds"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="CustomWorlds" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/WorldListTabs"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_yxbja")
+horizontal_scroll_mode = 0
+metadata/_tab_index = 1
+
+[node name="CustomWorldList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/WorldListTabs/CustomWorlds"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
@@ -50,7 +69,7 @@ layout_mode = 2
 text = "Pré-visualização"
 
 [node name="WorldPreview" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 300)
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 script = ExtResource("4_yxbja")
 

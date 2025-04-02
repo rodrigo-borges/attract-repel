@@ -29,7 +29,7 @@ func update() -> void:
         var spare_width:float = size.x - data.area.size.x * preview_scale
         var spare_height:float = size.y - data.area.size.y * preview_scale
         preview_translation = Vector2(spare_width/2., spare_height/2.)
-        queue_redraw()
+    queue_redraw()
 
 func adjust_rect(rect:Rect2) -> Rect2:
     var new = Rect2(rect)

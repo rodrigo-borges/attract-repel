@@ -10,6 +10,7 @@ static var scene_path:String = "res://world/world_selector.tscn"
 @onready var del_button:Button = find_child("Delete")
 
 var world_data:WorldData
+var deletable:bool = true
 
 
 func _ready() -> void:
@@ -18,10 +19,15 @@ func _ready() -> void:
 	update()
 
 func update() -> void:
+	del_button.set_visible(deletable)
 	if world_data != null:
 		select_button.set_text(world_data.resource_name)
 
-static func create(_world_data:WorldData) -> WorldSelector:
+func toggle(toggled_on:bool) -> void:
+	select_button.set_pressed(toggled_on)
+
+static func create(_world_data:WorldData, _deletable:bool) -> WorldSelector:
 	var selector:WorldSelector = load(scene_path).instantiate()
 	selector.world_data = _world_data
+	selector.deletable = _deletable
 	return selector

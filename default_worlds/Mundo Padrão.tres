@@ -1,0 +1,84 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=12 format=3 uid="uid://5rbclm50o1s5"]
+
+[ext_resource type="Texture2D" uid="uid://33r1i1onh2nf" path="res://obstacle/obstacle_texture.png" id="1_mq5dv"]
+[ext_resource type="Script" uid="uid://bdc10mq6m1mi3" path="res://creature_spawner/creature_spawner_data.gd" id="2_renx6"]
+[ext_resource type="Script" uid="uid://dd3bvba3uik6e" path="res://food_spawner/food_spawner_data.gd" id="3_dxhjb"]
+[ext_resource type="Script" uid="uid://bmn80wmho4wsq" path="res://obstacle/obstacle_data.gd" id="4_lq318"]
+[ext_resource type="Script" uid="uid://ddhs3u0gu31t2" path="res://world/world_data.gd" id="5_2k1ku"]
+
+[sub_resource type="Resource" id="Resource_ov2xu"]
+script = ExtResource("2_renx6")
+area = Rect2(100, 100, 1800, 300)
+color_mean = Color(0.485703, 0.485704, 0.485703, 1)
+color_std = 0.1
+size_radius_mean = 10.0
+size_radius_std = 1.0
+sense_radius_mean = 100.0
+sense_radius_std = 10.0
+attraction_mean = Vector3(0, 0, 0)
+attraction_std = 0.25
+intensity_mean = 5.0
+intensity_std = 0.5
+aggression_mean = Vector3(0, 0, 0)
+aggression_std = 0.25
+aggression_intensity_mean = 3.0
+aggression_intensity_std = 0.5
+aggression_energy_threshold_mean = 50.0
+aggression_energy_threshold_std = 10.0
+reproduction_energy_threshold_mean = 50.0
+reproduction_energy_threshold_std = 10.0
+reproduction_cooldown_mean = 10.0
+reproduction_cooldown_std = 2.0
+brake_mean = 0.5
+brake_std = 0.1
+incubation_time_mean = 5.0
+incubation_time_std = 1.0
+metadata/_custom_type_script = "uid://bdc10mq6m1mi3"
+
+[sub_resource type="Resource" id="Resource_mad0u"]
+script = ExtResource("3_dxhjb")
+area = Rect2(50, 50, 925, 950)
+spawn_rate = 1.0
+color = Color(0.87451, 0.192157, 0, 1)
+color_std = 0.05
+energy_provided = 20.0
+decay_time = 60.0
+metadata/_custom_type_script = "uid://dd3bvba3uik6e"
+
+[sub_resource type="Resource" id="Resource_ocfjn"]
+script = ExtResource("3_dxhjb")
+area = Rect2(1025, 50, 925, 800)
+spawn_rate = 2.0
+color = Color(0, 0.192157, 0.901961, 1)
+color_std = 0.1
+energy_provided = 10.0
+decay_time = 60.0
+metadata/_custom_type_script = "uid://dd3bvba3uik6e"
+
+[sub_resource type="Resource" id="Resource_b2suy"]
+script = ExtResource("4_lq318")
+area = Rect2(1500, 500, 100, 300)
+texture = ExtResource("1_mq5dv")
+metadata/_custom_type_script = "uid://bmn80wmho4wsq"
+
+[sub_resource type="Resource" id="Resource_h8lre"]
+script = ExtResource("4_lq318")
+area = Rect2(500, 200, 250, 250)
+texture = ExtResource("1_mq5dv")
+metadata/_custom_type_script = "uid://bmn80wmho4wsq"
+
+[sub_resource type="Resource" id="Resource_ysn08"]
+script = ExtResource("4_lq318")
+area = Rect2(150, 300, 1000, 10)
+texture = ExtResource("1_mq5dv")
+metadata/_custom_type_script = "uid://bmn80wmho4wsq"
+
+[resource]
+script = ExtResource("5_2k1ku")
+area = Rect2(0, 0, 2000, 2000)
+boundary_texture = ExtResource("1_mq5dv")
+boundary_width = 20.0
+creature_spawners = Array[ExtResource("2_renx6")]([SubResource("Resource_ov2xu")])
+food_spawners = Array[ExtResource("3_dxhjb")]([SubResource("Resource_mad0u"), SubResource("Resource_ocfjn")])
+obstacles = Array[ExtResource("4_lq318")]([SubResource("Resource_b2suy"), SubResource("Resource_h8lre"), SubResource("Resource_ysn08")])
+metadata/_custom_type_script = "uid://ddhs3u0gu31t2"

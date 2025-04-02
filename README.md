@@ -11,6 +11,7 @@ Lista de funcionalidades desejadas, sem ordem específica. Funcionalidades com *
 - [ ] Destacar janela com câmera seguindo criatura.
 - [x] Adicionar marcador em uma criatura que será passado para seus descendentes. (2025-03-10)
 - [ ] Visualizar métricas agrupadas por marcador.
+- [ ] Visualizar métricas agrupadas por uma área no mapa.
 - [x] Colidir e quicar criaturas com obstáculos genéricos. (2025-03-21)
 - [x] Barrar visão das criaturas em obstáculos. (2025-03-21)
 - [ ] Alterar atributos da criatura selecionada.
@@ -51,7 +52,7 @@ Lista de funcionalidades desejadas, sem ordem específica. Funcionalidades com *
 - [x] Visualizar lista de cenários salvos. (2025-03-26)
 - [x] Visualizar prévia de um cenário. (2025-04-02)
 - [x] Deletar cenários salvos. (2025-03-26)
-- [ ] **Carregar cenários pré-configurados.**
+- [x] Carregar cenários pré-configurados. (2025-04-02)
 - [x] Navegar por um menu inicial. (2025-03-30)
 - [x] Mostrar obstáculos no mini-mapa. (2025-04-02)
 - [ ] Selecionar e desselecionar elementos de mundo clicando neles.
