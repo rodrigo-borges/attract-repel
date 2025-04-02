@@ -53,7 +53,7 @@ Lista de funcionalidades desejadas, sem ordem específica. Funcionalidades com *
 - [x] Deletar cenários salvos. (2025-03-26)
 - [ ] **Carregar cenários pré-configurados.**
 - [x] Navegar por um menu inicial. (2025-03-30)
-- [ ] **Mostrar obstáculos no mini-mapa.**
+- [x] Mostrar obstáculos no mini-mapa. (2025-04-02)
 - [ ] Selecionar e desselecionar elementos de mundo clicando neles.
 - [x] Navegar por um menu de pausa com opções de salvar, carregar e sair. (2025-03-31)
 - [ ] Adicionar uma descrição aos cenários.
