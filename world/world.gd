@@ -125,44 +125,35 @@ func _process(_delta: float) -> void:
 
 func _unhandled_input(event:InputEvent) -> void:
 	if event.is_action_pressed("toggle_game_mode"):
-		print("toggle_game_mode pressed")
 		if game_mode == "sim":
-			print("in game mode sim, toggling to edit")
 			toggle_edit_mode()
 		elif game_mode == "edit":
-			print("in game mode edit, toggling to sim")
 			toggle_sim_mode()
 
 	if game_mode == "sim":
 		if event.is_action_pressed("left_click"):
-			print("in game mode sim, left_click pressed")
 			if hovered_creature != null:
 				feature_creature(hovered_creature.data)
 			else:
 				unfeature_creature()
 		if event.is_action_pressed("escape"):
-			print("in game mode sim, escape pressed")
 			if featured_creature == null:
 				open_pause_menu()
 			else:
 				unfeature_creature()
 		if event.is_action_pressed("follow"):
-			print("in game mode sim, follow pressed")
 			if selected_creature != null:
 				toggle_follow(followed_creature == null)
 	elif game_mode == "edit":
 		if event.is_action_pressed("escape"):
-			print("in game mode edit, escape pressed")
 			if selected_world_element == null:
 				open_pause_menu()
 			else:
 				deselect_world_element()
 		if event.is_action_pressed("delete"):
-			print("in game mode edit, delete pressed")
 			delete_current_world_element()
 	
 	if pause_allowed and Input.is_action_just_pressed("pause"):
-		print("pause pressed")
 		toggle_pause(Engine.time_scale > 0.)
 
 func _draw() -> void:
@@ -208,7 +199,7 @@ func _on_food_creation(food:Food, creature:CreatureVessel) -> void:
 	spawn_food(food, creature.global_position)
 
 func _on_reproduction(child:CreatureVessel, parent:CreatureVessel) -> void:
-	spawn_vessel(child, parent.global_position + Vector2(randf()*50., randf()*50.))
+	spawn_vessel(child, parent.global_position)
 	var cord = UmbilicalCord.create(parent, child)
 	add_child(cord)
 	current_gen = maxi(current_gen, child.data.generation)

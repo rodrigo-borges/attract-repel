@@ -62,6 +62,7 @@ Lista de funcionalidades desejadas, sem ordem específica. Funcionalidades com *
 - [ ] Reordenar lista de elementos do mundo.
 - [ ] **Ver instruções de como usar o simulador.**
 - [ ] Configurar as constantes da simulação.
+- [ ] Criar comedouros que mantenham uma quantidade constante de comida.
 
 ### Simulação
 
@@ -74,11 +75,11 @@ Lista de funcionalidades desejadas, sem ordem específica. Funcionalidades com *
 ### Problemas
 
 - [x] Quando o jogo está pausado, o controle de zoom não funciona. O motivo é o uso do `Engine.time_scale = 0.` para controle de pausa, pois `get_tree().paused` estava impedindo interações com a UI. (2025-03-14)
-- [ ] Quando o jogo está pausado, o movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.`.
+- [ ] **Quando o jogo está pausado, o movimento da câmera pelas setas não funciona, mas o movimento pelo mouse continua funcionando. O motivo é o uso do `Engine.time_scale = 0.`.**
 - [x] Toda atualização na árvore genealógica remove o hover do mouse, interrompendo a análise visual. (2025-03-17)
 - [x] O dropdown de marcadores está mostrando a lista duplicada, sendo que clicar em uma opção da segunda metade lança erro de posição fora da lista. (2025-03-18)
 - [ ] Algumas colisões com comida não estão sendo processadas, de forma que a criatura fica parada escorada na comida.
 - [ ] Depois de algumas dezenas de gerações, a árvore genealógica está travando o jogo e causando crashes (só aparentemente, porque não é lançado nenhum erro). Redesenhar toda a árvore em todo evento de nascimento ou morte, especificamente com a chamada de `get_descendents()`, é o maior gargalo de desempenho segundo o profiler.
-- [ ] **Criaturas podem nascer dentro ou através de obstáculos. Isso acontece porque os filhos nascem a uma distância aleatória do pai sem nenhuma checagem de viabilidade. Com a inclusão do tempo de incubação, talvez a solução mais simples seja fazer com que os filhos nasçam na mesma posição do pai.**
+- [x] Criaturas podem nascer dentro ou através de obstáculos. Isso acontece porque os filhos nascem a uma distância aleatória do pai sem nenhuma checagem de viabilidade. Com a inclusão do tempo de incubação, talvez a solução mais simples seja fazer com que os filhos nasçam na mesma posição do pai. (2025-04-02)
 - [x] Escrever nomes de cenário com espaço pausa/retoma a simulação. (2025-03-31)
 - [x] Em resoluções menores, abrir os detalhes de uma criatura distorce o posicionamento dos outros elementos do HUD. Isso acontece porque o cartão ficou muito longo e pode ser resolvido usando um ScrollContainer. (2025-04-02)

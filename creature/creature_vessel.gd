@@ -209,11 +209,12 @@ func _draw() -> void:
 func enter_incubation() -> void:
 	self.set_collision_layer(0b1000)
 	self.set_collision_mask(0b0000)
+	set_modulate(Color(1.,1.,1.,.5))
 	sense_area.set_collision_mask(0b0000)
 	sense_area.set_monitoring(false)
 	blink_tween = create_tween().set_loops()
 	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,.1), .5)
-	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,1.), .5)
+	blink_tween.tween_property(self, "modulate", Color(1.,1.,1.,.5), .5)
 	on_incubation = true
 
 func leave_incubation() -> void:
