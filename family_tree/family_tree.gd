@@ -32,10 +32,14 @@ var cam_ref_position:Vector2
 
 
 func _ready() -> void:
+	var a_line_edit:LineEdit = l_above_input.get_line_edit()
+	a_line_edit.text_submitted.connect(func(_new:String): a_line_edit.release_focus())
+	var b_line_edit:LineEdit = l_below_input.get_line_edit()
+	b_line_edit.text_submitted.connect(func(_new:String): b_line_edit.release_focus())
 	l_above_input.set_value(layers_above)
 	l_below_input.set_value(layers_below)
-	l_above_input.value_changed.connect(func(value:float):layers_above=int(value);refresh())
-	l_below_input.value_changed.connect(func(value:float):layers_below=int(value);refresh())
+	l_above_input.value_changed.connect(func(value:float):a_line_edit.release_focus();layers_above=int(value);refresh())
+	l_below_input.value_changed.connect(func(value:float):b_line_edit.release_focus();layers_below=int(value);refresh())
 	hide_extinct_bt.toggled.connect(refresh.unbind(1))
 
 	hover_highlight.set_visible(false)

@@ -116,26 +116,42 @@ chart_name = "Média de filhos"
 layout_mode = 2
 chart_name = "Momento total"
 
-[node name="MiniMap" parent="HUD/MarginContainer" node_paths=PackedStringArray("world", "camera") instance=ExtResource("3_3l1a1")]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 8
-world = NodePath("../../..")
-camera = NodePath("../../../WorldCamera")
+mouse_filter = 2
+theme_override_constants/separation = 30
 
-[node name="Cards" type="HBoxContainer" parent="HUD/MarginContainer"]
+[node name="Cards" type="ScrollContainer" parent="HUD/MarginContainer/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
+horizontal_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer/VBoxContainer/Cards"]
+layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="CreatureCard" parent="HUD/MarginContainer/Cards" instance=ExtResource("6_sit8l")]
+[node name="CreatureCard" parent="HUD/MarginContainer/VBoxContainer/Cards/HBoxContainer" instance=ExtResource("6_sit8l")]
 layout_mode = 2
 
-[node name="ComparisonCard" parent="HUD/MarginContainer/Cards" instance=ExtResource("6_sit8l")]
+[node name="ComparisonCard" parent="HUD/MarginContainer/VBoxContainer/Cards/HBoxContainer" instance=ExtResource("6_sit8l")]
 layout_mode = 2
 size_flags_vertical = 0
 show_life = false
 show_actions = false
+
+[node name="MiniMap" parent="HUD/MarginContainer/VBoxContainer" node_paths=PackedStringArray("world", "camera") instance=ExtResource("3_3l1a1")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+world = NodePath("../../../..")
+camera = NodePath("../../../../WorldCamera")
 
 [node name="FoodSpawnerCard" parent="HUD/MarginContainer" instance=ExtResource("13_b2suy")]
 visible = false
